@@ -53,6 +53,11 @@ class SubjectTableSeeder extends Seeder
         $commentcount = $this->getCount('comments');
         
         $this->command->info("Creating a range of {$commentcount} comments for {$users->count()} users.");
+        
+        // How many genres you need, defaulting 1 to 10
+        $replaycommentcount = $this->getCount('replay comments');
+        
+        $this->command->info("Creating a range of {$replaycommentcount} comments for {$users->count()} users.");
 
         //For using all memory limit
         // ini_set('memory_limit', '-1');
@@ -69,24 +74,32 @@ class SubjectTableSeeder extends Seeder
         }));
 
         // Create the articles & relation Users
-        $users->each( function($user) use($commentcount, $articlecount, $users)
+        $users->each( function($user) use($commentcount, $articlecount, $users, $replaycommentcount)
         {
             $user->articles()->saveMany(
                 $articles = factory(App\Models\Article\Article::class, $articlecount)->create([
                     'user_id' => $user->id
                 ])
-                // Create the comments & relation Users & articles
-            )->each( function($article) use($commentcount, $users)
+                // Create the comments & relation Users & articles & replay comment
+            )->each( function($article) use($commentcount, $users, $replaycommentcount)
             {
                 //For using all memory limit
                 // ini_set('memory_limit', '-1');
 
                 $article->comments()->saveMany(
                     factory(App\Models\Opinion\Comment::class, $commentcount)->make([
-                    'article_id' => $article->id,
                     'user_id' => $users->random()->id
                     ])
-                );
+                )->each(function($comment) use($replaycommentcount, $users, $article)
+                {
+                    $article->comments()->saveMany(
+                        factory(App\Models\Opinion\Comment::class, $replaycommentcount)->make([
+                            'parent_id' => $comment->id,
+                            'user_id' => $users->random()->id,
+                            'article_id' => $article->id
+                        ])
+                    );
+                });
             });
         });
 

@@ -18,6 +18,7 @@ class Comment extends Model
      */
     protected $fillable = [
         'article_id',
+        'parent_id',
         'messages',
         'is_accept'
     ];
@@ -58,5 +59,13 @@ class Comment extends Model
     public function user()
     {
         return $this->belongsTo(\App\User::class);
+    }
+
+    /**
+     * This function for answer's comments.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'parent_id');
     }
 }

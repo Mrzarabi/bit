@@ -49,7 +49,7 @@ $factory->define(App\Models\Opinion\Review::class, function (Faker $faker) use (
         'ranks'         => $faker->numberBetween(0, 50),
         'advantages'    => nullable( $advantages[$select_adv]['adv'] ),
         'disadvantages' => nullable( $disadvantages[$select_dis]['dis'] ),
-        'message'       => $faker->realText(100),
+        'message'       => $faker->sentence(),
         'is_accept'     => $faker->boolean(),
     ];
 });
