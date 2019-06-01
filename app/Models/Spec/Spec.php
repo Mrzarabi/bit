@@ -3,21 +3,35 @@
 namespace App\Models\Spec;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Category;
+use App\Models\Grouping\Category;
 
 class Spec extends Model
 {
-    protected $fillable = [ 'category_id' ];
+    /****************************************
+     **             Attributes
+     ***************************************/
+    
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'category_id'
+    ];
 
-    public function category ()
-    {
-        return $this->belongsTo(Category::class);
-    }
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'deleted_at'
+    ];
 
-    public function specHeaders ()
-    {
-        return $this->hasMany(SpecHeader::class);
-    }
+    /****************************************
+     **          Important methods
+     ***************************************/
 
     public static function compare ()
     {
@@ -28,8 +42,28 @@ class Spec extends Model
                 'specHeaders:id,spec_id,title,description',
                 'specHeaders.specRows:id,spec_header_id,title,label,values,help,multiple',
                 'specHeaders.specRows.specDatas' => function ($query) {
-                    $query->whereIn('product_id', session( 'compare' ) );
-                }
-            ]);
+                $query->whereIn('product_id', session( 'compare' ) );
+            }
+        ]);
+    }
+
+    /****************************************
+     **              Relations
+     ***************************************/
+
+    /**
+     * Get the category of the specification.
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Get all of the specificationHeader for the specification.
+     */
+    public function specHeaders()
+    {
+        return $this->hasMany(SpecHeader::class);
     }
 }

@@ -1,19 +1,11 @@
 <?php
 
-namespace App\Models\Spec;
+namespace App\Models\Ticket;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Currency\Currency;
 
-class SpecData extends Model
+class Ticket extends Model
 {
-
-    /****************************************
-     **         Name of the Database
-     ***************************************/
-
-    protected $table = 'spec_data';
-
     /****************************************
      **             Attributes
      ***************************************/
@@ -24,8 +16,16 @@ class SpecData extends Model
      * @var array
      */
     protected $fillable = [
-        'currency_id',
-        'data',
+        'is_close',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_close'    => 'boolean',
     ];
 
     /**
@@ -41,19 +41,19 @@ class SpecData extends Model
      **              Relations
      ***************************************/
     
-    /**
-     * Get the specificationRow of the specificatoinData.
+     /**
+     * Get the user of the ticket.
      */
-    public function specRow()
+    public function user()
     {
-        return $this->belongsTo(SpecRow::class, 'spec_row_id');
+        return $this->belongsTo(\App\User::class);
     }
-    
+
     /**
-     * Get the currency of the specificationData.
+     * Get all of the ticketmessages for the ticket.
      */
-    public function currencies()
+    public function ticketmessages()
     {
-        return $this->belongsTo(Currency::class);
+        return $this->hasMany(TicketMessage::class);
     }
 }

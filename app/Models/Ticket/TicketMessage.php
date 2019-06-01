@@ -1,19 +1,11 @@
 <?php
 
-namespace App\Models\Spec;
+namespace App\Models\Ticket;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Currency\Currency;
 
-class SpecData extends Model
+class TicketMessage extends Model
 {
-
-    /****************************************
-     **         Name of the Database
-     ***************************************/
-
-    protected $table = 'spec_data';
-
     /****************************************
      **             Attributes
      ***************************************/
@@ -24,8 +16,7 @@ class SpecData extends Model
      * @var array
      */
     protected $fillable = [
-        'currency_id',
-        'data',
+        'message',
     ];
 
     /**
@@ -42,18 +33,18 @@ class SpecData extends Model
      ***************************************/
     
     /**
-     * Get the specificationRow of the specificatoinData.
+     * Get the ticket of the ticketMessage.
      */
-    public function specRow()
+    public function ticket()
     {
-        return $this->belongsTo(SpecRow::class, 'spec_row_id');
+        return $this->belongsTo(Ticket::class);
     }
     
     /**
-     * Get the currency of the specificationData.
+     * Get the user of the ticketMessage.
      */
-    public function currencies()
+    public function user()
     {
-        return $this->belongsTo(Currency::class);
+        return $this->belongsTo(\App\User::class);
     }
 }

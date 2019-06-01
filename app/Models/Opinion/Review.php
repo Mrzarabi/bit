@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Models\Spec;
+namespace App\Models\Opinion;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Currency\Currency;
 
-class SpecRow extends Model
+class Review extends Model
 {
     /****************************************
      **             Attributes
@@ -16,11 +17,12 @@ class SpecRow extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
-        'label',
-        'values',
-        'help',
-        'multiple'
+        'currency_id',
+        'ranks',
+        'advantages',
+        'disadvantages',
+        'message',
+        'is_accept'
     ];
 
     /**
@@ -29,7 +31,10 @@ class SpecRow extends Model
      * @var array
      */
     protected $casts = [
-        'values' => 'array'
+        'is_accept'              => 'boolean',
+        'ranks'                  => 'array',
+        'advantages'             => 'array',
+        'disadvantages'          => 'array',
     ];
 
     /**
@@ -44,28 +49,20 @@ class SpecRow extends Model
     /****************************************
      **              Relations
      ***************************************/
-    
+
     /**
-     * Get the specheader of the specrow.
+     * Get the currency of the review.
      */
-    public function specHeader ()
+    public function currency()
     {
-        return $this->belongsTo(SpecHeader::class, 'spec_header_id');
+        return $this->belongsTo(Currency::class);
     }
 
     /**
-     * Get the specrow's specdata.
+     * Get the user of the review.
      */
-    public function specData ()
+    public function user()
     {
-        return $this->hasOne(SpecData::class, 'spec_row_id');
-    }
-
-    /**
-     * Get all of the specdatas for the spesrow.
-     */
-    public function specDatas ()
-    {
-        return $this->hasMany(SpecData::class, 'spec_row_id');
+        return $this->belongsTo(\App\User::class);
     }
 }

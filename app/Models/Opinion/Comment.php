@@ -1,19 +1,12 @@
 <?php
 
-namespace App\Models\Spec;
+namespace App\Models\Opinion;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Currency\Currency;
+use App\Models\Article\Article;
 
-class SpecData extends Model
+class Comment extends Model
 {
-
-    /****************************************
-     **         Name of the Database
-     ***************************************/
-
-    protected $table = 'spec_data';
-
     /****************************************
      **             Attributes
      ***************************************/
@@ -24,8 +17,18 @@ class SpecData extends Model
      * @var array
      */
     protected $fillable = [
-        'currency_id',
-        'data',
+        'article_id',
+        'messages',
+        'is_accept'
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_accept' => 'boolean',
     ];
 
     /**
@@ -36,24 +39,24 @@ class SpecData extends Model
     protected $dates = [
         'deleted_at'
     ];
-
+    
     /****************************************
      **              Relations
      ***************************************/
-    
+
     /**
-     * Get the specificationRow of the specificatoinData.
+     * Get the article of the comment.
      */
-    public function specRow()
+    public function article()
     {
-        return $this->belongsTo(SpecRow::class, 'spec_row_id');
+        return $this->belongsTo(Article::class);
     }
-    
+
     /**
-     * Get the currency of the specificationData.
+     * Get the user of the comment.
      */
-    public function currencies()
+    public function user()
     {
-        return $this->belongsTo(Currency::class);
+        return $this->belongsTo(\App\User::class);
     }
 }

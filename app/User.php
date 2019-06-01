@@ -5,6 +5,13 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Article\Article;
+use App\Models\Currency\Currency;
+use App\Models\Ticket\Ticket;
+use App\Models\Ticket\TicketMessage;
+use App\Models\Bank\BankCard;
+use App\Models\Opinion\Comment;
+use App\Models\Opinion\Review;
 
 class User extends Authenticatable
 {
@@ -12,16 +19,31 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
+    /****************************************
+     **          Important methods
+     ***************************************/
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'id', 'first_name', 'last_name', 'phone', 'email', 'password', 'state', 'city', 'address', 'postal_code', 'type'
+        'first_name',
+        'second_name',
+        'last_name',
+        'social_link',
+        'phone_number',
+        'birthday',
+        'address',
+        'email',
+        'password',
+        'avatar',
+        'image_social_link',
+        'image_certificate',
+        'image_bills',
+        'image_selfie_social_link',
     ];
-
-    public $incrementing = false;
 
     /**
      * The attributes that should be hidden for arrays.
@@ -29,43 +51,13 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
-    public function is_admin ($user_id)
-    {
-        return ($this->type == 1) ? true : false;   
-    }
-    
-    /**
-     * Relation to Article model
-     *
-     * @return Article Model
-     */
-    public function articles ()
-    {
-        return $this->hasMany(\App\Models\Article::class);
-    }
-
-    /**
-     * Relation to Product model
-     *
-     * @return Product Model
-     */
-    public function products ()
-    {
-        return $this->hasMany(\App\Models\Product::class);
-    }
-
-    /**
-     * Relation to Review model
-     *
-     * @return Review Model
-     */
-    public function reviews ()
-    {
-        return $this->hasMany(\App\Models\Review::class);
-    }
+    /****************************************
+     **         Important Method
+     ***************************************/
 
     /**
      * Full_name Mutators
@@ -74,6 +66,76 @@ class User extends Authenticatable
      */
     public function getFullNameAttribute()
     {
-        return $this->first_name . ' ' . $this->last_name;
+        return $this->first_name . ' ' . $this->second_name . ' ' . $this->last_name;
     }
+
+    /****************************************
+     **              Relations
+     ***************************************/
+
+    /**
+     * Get all of the articles for the user.
+     */
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
+
+    /**
+     * Get all of the comments for the user.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Get all of the reviews for the user.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Get all of the tickets for the user.
+     */
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    /**
+     * Get all of the ticketmessages for the user.
+     */
+    public function ticketMessages()
+    {
+        return $this->hasMany(TicketMessage::class);
+    }
+
+    /**
+     * Get all of the currencies for the user.
+     */
+    public function currencies()
+    {
+        return $this->hasMany(Currency::class);
+    }
+
+    /**
+     * Get all of the bankCard for the user.
+     */
+    public function bankCard()
+    {
+        return $this->hasMany(BankCard::class);
+    }
+
+    /**
+     * Relation to Review model
+     *
+     * @return Review Model
+     */
+    // public function reviews ()
+    // {
+    //     return $this->hasMany(\App\Models\Review::class);
+    // }
 }

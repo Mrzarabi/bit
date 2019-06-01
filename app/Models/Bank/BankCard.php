@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Spec;
+namespace App\Models\Bank;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SpecHeader extends Model
+class BankCard extends Model
 {
     /****************************************
      **             Attributes
@@ -16,8 +16,19 @@ class SpecHeader extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
-        'description'
+        'bank_name',
+        'bank_card',
+        'code',
+        'image_benk_card',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'image_benk_card'  => 'array',
     ];
 
     /**
@@ -32,28 +43,12 @@ class SpecHeader extends Model
     /****************************************
      **              Relations
      ***************************************/
-
-    /**
-     * Get the specification of the specificationHeader.
+    
+     /**
+     * Get the user of the ticket.
      */
-    public function spec()
+    public function user()
     {
-        return $this->belongsTo(Spec::class);
-    }
-
-    /**
-     * Get all of the specificationRows for the specificationHeader.
-     */
-    public function specRows()
-    {
-        return $this->hasMany(SpecRow::class);
-    }
-
-    /**
-     * Get all of the specificationDatas for the specificationHeader.
-     */
-    public function specData()
-    {
-        return $this->hasMany(SpecData::class);
+        return $this->belongsTo(\App\User::class);
     }
 }

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Models\Spec;
+namespace App\Models\Grouping;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Article\Article;
 
-class SpecHeader extends Model
+class Subject extends Model
 {
     /****************************************
      **             Attributes
@@ -17,7 +18,17 @@ class SpecHeader extends Model
      */
     protected $fillable = [
         'title',
-        'description'
+        'description',
+        'logo'
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'logo' => 'array',
     ];
 
     /**
@@ -32,28 +43,12 @@ class SpecHeader extends Model
     /****************************************
      **              Relations
      ***************************************/
-
+    
     /**
-     * Get the specification of the specificationHeader.
+     * Get all of the articles for the subject.
      */
-    public function spec()
+    public function articles() 
     {
-        return $this->belongsTo(Spec::class);
-    }
-
-    /**
-     * Get all of the specificationRows for the specificationHeader.
-     */
-    public function specRows()
-    {
-        return $this->hasMany(SpecRow::class);
-    }
-
-    /**
-     * Get all of the specificationDatas for the specificationHeader.
-     */
-    public function specData()
-    {
-        return $this->hasMany(SpecData::class);
+        return $this->hasMany(Article::class);
     }
 }
