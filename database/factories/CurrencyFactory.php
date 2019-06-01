@@ -2,17 +2,13 @@
 
 use Faker\Generator as Faker;
 
-function nullable($field)
-{
-    return [null, $field][rand(0, 1)];
-}
-
-$factory->define(App\Models\Article\Article::class, function (Faker $faker) {
+$factory->define(App\Models\Currency\Currency::class, function (Faker $faker) {
     $faker = \Faker\Factory::create('fa_IR');
     return [
         'title'         => $faker->name(),
         'description'   => nullable($faker->realText(255)),
-        'body'          => $faker->realText(255),
+        'price'         => $faker->numberBetween(1000, 500000),
+        'inventory'     => $faker->numberBetween(1, 500000),
         'image'         => nullable($faker->imageUrl($width = 640, $height = 480))
     ];
 });

@@ -16,19 +16,26 @@ use Faker\Generator as Faker;
 $factory->define(App\User::class, function (Faker $faker) {
     $faker = \Faker\Factory::create('fa_IR');
     return [
-        'id' => $faker->ean8,
-        'first_name' => $faker->firstName(),
-        'last_name' => $faker->lastName(),
-        'phone' => $faker->phoneNumber,
-        'email' => $faker->unique()->safeEmail,
+        'first_name'        => $faker->firstName(),
+        'second_name'       => $faker->firstName(),
+        'last_name'         => $faker->lastName(),
+
+        'social_link'       => $faker->numberBetween(00000, 99999),
+        'phone_number'      => $faker->phoneNumber,
+        'birthday'          => $faker->dateTimeThisCentury->format('Y-m-d'),
+        'address'           => $faker->address,
+
+        'email'             => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-        'avatar' => $faker->imageUrl(50, 50),
-        'state' => $faker->city,
-        'city' => $faker->city,
-        'address' => $faker->address,
-        'postal_code' => $faker->postcode,
-        'type' => 0,
-        'remember_token' => str_random(10),
+        'password'          => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+        
+        'avatar'            => nullable($faker->imageUrl(50, 50)),
+
+        'image_social_link' => $faker->imageUrl(50, 50),
+        'image_certificate' => $faker->imageUrl(50, 50),
+        'image_bill'        => $faker->imageUrl(50, 50),
+        'image_selfie_social_link' => $faker->imageUrl(50, 50),
+
+        'remember_token'    => str_random(10),
     ];
 });
