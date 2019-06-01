@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\Blueprint;
 
-class CreateArticlesTable extends Migration
+class CreateBankCardsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,26 +15,23 @@ class CreateArticlesTable extends Migration
      */
     public function up()
     {
-
         /** start for have default Blueprint class */
         $Schema = DB::connection()->getSchemaBuilder();
         $Schema->blueprintResolver( function( $table, $callback ) {
             return new Blueprint( $table, $callback );
         });
         /** end  */
-        
-        $Schema->create('articles', function (Blueprint $table) {
+
+        $Schema->create('bank_cards', function (Blueprint $table) {
             $table->increments('id')->unsigned();
 
             $table->foreign_key('user_id', 'users');
-            $table->foreign_key('subject_id', 'subjects');
-                    
-            $table->string('title', 50);
-            $table->string('slug', 50);
-            $table->string('description', 255)->nullable();
-            $table->text('body');
-            $table->string('image', 100)->nullable();
 
+            $table->string('bank_name');
+            $table->unsignedBigInteger('bank_card');
+            $table->string('code')->comment('shomare shaba mibashad');
+            $table->string('image_benk_card');
+            
             $table->full_timestamps();
         });
     }
@@ -46,6 +43,6 @@ class CreateArticlesTable extends Migration
      */
     public function down()
     {
-        $Schema->dropIfExists('articles');
+        $Schema->dropIfExists('bank_cards');
     }
 }

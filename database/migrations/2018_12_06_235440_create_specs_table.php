@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+// use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
+use App\Helpers\Blueprint;
 
 class CreateSpecsTable extends Migration
 {
@@ -13,16 +15,55 @@ class CreateSpecsTable extends Migration
      */
     public function up()
     {
-        Schema::create('specs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('category_id');
-                $table->foreign('category_id')
-                    ->references('id')
-                    ->on('categories')
-                    ->onDelete('cascade')
-                    ->onUpdate('cascade');
-                    
-            $table->timestamps();
+        /** start for have default Blueprint class */
+        $Schema = DB::connection()->getSchemaBuilder();
+        $Schema->blueprintResolver( function( $table, $callback ) {
+            return new Blueprint( $table, $callback );
+        });
+        /** end  */
+
+        $Schema->create('specs', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
+
+            $table->foreign_key('category_id', 'categories');
+
+            $table->full_timestamps();
+        });
+
+        $Schema->create('spec_headers', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
+
+            $table->foreign_key('spec_id', 'specs');
+
+            $table->string('title', 50);
+            $table->string('description', 255)->nullable();
+
+            $table->full_timestamps();
+        });
+
+        $Schema->create('spec_rows', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
+
+            $table->foreign_key('spec_header_id', 'spec_headers');
+
+            $table->string('title', 50);
+            $table->string('label', 50)->nullable();
+            $table->mediumText('values')->nullable();
+            $table->mediumText('help')->nullable();
+            $table->boolean('multiple')->default(0);
+
+            $table->full_timestamps();
+        });
+
+        $Schema->create('spec_data', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
+
+            $table->foreign_key('spec_row_id', 'spec_rows');
+            $table->foreign_key('currency_id', 'currencies');
+
+            $table->string('data', 255);
+            
+            $table->full_timestamps();
         });
     }
 
@@ -33,6 +74,9 @@ class CreateSpecsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('speceficatinos');
+        $Schema->dropIfExists('specs');
+        $Schema->dropIfExists('spec_headers');
+        $Schema->dropIfExists('spec_rows');
+        $Schema->dropIfExists('spec_data');
     }
 }
