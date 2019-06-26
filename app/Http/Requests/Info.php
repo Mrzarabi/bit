@@ -30,7 +30,7 @@ class Info extends FormRequest
             'min_total'     => 'required|min:0|integer',
             'address'       => 'required|max:100|string',
             'logo'          => 'nullable|image|mimes:jpeg,png,jpg|max:512',
-            'watermark'     => 'nullable|image|mimes:jpeg,png,jpg|max:512',
+            'watermark'     => 'nullable||mimes:jpeg,png,jpg|max:512',
         ];
     }
 }

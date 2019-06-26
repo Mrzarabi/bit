@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\V1\Spec;
+namespace App\Http\Requests\V1\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SpecRequest extends FormRequest
+class AcceptUserCertificate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class SpecRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -24,9 +24,8 @@ class SpecRequest extends FormRequest
     public function rules()
     {
         return [
-
-            /* relateion */
-            'parent'    => 'required|integer|exists:categories,id', 
+            'type' => 'required|in:image_national_code,identify_certificate,image_bill,image_selfie_national_code',
+            'status' => 'required|boolean'
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -24,24 +25,44 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name'               => 'required|string|max:20',
-            'second_name'              => 'required|string|max:20',
-            'last_name'                => 'required|string|max:30',
+            'first_name'                 => 'required|string|max:20',
+            'last_name'                  => 'required|string|max:30',
+            'birthday'                   => 'required|string|',
+            'address'                    => 'nullable|string|max:255',
 
-            'social_link'              => 'required|string|min:10|unique:users,social_links',
-            'phone_number'             => 'nullable|integer|min:7|unique:users,phone-number',
-            'birthday'                 => 'required|string|',
-            'address'                  => 'nullable|string|max:255',
+            'national_code'              => [
+                'required','string', 'min:10', 
+                Rule::unique('users')->ignore( request()->route()->user->id )
+            ],
+            'phone_number'               => [
+                'nullable', 'string', 'min:7',
+                Rule::unique('users')->ignore( request()->route()->user->id )
+            ],
 
-            'email'                    => 'nullable|unique:users,email',
-            'password'                 => 'required|string|min:4',
+            'email'                      => [
+                'nullable',
+                Rule::unique('users')->ignore( request()->route()->user->id ),
+            ],
+            'password'                   => [ 
+                $this->method() === 'POST' ? 'required' : 'nullable', 'string', 'min:4', 'confirmed'
+            ],
 
-            'avatar'                   => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
+            'avatar'                     => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
 
-            'image_social_link'        => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
-            'image_certificate'        => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
-            'image_bill'               => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
-            'image_selfie_social_link' => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
+            'image_national_code'        => [
+                $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],
+
+            'identify_certificate'          => [
+                $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],
+            
+            'image_bill'                 => [
+                $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],
+            
+            'image_selfie_national_code' => [
+                $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],
+            
+            'type' => 'required|in:image_national_code,identify_certificate,image_bill,image_selfie_national_code',
+            'status' => 'required|boolean'
         ];
     }
 }

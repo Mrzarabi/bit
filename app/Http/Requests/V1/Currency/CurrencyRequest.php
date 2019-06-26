@@ -24,14 +24,23 @@ class CurrencyRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'          => 'required|string|max:50',
-            'description'    => 'nullable|string|max:255',
-            'price'          => 'required|integer',
-            'inventory'      => 'required|integer',
-            'image'          => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
+            'title'                => 'required|string|max:50',
+            'short_description'    => 'nullable|string|max:255',
+            'note'                 => 'nullable|string|max:255',
+            'price'                => 'required|integer',
+            'inventory'            => 'required|integer',
+            'code'                 => 'nullable|string',
+            'status'               => 'required|integer',
+            'photo'                => [
+                $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'
+            ],
             
             /* relateion */
-            'categories.*'    => 'required|integer|exists:categories,id',
+            'categories.*'         => 'required|integer|exists:categories,id',
+            "specs"                => 'nullable|array',
+            "specs.*"              => 'required|integer|exists:specs,id',
+            "specs.*.id"           => 'nullable|array',
+            "specs.*.data"         => 'nullable',
         ];
     }
 }

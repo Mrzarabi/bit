@@ -29,7 +29,7 @@ class CategoryRequest extends FormRequest
             'logo'          => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
 
             /*Relation */
-            'parent_id'     => 'required|integer|exists:categories,id',
+            'parent_id'     => 'nullable|integer|exists:categories,id',
         ];
     }
 }

@@ -13,7 +13,7 @@ class SpecRowRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -28,9 +28,6 @@ class SpecRowRequest extends FormRequest
             'label'     => 'nullable|string|max:50',
             'values'    => 'nullable|string|max:255',
             'help'      => 'nullable|string|max:255',
-
-            /* relateion */
-            'spec_header_id'    => 'required|integer|exists:spec_headers,id',
         ];
     }
 }

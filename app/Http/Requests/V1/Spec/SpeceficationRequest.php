@@ -4,7 +4,7 @@ namespace App\Http\Requests\V1\Spec;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SpecHeaderRequest extends FormRequest
+class SpeceficationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,7 @@ class SpecHeaderRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'       => 'required|string|max:50',
-            'description' => 'nullable|string|max:255',
+            'parent' => [ 'required', 'exists:categories,id' ]
         ];
     }
 }
