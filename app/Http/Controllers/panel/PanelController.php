@@ -18,6 +18,7 @@ use App\Models\Product;
 use App\Models\Option;
 use App\Models\ProductVariation;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Currency\Currency;
 
 /**
  *  CLASS PanelController
@@ -33,18 +34,18 @@ class PanelController extends Controller
      * @param string $total_type
      * @return View
      */
-    public function index ($total_type = 'daily')
+    public function index($total_type = 'daily')
     {
         return view('panel.index', [
-            'orders'        => Order::list(),
-            'reviews'       => Review::list(),
-            'top_products'  => ProductVariation::getTops(),
-            'orders_count'  => Order::count(),
-            'product_count' => Product::count(),
+            // 'orders'        => Order::list(),
+            // 'reviews'       => Review::list(),
+            // 'top_products'  => ProductVariation::getTops(),
+            // 'orders_count'  => Order::count(),
+            'product_count' => Currency::count(),
             'page_name'     => 'داشبورد',
             // 'total_income'  => Order::total_income(),
-            'order_compare' => Order::compare(),
-            'total_sales'   => Order::total($total_type),
+            // 'order_compare' => Order::compare(),
+            // 'total_sales'   => Order::total($total_type),
             'total_type'    => $total_type,
             'options'       => $this->options(['site_name', 'site_logo', 'dollar_cost'])
         ]);
@@ -55,7 +56,7 @@ class PanelController extends Controller
      *
      * @return View
      */
-    public function setting ()
+    public function setting()
     {
         return view('panel.setting', [
             'page_name' => 'setting',

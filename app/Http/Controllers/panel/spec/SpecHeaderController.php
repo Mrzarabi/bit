@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\panel\spec;
 
 use App\Models\Spec\SpecHeader;
-use App\Http\Requests\SpecHeaderRequest;
+use App\Http\Requests\V1\Spec\SpecHeaderRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Spec\Spec;
 

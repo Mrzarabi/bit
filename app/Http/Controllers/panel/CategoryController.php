@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\panel;
 
-use App\Models\Category;
-use App\Http\Requests\CategoryRequest;
+use App\Models\Grouping\Category;
+use App\Http\Requests\V1\Grouping\CategoryRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
-use Intervention\Image\Facades\Image;
 
 class CategoryController extends Controller
 {
@@ -39,21 +37,22 @@ class CategoryController extends Controller
     /**
      * Store a newly created Category in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request\V1\Grouping\CategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(CategoryRequest $request)
     {
-        Category::create(array_merge($request -> all(), [
-            'avatar' => $request->hasFile('avatar') ? $this->upload_image( Input::file('avatar') ) : null,
+        Category::create(array_merge($request->all(), [
+            'logo' => $request->hasFile('logo') ? $this->upload_image( Input::file('logo') ) : null,
         ]));
+        // return $request->logo;
         return redirect()->back()->with('message', 'گروه '.$request->title.' با موفقیت ثبت شد .');
     }
 
     /**
      * Display the specified Category.
      *
-     * @param  \App\models\Category  $category
+     * @param  \App\models\Grouping\Category  $category
      * @return \Illuminate\Http\Response
      */
     public function show(Category $category)
@@ -72,7 +71,7 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified Category.
      *
-     * @param  \App\models\Category  $category
+     * @param  \App\models\Grouping\Category  $category
      * @return \Illuminate\Http\Response
      */
     public function edit(Category $category)
@@ -91,34 +90,34 @@ class CategoryController extends Controller
     /**
      * Update the specified Category in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\models\Category  $category
+     * @param  \Illuminate\Http\Request\V1\Grouping\CategoryRequest  $request
+     * @param  \App\models\Grouping\Category  $category
      * @return \Illuminate\Http\Response
      */
     public function update(CategoryRequest $request, Category $category)
     {
-        if ($request->hasFile('avatar'))
+        if ($request->hasFile('logo'))
         {
-            $avatar = $this->upload_image( Input::file('avatar') );
+            $logo = $this->upload_image( Input::file('logo') );
             
-            if ( file_exists( public_path($category->avatar) ) )
-                unlink( public_path($category->avatar) );
+            if ( file_exists( public_path($category->logo) ) )
+                unlink( public_path($category->logo) );
         }
         else
         {
-            $avatar = $category->avatar;
+            $logo = $category->logo;
         }
                 
         $category->update(array_merge($request -> all(), [
-            'avatar' => $avatar
+            'logo' => $logo
         ]));
-        return redirect()->back()->with('message', 'گروه '.$request->title.' با موفقیت بروز رسانی شد .');
+        return redirect(route('category.index'))->with('message', 'گروه '.$request->title.' با موفقیت بروز رسانی شد .');
     }
 
     /**
      * Remove the specified Category from storage.
      *
-     * @param  \App\models\Category  $category
+     * @param  \App\models\Grouping\Category  $category
      * @return \Illuminate\Http\Response
      */
     public function destroy(Category $category)
@@ -133,7 +132,7 @@ class CategoryController extends Controller
      * @param Integer $id
      * @return JSON
      */
-    public function sub ($id)
+    public function sub($id)
     {
         return json_encode( Category::select('id', 'title')->where('parent', $id)->get() );
     }

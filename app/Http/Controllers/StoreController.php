@@ -22,27 +22,29 @@ use App\Models\ProductVariation;
 use App\Models\Brand;
 use App\Models\Color;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Category;
+use App\Models\Grouping\Category;
 use App\Http\Resources\CartItemCollection;
+use App\Models\Currency\Currency;
+use App\Models\Grouping\Subject;
 
 class StoreController extends Controller
 {
     public function index ()
     {
-        $this -> restore_cart();
-        $this -> move_cart_items();
+        // $this -> restore_cart();
+        // $this->move_cart_items();
 
         return view('store.index', [
-            'products'      => Product::productCard(),
+            'currencies'      => Currency::productCard(),
             'groups'        => $this -> Get_sub_groups(),
-            'top_products'  => ProductVariation::getTops(18, true),
-            'cart_products' => $this -> Get_Cart_items(),
-            'brands'        => Brand::all(),
+            // 'top_products'  => ProductVariation::getTops(18, true),
+            // 'cart_products' => $this -> Get_Cart_items(),
+            // 'brands'        => Brand::all(),
             'page_name'     => 'main',
-            'offers' => [
-                'the_most'    => ProductVariation::productOffers('the_most'),
-                'mostـurgent' => ProductVariation::productOffers('mostـurgent'),
-            ],
+            // 'offers' => [
+            //     'the_most'    => ProductVariation::productOffers('the_most'),
+            //     'mostـurgent' => ProductVariation::productOffers('mostـurgent'),
+            // ],
             'options' => $this->options([
                 'slider', 'posters', 'site_name', 'site_description',
                 'site_logo', 'social_link', 'dollar_cost', 'shop_address', 'shop_phone'
@@ -50,25 +52,27 @@ class StoreController extends Controller
         ]);
     }
 
-    public function store ($query = null)
+    public function store($query = null)
     {
-        $data = Validator::make($_GET, [
-            'brand.*'    => [ 'nullable', 'integer', 'exists:brands,id' ],
-            'color.*'    => [ 'nullable', 'integer', 'exists:colors,id' ],
-            'price_from' => [ 'nullable', 'integer', 'min:0', 'max:10000', 'lt:price_to' ],
-            'price_to'   => [ 'nullable', 'integer', 'min:0', 'max:10000', 'gt:price_from' ],
-            'orderby'    => [ 'nullable' , 'in:newst,oldest,most_expensive,cheapest']
-        ])->validate();
+        // $data = Validator::make($_GET, [
+        //     'brand.*'    => [ 'nullable', 'integer', 'exists:brands,id' ],
+        //     'color.*'    => [ 'nullable', 'integer', 'exists:colors,id' ],
+        //     'price_from' => [ 'nullable', 'integer', 'min:0', 'max:10000', 'lt:price_to' ],
+        //     'price_to'   => [ 'nullable', 'integer', 'min:0', 'max:10000', 'gt:price_from' ],
+        //     'orderby'    => [ 'nullable' , 'in:newst,oldest,most_expensive,cheapest']
+        // ])->validate();
 
-        return view('store.shop  ', [
-            'products'      => Product::productCard($query, array_merge([ 'more' => true ], $data)),
-            'data'          => $data,
-            'offers'        => [ 'mostـurgent' => ProductVariation::productOffers('mostـurgent') ],
+        return view('store.shop', [
+            // 'currencies'      => Currency::productCard($query, array_merge([ 'more' => true ], $data)),
+            'currencies'      => Currency::productCard(),
+            // 'data'          => $data,
+            // 'offers'        => [ 'mostـurgent' => ProductVariation::productOffers('mostـurgent') ],
             'groups'        => $this -> Get_sub_groups(),
-            'cart_products' => $this -> Get_Cart_items(),
-            'brands'        => Brand::all(),
-            'colors'        => Color::all(),
-            'top_products'  => ProductVariation::getTops(18, true),
+            'subjects'      => Subject::all(),
+            // 'cart_products' => $this -> Get_Cart_items(),
+            // 'brands'        => Brand::all(),
+            // 'colors'        => Color::all(),
+            // 'top_products'  => ProductVariation::getTops(18, true),
             'page_title'    => $query ? "جستجو برای $query" : 'محصولات',
             'options'       => $this->options([
                 'slider', 'posters', 'site_name', 'site_description',
@@ -77,19 +81,19 @@ class StoreController extends Controller
         ]);
     }
 
-    public function category (Category $category)
+    public function category(Category $category)
     {
         return view('store.category  ', [
             'category'      => $category->load('childs'),
-            'category_pros' => Product::productCard(null, [ 'category' => $category->id ]),
-            'products'      => Product::productCard(),
+            'category_pros' => Currency::productCard(null, [ 'category' => $category->id ]),
+            'products'      => Currency::productCard(),
             'breadcrumb'    => $this->breadcrumb($category),
-            'offers'        => [ 'mostـurgent' => ProductVariation::productOffers('mostـurgent') ],
+            // 'offers'        => [ 'mostـurgent' => ProductVariation::productOffers('mostـurgent') ],
             'groups'        => $this -> Get_sub_groups(),
-            'cart_products' => $this -> Get_Cart_items(),
-            'brands'        => Brand::all(),
-            'colors'        => Color::all(),
-            'top_products'  => ProductVariation::getTops(18, true),
+            // 'cart_products' => $this -> Get_Cart_items(),
+            // 'brands'        => Brand::all(),
+            // 'colors'        => Color::all(),
+            // 'top_products'  => ProductVariation::getTops(18, true),
             'page_title'    => 'گروه ' . $category->title,
             'options'       => $this->options([
                 'slider', 'posters', 'site_name', 'site_description',
@@ -98,19 +102,19 @@ class StoreController extends Controller
         ]);
     }
     
-    public function product (Product $product)
+    public function currency(Currency $currency)
     {
         return view('store.single-product', [
-            'product'       => Product::productInfo($product, ['reviews' => true]),
-            'relateds'      => Product::related_products($product),
-            'products'      => Product::productCard(),
-            'offers'        => [ 'mostـurgent' => ProductVariation::productOffers('mostـurgent') ],
-            'breadcrumb'    => $this->breadcrumb($product->category),
+            'product'       => Currency::productInfo($currency, ['reviews' => true]),
+            'relateds'      => Currency::related_products($currency),
+            'currencies'    => Currency::productCard(),
+            // 'offers'        => [ 'mostـurgent' => ProductVariation::productOffers('mostـurgent') ],
+            'breadcrumb'    => $this->breadcrumb($currency->category),
             'groups'        => $this -> Get_sub_groups(),
-            'cart_products' => $this -> Get_Cart_items(),
-            'brands'        => Brand::all(),
-            'top_products'  => ProductVariation::getTops(18, true),
-            'page_title'    => $product->name,
+            // 'cart_products' => $this -> Get_Cart_items(),
+            // 'brands'        => Brand::all(),
+            // 'top_products'  => ProductVariation::getTops(18, true),
+            'page_title'    => $currency->title,
             'options'       => $this->options([
                 'slider', 'posters', 'site_name', 'site_description',
                 'site_logo', 'social_link', 'dollar_cost', 'shop_address', 'shop_phone'
@@ -118,10 +122,10 @@ class StoreController extends Controller
         ]);
     }
 
-    public function add_review (AddReview $request, Product $product)
+    public function add_review(AddReview $request, Currency $currency)
     {
         auth()->user()->reviews()->create(
-            array_merge( $request->all(), [ 'product_id' => $product->id ])
+            array_merge( $request->all(), [ 'currency_id' => $currency->id ])
         );
 
         return redirect()->back()->with('message', 'نظر شما با موفقیت ثبت شد .');

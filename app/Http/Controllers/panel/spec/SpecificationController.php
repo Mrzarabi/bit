@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\panel\spec;
 
 use App\Models\Spec\Spec;
-use App\Http\Requests\SpeceficationRequest;
+use App\Http\Requests\V1\Spec\SpeceficationRequest;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Grouping\Category;
 
 class SpecificationController extends Controller
 {

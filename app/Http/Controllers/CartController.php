@@ -36,7 +36,7 @@ class CartController extends Controller
         $this->check_cart();
         
         return view('store.cart  ', [
-            'products'      => Product::productCard(),
+            // 'products'      => Product::productCard(),
             'offers'        => [ 'mostـurgent' => ProductVariation::productOffers('mostـurgent') ],
             'groups'        => $this -> Get_sub_groups(),
             'cart_products' => $this -> Get_Cart_items([ 'more' => true ]),

@@ -233,13 +233,13 @@ class ProductController extends Controller
      */
     public function search ($query = '')
     {
-        return view('panel.products', [
-            'products' => Product::productCard($query),
-            'page_name' => 'products',
-            'query' => $query,
-            'page_title' => 'جستجوی محصولات برای "' . $query . '"',
-            'options'=> $this->options(['site_name', 'site_logo'])
-        ]);
+        // return view('panel.products', [
+        //     'products' => Product::productCard($query),
+        //     'page_name' => 'products',
+        //     'query' => $query,
+        //     'page_title' => 'جستجوی محصولات برای "' . $query . '"',
+        //     'options'=> $this->options(['site_name', 'site_logo'])
+        // ]);
     }
 
     /**

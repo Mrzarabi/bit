@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\panel\spec;
 
 use App\Models\Spec\SpecRow;
-use App\Http\Requests\SpecRowRequest;
+use App\Http\Requests\V1\Spec\SpecRowRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Spec\SpecHeader;
 
