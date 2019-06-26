@@ -212,9 +212,11 @@
 												<td>{{ $item->title }}</td>
 												<td>{{ $item->label }}</td>
 												<td>
-													@for ($i = 0; $i < count($item->values); ++$i)
-														<li>{{ $item->values[$i] }}</li>
-													@endfor
+													@if ( $item->values )
+														@for ($i = 0; $i < count($item->values); ++$i)
+															<li>{{ $item->values[$i] }}</li>
+														@endfor
+													@endif
 												</td>
 												<td>{{ $item->help }}</td>
 												<td>@if($item->multiple) <i class="ti-close text-danger"></i> @else <i class="ti-check text-success"></i> @endif</td>

@@ -1,4 +1,4 @@
-<section class="brands-carousel">
+{{-- <section class="brands-carousel">
     <h2 class="sr-only">برند های فروشگاه</h2>
     <div class="container">
         <div id="owl-brands" class="owl-brands owl-carousel unicase-owl-carousel owl-outer-nav">
@@ -12,10 +12,10 @@
         </div><!-- /.owl-carousel -->
 
     </div>
-</section>
+</section> --}}
 
 <footer id="colophon" class="site-footer">
-    <div class="footer-widgets">
+    {{-- <div class="footer-widgets">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-xs-12">
@@ -67,7 +67,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="footer-newsletter">
         <div class="container">
@@ -132,8 +132,8 @@
                                 <div class="menu-footer-menu-3-container">
                                     <ul id="menu-footer-menu-3" class="menu">
                                         <li class="menu-item"><a href="/">صفحه اصلی</a></li>
-                                        <li class="menu-item"><a href="/cart">سبد خرید</a></li>
-                                        <li class="menu-item"><a href="/product">محصولات</a></li>
+                                        {{-- <li class="menu-item"><a href="/cart">سبد خرید</a></li> --}}
+                                        <li class="menu-item"><a href="/currency">محصولات</a></li>
                                         <li class="menu-item"><a href="/login">ورود</a></li>
                                         <li class="menu-item"><a href="/register">ثبت نام</a></li>
                                     </ul>
@@ -142,7 +142,8 @@
                         </aside>
                     </div><!-- /.columns -->
 
-                </div><!-- /.col -->
+                </div>
+                <!-- /.col -->
 
                 <div class="footer-contact col-xs-12 col-sm-12 col-md-5 col-md-pull-7">
                     <div class="footer-logo">
@@ -185,7 +186,7 @@
 
     <div class="copyright-bar">
         <div class="container">
-            <div class="pull-left flip copyright">طراح و برنامه نویس وبسایت : <a href="tel:+989105009868">امیرخدنگی</a> | &copy; کلیه حقوق وبسایت محفوظ است</div>
+            <div class="pull-left flip copyright">طراح و برنامه نویس وبسایت : <a href="tel:+989030587521">محمد هادی ضرابی</a> | &copy; کلیه حقوق وبسایت محفوظ است</div>
             <div class="pull-right flip payment">
                 <div class="footer-payment-logo">
                     {{-- <ul class="cash-card card-inline">

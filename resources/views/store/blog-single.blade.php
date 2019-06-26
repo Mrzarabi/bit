@@ -7,7 +7,11 @@
     <div id="content" class="site-content" tabindex="-1">
         <div class="container">
 
-            <nav itemprop="breadcrumb" class="woocommerce-breadcrumb"><a href="/">صفحه اصلی</a><span class="delimiter"><i class="fa fa-angle-right"></i></span><a href="/blog">وبلاگ</a><span class="delimiter"><i class="fa fa-angle-right"></i></span>{{ $article->title }}</nav>
+            <nav itemprop="breadcrumb" class="woocommerce-breadcrumb">
+                <a href="/">صفحه اصلی</a><span class="delimiter">
+                <i class="fa fa-angle-right"></i></span><a href="/blog">وبلاگ</a><span class="delimiter">
+                    <i class="fa fa-angle-right"></i></span>{{ $article->title }}
+            </nav>
 
             <div id="primary" style="width: 100%; right: 0%" class="content-area">
                 <main id="main" class="site-main">
@@ -36,6 +40,16 @@
                         <div class="entry-content" itemprop="articleBody">
                             {{ $article->body }}
                         </div><!-- .entry-content -->
+                        <div class="well">
+                            <form role="form" action="{{ route('comment.store' , ['article' => $article->slug ]) }}" method="post">
+                                {!! csrf_field() !!}
+                                <div class="form-group">
+                                    <label for="title">متن : </label>
+                                    <textarea class="form-control" name="body" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">ارسال</button>
+                            </form>
+                        </div>
                     </article>
                 </main><!-- #main -->
             </div><!-- #primary -->

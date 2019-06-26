@@ -11,20 +11,20 @@
                 <li class="menu-item animate-dropdown"><a title="آدرس دفتر"><i class="ec ec-map-pointer"></i>{{ $options['shop_address'] }}</a></li>
                 <!-- Authentication Links -->
                 @guest
-                    <li class="menu-item animate-dropdown"><a title="سبد خرید" href="/cart"><i class="ec ec-user"></i>سبد خرید</a></li>
+                    {{-- <li class="menu-item animate-dropdown"><a title="سبد خرید" href="/cart"><i class="ec ec-user"></i>سبد خرید</a></li> --}}
                     <li class="menu-item animate-dropdown"><a title="ورود به حساب" href="{{ route('login') }}"><i class="fa fa-sign-in"></i>{{ __('ورود') }}</a></li>
                     @if (Route::has('register'))
                         <li class="menu-item animate-dropdown"><a title="ثبت نام" href="{{ route('register') }}"><i class="fa fa-user-plus"></i>{{ __('ثبت نام') }}</a></li>
                     @endif
                 @else
                     @if (\Auth::user()->type == 1)
-                        @isset($product->name)
-                        <li class="menu-item animate-dropdown"><a title="ویرایش محصول" href="/panel/products/edit/{{$product->id}}"><i class="fa fa-pencil-square-o"></i>ویرایش محصول</a></li>
+                        @isset($currency->title)
+                        <li class="menu-item animate-dropdown"><a title="ویرایش محصول" href="/panel/products/edit/{{$currency->id}}"><i class="fa fa-pencil-square-o"></i>ویرایش محصول</a></li>
                         @endisset
                         <li class="menu-item animate-dropdown"><a title="پنل مدیریت" target="_blank" href="/panel"><i class="fa fa-desktop"></i>پنل مدیریت</a></li>
                     @endif
-                    <li class="menu-item animate-dropdown"><a title="سفارشات" href="/orders"><i class="fa fa-file-text-o"></i>سفارشات</a></li>                    
-                    <li class="menu-item animate-dropdown"><a title="سبد خرید" href="/cart"><i class="fa fa-shopping-basket"></i>سبد خرید</a></li>
+                    {{-- <li class="menu-item animate-dropdown"><a title="سفارشات" href="/orders"><i class="fa fa-file-text-o"></i>سفارشات</a></li>                     --}}
+                    {{-- <li class="menu-item animate-dropdown"><a title="سبد خرید" href="/cart"><i class="fa fa-shopping-basket"></i>سبد خرید</a></li> --}}
                     
                     <li class="menu-item animate-dropdown"
                         onclick="event.preventDefault();
@@ -68,7 +68,7 @@
                         <ul id="menu-main-menu" class="nav nav-inline yamm">
                             <li class="menu-item"><a href="/">صفحه اصلی</a></li>
                             <li class="menu-item"><a href="/product">فروشگاه</a></li>
-                            <li class="menu-item"><a href="/cart">سبد خرید</a></li>
+                            {{-- <li class="menu-item"><a href="/cart">سبد خرید</a></li> --}}
                             <li class="menu-item"><a href="/blog">وبلاگ</a></li>
                         </ul>
                     </nav>
@@ -94,60 +94,71 @@
     <div class="container">
         <ul class="nav navbar-nav departments-menu animate-dropdown">
             <li class="nav-item dropdown ">
-
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="departments-menu-toggle" >تمامی دسته بندی ها</a>
-                <ul id="menu-vertical-menu" class="dropdown-menu yamm departments-menu-dropdown">
-                    
-                    @foreach ( $groups as $group_first )
-                        @if ( $group_first->childs->isEmpty() )
-                            <li class="highlight menu-item animate-dropdown"><a title="{{ $group_first->title }}"href="/category/{{ $group_first->id }}">{{ $group_first->title }}</a></li>
-                        @else
+                {{-- @if (route('blog'))
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="departments-menu-toggle" >تمامی دسته بندی ها</a>
+                    <ul id="menu-vertical-menu" class="dropdown-menu yamm departments-menu-dropdown">
+                        @foreach ($subjects as $subject)
                             <li class="yamm-tfw menu-item menu-item-has-children animate-dropdown menu-item-2584 dropdown">
-                                <a title="{{ $group_first->description }}" href="/category/{{ $group_first->id }}" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true">{{ $group_first->title }}</a>
-                                <ul role="menu" class=" dropdown-menu">
-                                    <li class="menu-item animate-dropdown menu-item-object-static_block">
-                                        <div class="yamm-content">
-                                            <div class="vc_row row wpb_row vc_row-fluid bg-yamm-content bg-yamm-content-bottom bg-yamm-content-right">
-                                                <div class="wpb_column vc_column_container vc_col-sm-12 col-sm-12">
-                                                    <div class="vc_column-inner ">
-                                                        <div class="wpb_wrapper">
-                                                            <div class="wpb_single_image wpb_content_element vc_align_left" style="width: 100%;height: 300px;background: url('{{ $group_first->avatar }}') center/cover no-repeat"></div>
+                                <a  href="{{route('subject.index', ['id' => $subject->id])}}" title="{{$subject->description}}">{{ $subject->title }}</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @else --}}
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="departments-menu-toggle" >تمامی دسته بندی ها</a>
+                    <ul id="menu-vertical-menu" class="dropdown-menu yamm departments-menu-dropdown">
+                        
+                        @foreach ( $groups as $group_first )
+                            @if ( $group_first->childs->isEmpty() )
+                                <li class="highlight menu-item animate-dropdown"><a title="{{ $group_first->title }}"href="/category/{{ $group_first->id }}">{{ $group_first->title }}</a></li>
+                            @else
+                                <li class="yamm-tfw menu-item menu-item-has-children animate-dropdown menu-item-2584 dropdown">
+                                    <a title="{{ $group_first->description }}" href="/category/{{ $group_first->id }}" data-toggle="dropdown" class="dropdown-toggle" aria-haspopup="true">{{ $group_first->title }}</a>
+                                    <ul role="menu" class=" dropdown-menu">
+                                        <li class="menu-item animate-dropdown menu-item-object-static_block">
+                                            <div class="yamm-content">
+                                                <div class="vc_row row wpb_row vc_row-fluid bg-yamm-content bg-yamm-content-bottom bg-yamm-content-right">
+                                                    <div class="wpb_column vc_column_container vc_col-sm-12 col-sm-12">
+                                                        <div class="vc_column-inner ">
+                                                            <div class="wpb_wrapper">
+                                                                <div class="wpb_single_image wpb_content_element vc_align_left" style="width: 100%;height: 300px;background: url('{{ $group_first->avatar }}') center/cover no-repeat"></div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="vc_row row wpb_row vc_row-fluid">
-                                                @foreach ( $group_first->childs as $group_secound )
-                                                    <div class="wpb_column vc_column_container vc_col-sm-6 col-sm-6">
-                                                        <div class="vc_column-inner ">
-                                                            <div class="wpb_wrapper">
-                                                                <div class="wpb_text_column wpb_content_element ">
-                                                                    <div class="wpb_wrapper">
-                                                                        <ul>
-                                                                            <li class="nav-title"><a href="/category/{{ $group_secound->id }}" title="{{ $group_secound->description }}">{{ $group_secound->title }}</a></li>
-                                                                            @if ($group_secound->childs)
-                                                                                @foreach ($group_secound->childs as $group_third)
-                                                                                    <li><a href="/category/{{ $group_third->id }}" title="{{ $group_third->description }}">{{ $group_third->title }}</a></li>
-                                                                                @endforeach
-                                                                            @endif
-                                                                            <li class="nav-divider"></li>
-                                                                            {{-- <li><a href="#"><span class="nav-text">All Electronics</span><span class="nav-subtext">Discover more products</span></a></li> --}}
-                                                                        </ul>
+                                                <div class="vc_row row wpb_row vc_row-fluid">
+                                                    @foreach ( $group_first->childs as $group_secound )
+                                                        <div class="wpb_column vc_column_container vc_col-sm-6 col-sm-6">
+                                                            <div class="vc_column-inner ">
+                                                                <div class="wpb_wrapper">
+                                                                    <div class="wpb_text_column wpb_content_element ">
+                                                                        <div class="wpb_wrapper">
+                                                                            <ul>
+                                                                                <li class="nav-title"><a href="/category/{{ $group_secound->id }}" title="{{ $group_secound->description }}">{{ $group_secound->title }}</a></li>
+                                                                                @if ($group_secound->childs)
+                                                                                    @foreach ($group_secound->childs as $group_third)
+                                                                                        <li><a href="/category/{{ $group_third->id }}" title="{{ $group_third->description }}">{{ $group_third->title }}</a></li>
+                                                                                    @endforeach
+                                                                                @endif
+                                                                                <li class="nav-divider"></li>
+                                                                                {{-- <li><a href="#"><span class="nav-text">All Electronics</span><span class="nav-subtext">Discover more products</span></a></li> --}}
+                                                                            </ul>
 
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                @endforeach
+                                                    @endforeach
+                                                </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                        @endif
-                    @endforeach
-                </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endif
+                        @endforeach
+                    </ul>    
+                {{-- @endif --}}
+                
             </li>
         </ul>
 
@@ -161,7 +172,7 @@
                 </div>
             </div>
         </div>
-        <ul class="navbar-mini-cart navbar-nav animate-dropdown nav pull-right flip">
+        {{-- <ul class="navbar-mini-cart navbar-nav animate-dropdown nav pull-right flip">
             <li class="nav-item dropdown">
                 <a href="cart.html" class="nav-link" data-toggle="dropdown">
                     <i class="ec ec-shopping-bag"></i>
@@ -234,7 +245,7 @@
                     </li>
                 </ul>
             </li>
-        </ul>
+        </ul> --}}
 
         <ul class="navbar-compare nav navbar-nav pull-right flip">
             <li class="nav-item">
@@ -246,7 +257,7 @@
 
 @if ( $errors->all() || session()->has('message') )
     <div class="panel-body" style="padding: 30px">
-        @foreach ($errors -> all() as $message)
+        @foreach ($errors->all() as $message)
             <div class="alert alert-danger alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 {{ $message }} 

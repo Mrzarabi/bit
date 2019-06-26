@@ -93,7 +93,7 @@
 								<form action="@isset($product) {{ route('product.update', ['product' => $product->id]) }} @else {{ route('product.store') }} @endisset" enctype="multipart/form-data" method="POST" id="product_form">
 									
 									<div class="panel-body">
-										@foreach ($errors -> all() as $message)
+										@foreach ($errors->all() as $message)
 											<div class="alert alert-danger alert-dismissable">
 												<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 												{{ $message }} 
@@ -157,7 +157,6 @@
 															@endif
 														</div>
 													</div>
-													
 													<div class="col-md-6">
 														<div class="form-group @if( $errors->has('code') ) has-error @endif">
 															<label class="control-label mb-10">شناسه محصول</label>

@@ -94,14 +94,14 @@
 		<div class="row heading-bg">
 			<!-- Breadcrumb -->
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h5 class="txt-dark">مقالات</h5>
+				<h5 class="txt-dark">کاربران</h5>
 			</div>
 			
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
+					<li class="active"><span>کاربران</span></li>
+					<li><a href="#"><span>کاربران</span></a></li>
 					<li><a href="index.html">داشبورد</a></li>
-					<li><a href="#"><span>فروشگاه</span></a></li>
-					<li class="active"><span>مقالات</span></li>
 				</ol>
 			</div>
 			<!-- /Breadcrumb -->
@@ -114,7 +114,7 @@
 				<div class="panel panel-default card-view">
 					<div class="panel-heading">
 						<div class="pull-right">
-							<h6 class="panel-title txt-dark">جستجو در مقالات</h6>
+							<h6 class="panel-title txt-dark">جستجو در کاربران</h6>
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -142,14 +142,14 @@
 		
 		<!-- Product Row One -->
 		<div class="row">
-			@empty($articles[0])
+			@empty($users[0])
 			<div class="alert alert-warning alert-dismissable">
 				<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
-				<p class="pull-right">هیچ محصولی یافت نشد !</p>
+				<p class="pull-right">هیچ کاربری یافت نشد !</p>
 				<div class="clearfix"></div>
 			</div>
 			@else
-				@foreach ($articles as $item)
+				@foreach ($users as $user)
 				{{-- <div class="card" onclick="this.classList.toggle('expanded')">
 					<img class="label" src="{{$item->image}}" viewBox="0 0 100 100" height="200" width="200">
 					<div class="text1">
@@ -166,25 +166,25 @@
 								<article class="col-item">
 									<div class="photo">
 										<div class="options">
-											<form action="{{ route('article.destroy', ['article' => $item->slug]) }}" method="POST">
-												<a href="{{ route('article.edit', ['article' => $item->slug]) }}" class="font-18 txt-grey mr-10 pull-left"><i class="icon ti-pencil"></i></a>
-												<button type="submit" itemid="{{ $item->id }}" class="font-18 txt-grey pull-left delete-item"><i class="icon ti-close"></i></button>
+											<form action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
+												<a href="{{ route('user.edit', ['user' => $user->id]) }}" class="font-18 txt-grey mr-10 pull-left"><i class="icon ti-pencil"></i></a>
+												<button type="submit" itemid="{{ $user->id }}" class="font-18 txt-grey pull-left delete-item"><i class="icon ti-close"></i></button>
 												@method('delete')
 												@csrf
 											</form>	
 										</div>
 										
-										<a href="{{ route('article.show', ['article' => $item->slug]) }}">
+										<a href="{{ route('user.show', ['user' => $user->id]) }}">
 											<div class="product-pic img-responsive"
-												style="background: url('{{ $item->image }}') center center;
+												style="background: url('{{ $user->avatar }}') center center;
 													background-size: cover;">
 											</div>
 										</a>
 									</div>
 									<div class="info">
-										<a href="{{ route('article.show', ['article' => $item->slug]) }}"> <h5>{{$item->title}}</h5></a>
+                                        <a href="{{ route('user.show', ['user' => $user->id]) }}"> <h5>{{$user->first_name}} {{$user->last_name}}</h5></a>
 										
-										<p class="head-font block txt-orange-light-1 font-16">{{$item->description}}</p>
+										<p class="head-font block txt-orange-light-1 font-16">{{$user->phone_number}}</p>
 									</div>
 								</article>
 							</div>
@@ -194,7 +194,6 @@
 				@endforeach	
 			@endempty
 
-			{{ $articles->links() }}
 		</div>	
 		<!-- /Product Row Four -->
 		
@@ -234,7 +233,7 @@
 
 			swal({   
 				title: "مطمین هستید ؟",   
-				text: "برای پاک کردن مقاله " + title + " مطمین هستید ؟",   
+				text: "برای پاک کردن کاربر " + title + " مطمین هستید ؟",   
 				type: "warning",   
 				showCancelButton: true,   
 				confirmButtonColor: "#f83f37",   
@@ -246,7 +245,7 @@
 				if (isConfirm) {
 					form.submit();
 				} else {     
-					swal("لغو شد", "هیچ مقاله ای حذف نشد :)", "error");   
+					swal("لغو شد", "هیچ کاربری حذف نشد :)", "error");   
 				} 
 			});
 			return false;

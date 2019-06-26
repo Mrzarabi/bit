@@ -54,19 +54,7 @@
 									<hr class="light-grey-hr"/>
 									
 									<div class="panel-body">
-										@foreach ($errors -> all() as $message)
-											<div class="alert alert-danger alert-dismissable">
-												<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-												{{ $message }} 
-											</div>
-										@endforeach
-
-										@if(session()->has('message'))
-											<div class="alert alert-success alert-dismissable">
-												<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-												{{ session()->get('message') }}
-											</div>
-										@endif
+										@include('errors.errors-show')
 									</div>
 									
 									<div class="row">
@@ -82,7 +70,7 @@
 														@endif
 
 														@foreach ($categories as $item)
-														<option value="{{ $item->id}}">{{$item->title}}</option>
+															<option value="{{ $item->id}}">{{$item->title}}</option>
 														@endforeach
 													</select>
 													<div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
@@ -152,24 +140,25 @@
 										</tfoot>
 										<tbody>
 											@php $i = 0 @endphp
-
 											@foreach ($specs as $item)
-											<tr>
-												<td>{{ ++$i }}</td>
-												<td>{{ $item->category->title }}</td>
-												<td>{{ \Morilog\Jalali\Jalalian::forge($item->created_at)->format('%H:%S - %d %B %Y') }}</td>
-												<td>{{ \Morilog\Jalali\Jalalian::forge($item->updated_at)->ago() }}</td>
-												<td>
-													<form action="{{ route('specification.destroy', ['specification' => $item->id]) }}" method="POST">
-														<a href="{{ route('header.index', ['specification' => $item->id]) }}" class="btn btn-warning"><i class="icon ti-pencil"></i> ویرایش</a>
-														<a href="{{ route('specification.edit', ['specification' => $item->id]) }}" class="btn btn-info"><i class="icon ti-layout-grid2-alt"></i> تغییر گروه</a>
-														<button type="submit" itemid="{{ $item->id }}" class="btn btn-danger delete-item"><i class="icon ti-close"></i> حذف</button>
-														
-														@method('delete')
-														@csrf
-													</form>	
-												</td>
-											</tr>
+												@isset($item->category_id)
+												<tr>
+													<td>{{ ++$i }}</td>
+													<td>{{ $item->category->title }}</td>
+													<td>{{ \Morilog\Jalali\Jalalian::forge($item->created_at)->format('%H:%S - %d %B %Y') }}</td>
+													<td>{{ \Morilog\Jalali\Jalalian::forge($item->updated_at)->ago() }}</td>
+													<td>
+														<form action="{{ route('specification.destroy', ['specification' => $item->id]) }}" method="POST">
+															<a href="{{ route('header.index', ['specification' => $item->id]) }}" class="btn btn-warning"><i class="icon ti-pencil"></i> ویرایش</a>
+															<a href="{{ route('specification.edit', ['specification' => $item->id]) }}" class="btn btn-info"><i class="icon ti-layout-grid2-alt"></i> تغییر گروه</a>
+															<button type="submit" itemid="{{ $item->id }}" class="btn btn-danger delete-item"><i class="icon ti-close"></i> حذف</button>
+															
+															@method('delete')
+															@csrf
+														</form>	
+													</td>
+												</tr>
+												@endisset
 											@endforeach
 										</tbody>
 									</table>
@@ -219,7 +208,7 @@
 	]; ?>
 
 	@foreach ($scripts as $script)
-	<script src="{{ asset($script) }}"></script>
+		<script src="{{ asset($script) }}"></script>
 	@endforeach
 	
 	<script>

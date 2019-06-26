@@ -11,11 +11,11 @@
     <div id="recently-added-products-carousel">
         <div class="woocommerce columns-6">
             <div class="products owl-carousel recently-added-products products-carousel columns-6">
-                @foreach ($products as $item)
+                @foreach ($currencies as $item)
                     @productCard([
-                        'product' => $item,
-                        'variation' => $item->variation,
-                        'dollar_cost' => $options['dollar_cost'],
+                        'currency' => $item,
+                        // 'variation' => $item->variation,
+                        // 'dollar_cost' => $options['dollar_cost'],
                         'tag_name' => 'div',
                     ])@endproductCard
                 @endforeach

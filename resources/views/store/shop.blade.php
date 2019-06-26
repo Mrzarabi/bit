@@ -101,7 +101,7 @@
             <div id="primary" class="content-area">
                 <main id="main" class="site-main">
 
-                    <section class="section-product-cards-carousel" >
+                    {{-- <section class="section-product-cards-carousel" >
                         <header>
                             <h2 class="h1">برترین محصولات</h2>
                             <div class="owl-nav">
@@ -124,9 +124,9 @@
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </section> --}}
 
-                    <div class="shop-control-bar">
+                    {{-- <div class="shop-control-bar">
                         <ul class="shop-view-switcher nav nav-tabs" role="tablist">
                             <li class="nav-item"><a class="nav-link active" data-toggle="tab" title="Grid View" href="#grid"><i class="fa fa-th"></i></a></li>
                             <li class="nav-item"><a class="nav-link " data-toggle="tab" title="List View" href="#list-view"><i class="fa fa-list"></i></a></li>
@@ -142,17 +142,17 @@
                         <nav class="electro-advanced-pagination">
                             {{ $products->links() }}
                         </nav>
-                    </div>
+                    </div> --}}
 
-                    <div class="tab-content">
+                    {{-- <div class="tab-content">
 
                         <div role="tabpanel" class="tab-pane active" id="grid" aria-expanded="true">
 
                             <ul class="products columns-3">
                                 @php $i = 1 @endphp
-                                @foreach ($products as $item)
+                                @foreach ($currencies as $item)
                                     @productCard([
-                                        'product' => $item,
+                                        'currency' => $item,
                                         'variation' => $item->variation,
                                         'dollar_cost' => $options['dollar_cost'],
                                         'i' => $i++
@@ -173,7 +173,7 @@
                             </ul>
                         </div>
                     </div>
-                    {{ $products->links() }}
+                    {{ $products->links() }} --}}
                     
 
                 </main><!-- #main -->
@@ -183,7 +183,7 @@
                 <aside class="widget widget_electro_products_filter">
                     <h3 class="widget-title">فیلتر کردن</h3>
                     <form action="/product" method="GET">
-                        <aside class="widget woocommerce widget_layered_nav">
+                        {{-- <aside class="widget woocommerce widget_layered_nav">
                             <h3 class="widget-title">برند ها</h3>
                             <ul class="filter_widget">
                                 @foreach ($brands as $item)
@@ -204,7 +204,7 @@
                                     </li>
                                 @endforeach
                             </ul>
-                        </aside>
+                        </aside> --}}
                         <aside class="widget woocommerce widget_price_filter" style="clear:both">
                             <h3 class="widget-title">قیمت</h3>
                             <div dir="ltr">

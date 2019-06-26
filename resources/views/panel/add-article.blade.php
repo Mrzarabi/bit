@@ -86,22 +86,10 @@
 					<div class="panel-wrapper collapse in">
 						<div class="panel-body pt-0">
 							<div class="form-wrap">
-								<form action="@isset($article) {{ route('article.update', ['article' => $article->id]) }} @else {{ route('article.store') }} @endisset" enctype="multipart/form-data" method="POST">
+								<form action="@isset($article) {{ route('article.update', ['article' => $article->slug]) }} @else {{ route('article.store') }} @endisset" enctype="multipart/form-data" method="POST">
 									
 									<div class="panel-body">
-										@foreach ($errors -> all() as $message)
-											<div class="alert alert-danger alert-dismissable">
-												<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-												{{ $message }} 
-											</div>
-										@endforeach
-							
-										@if(session()->has('message'))
-											<div class="alert alert-success alert-dismissable">
-												<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-												{{ session()->get('message') }}
-											</div>
-										@endif
+										@include('errors.errors-show')
 									</div>
 
 									<div class="row">
@@ -117,6 +105,29 @@
 														@if( $errors->has('title') )
 															<span class="help-block">{{ $errors->first('title') }}</span>
 														@endif
+													</div>
+												</div>
+
+												<div class="col-md-12">
+													<div class="form-group @if( $errors->has('subject_id') ) has-error @endif">
+														<label class="control-label mb-10">گروه</label>
+														<div class="input-group">
+															<select name="subject_id" class="form-control select2">
+																<option value="">دسته بندی نشده</option>
+
+																@foreach ($subjects as $subject)
+																	<option value="{{$subject['id']}}" 
+																		@if( isset($article) && $article->subject_id === $subject['id'] ) selected @endif>
+																		{{$subject['title']}}
+																	</option>
+																@endforeach
+															</select>
+															<div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
+														</div>
+														@if( $errors->has('subject_id') )
+															<span class="help-block">{{ $errors->first('subject_id') }}</span>
+														@endif
+														
 													</div>
 												</div>
 	

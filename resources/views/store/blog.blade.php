@@ -43,11 +43,10 @@
                 <main id="main" class="site-main">
                     @foreach ($articles as $item)
                         <article class="post format-standard hentry">
-
-                        <div class="media-attachment"><a href="/blog/{{ $item->id }}"><img width="870" height="460" src="{{ $item->image }}" class="wp-post-image" alt="{{ $item->title }}" /></a></div>
+                        <div class="media-attachment"><a href="{{route('article.blog', ['slug' => $item->slug ])}}"><img width="870" height="460" src="{{ $item->image }}" class="wp-post-image" alt="{{ $item->title }}" /></a></div>
                             <div class="content-body">
                                 <header class="entry-header">
-                                    <h1 class="entry-title" itemprop="name headline"><a href="/blog/{{ $item->id }}" rel="bookmark">{{ $item->title }}</a></h1>
+                                    <h1 class="entry-title" itemprop="name headline"><a href="{{route('article.blog', ['slug' => $item->slug ])}}" rel="bookmark">{{ $item->title }}</a></h1>
                                     <div class="entry-meta">
                                         <span class="cat-links"><i class="fa fa-user"></i> {{ $item->user->full_name }}</span>
                                         <span class="posted-on"><time class="entry-date published" datetime="2016-03-01T07:40:25+00:00"><i class="fa fa-clock-o"></i> {{ \Morilog\Jalali\Jalalian::forge($item->updated_at)->ago() }}</time></span>
@@ -58,7 +57,7 @@
                                     <p>{{ $item->description }}</p>
                                 </div><!-- .post-excerpt -->
 
-                                <div class="post-readmore"><a href="/blog/{{ $item->id }}" class="btn btn-primary">ادامه مطلب ...</a></div>
+                                <div class="post-readmore"><a href="{{route('article.blog', ['slug' => $item->slug ])}}" class="btn btn-primary">ادامه مطلب ...</a></div>
                             </div>
 
                         </article><!-- #post-## -->

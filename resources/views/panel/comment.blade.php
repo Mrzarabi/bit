@@ -81,8 +81,8 @@
 		justify-content: center;
 	}
 	.delete-item {
-		background: none;
 		border: none;
+		background: none;
 	}
 	</style>
 @endsection
@@ -94,14 +94,14 @@
 		<div class="row heading-bg">
 			<!-- Breadcrumb -->
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h5 class="txt-dark">مقالات</h5>
+				<h5 class="txt-dark">محصولات</h5>
 			</div>
 			
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
 					<li><a href="index.html">داشبورد</a></li>
 					<li><a href="#"><span>فروشگاه</span></a></li>
-					<li class="active"><span>مقالات</span></li>
+					<li class="active"><span>محصولات</span></li>
 				</ol>
 			</div>
 			<!-- /Breadcrumb -->
@@ -114,7 +114,7 @@
 				<div class="panel panel-default card-view">
 					<div class="panel-heading">
 						<div class="pull-right">
-							<h6 class="panel-title txt-dark">جستجو در مقالات</h6>
+							<h6 class="panel-title txt-dark">جستجو در محصولات</h6>
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -122,8 +122,8 @@
 						<div  class="panel-body">
 							<div class="form-group">
 								<div class="input-group">
-									<input type="text" name="article_title" onkeyup="this.nextElementSibling.href = '/panel/article/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : تلفن همراه">
-									<a href="/panel/article/search/" class="input-group-addon"><i class="ti-search"></i></a>
+									<input type="text" name="currency_title" onkeyup="this.nextElementSibling.href = '/panel/currency/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : نام محصول">
+									<a href="/panel/currency/search/" class="input-group-addon"><i class="ti-search"></i></a>
 								</div>
 							</div>
 						</div>
@@ -140,25 +140,16 @@
 
 		<div class="seprator-block"></div>
 		
-		<!-- Product Row One -->
+		<!-- Currency Row One -->
 		<div class="row">
-			@empty($articles[0])
+			@empty($currencies[0])
 			<div class="alert alert-warning alert-dismissable">
 				<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
 				<p class="pull-right">هیچ محصولی یافت نشد !</p>
 				<div class="clearfix"></div>
 			</div>
 			@else
-				@foreach ($articles as $item)
-				{{-- <div class="card" onclick="this.classList.toggle('expanded')">
-					<img class="label" src="{{$item->image}}" viewBox="0 0 100 100" height="200" width="200">
-					<div class="text1">
-						<div class="text-content">
-							<h1 class="title">{{$item->title}}</h1>
-							<div class="body-text">{{$item->description}}</div>
-						</div>
-					</div> --}}
-				{{-- <svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 35" width="30"><path d="M5 30L50 5l45 25" fill="none" stroke="#000" stroke-width="5"/></svg> --}}
+				@foreach ($comments as $item)
 				<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 product-card">
 					<div class="panel panel-default card-view pa-0">
 						<div class="panel-wrapper collapse in">
@@ -166,25 +157,48 @@
 								<article class="col-item">
 									<div class="photo">
 										<div class="options">
-											<form action="{{ route('article.destroy', ['article' => $item->slug]) }}" method="POST">
-												<a href="{{ route('article.edit', ['article' => $item->slug]) }}" class="font-18 txt-grey mr-10 pull-left"><i class="icon ti-pencil"></i></a>
+											<form action="{{ route('comment.destroy', ['comment' => $item->id]) }}" method="POST">
+												<a href="{{ route('comment.edit', ['comment' => $item->id]) }}" class="font-18 txt-grey mr-10 pull-left"><i class="icon ti-pencil"></i></a>
 												<button type="submit" itemid="{{ $item->id }}" class="font-18 txt-grey pull-left delete-item"><i class="icon ti-close"></i></button>
+												
 												@method('delete')
 												@csrf
 											</form>	
 										</div>
-										
-										<a href="{{ route('article.show', ['article' => $item->slug]) }}">
+										{{-- @php
+											dd($item['title'])
+										@endphp --}}
+										<a href="javascript:void(0);">
 											<div class="product-pic img-responsive"
-												style="background: url('{{ $item->image }}') center center;
+												{{-- style="background: url('{{ asset('uploads/'.$product->photo) }}') center center; --}}
+												style="background: url('{{ $item->article->image }}') center center;
 													background-size: cover;">
 											</div>
 										</a>
 									</div>
 									<div class="info">
-										<a href="{{ route('article.show', ['article' => $item->slug]) }}"> <h5>{{$item->title}}</h5></a>
-										
-										<p class="head-font block txt-orange-light-1 font-16">{{$item->description}}</p>
+										<h5>{{$item->message}}</h5>
+										{{-- <h6>شناسه : {{$item->code}}</h6>
+										@php 
+											if ( isset($item->variations[0]) )
+												$variation = $item->variations[0];
+											else
+												$variation = null;
+
+											if ($item->unit) { 
+												$item->unit = 'دلار';
+											} else { 
+												$item->unit = 'تومان';
+											}
+										@endphp --}}
+
+										{{-- @if($item->offer && $variation)
+											<span class="head-font block txt-orange-light-1 font-16"><del><span class="num-comma">{{$variation['price']}}</span> {{$variation['unit']}}</del></span>
+											@php $variation['offer'] = $variation['price'] - ($variation['offer'] * $variation['price']) / 100; @endphp
+											<span class="head-font block txt-dark-1 font-16"><ins><span class="num-comma">{{$variation['offer']}}</span> {{$variation['unit']}}</ins></span>
+										@else
+											<span class="head-font block txt-orange-light-1 font-16"><span class="num-comma">{{$variation['price']}}</span> {{$variation['unit']}}</span>
+										@endif --}}
 									</div>
 								</article>
 							</div>
@@ -194,9 +208,9 @@
 				@endforeach	
 			@endempty
 
-			{{ $articles->links() }}
+			{{-- {{ $currencies->links() }} --}}
 		</div>	
-		<!-- /Product Row Four -->
+		<!-- /Currency Row Four -->
 		
 	</div>
 @endsection
@@ -226,15 +240,24 @@
 		<script src="{{ asset($script) }}"></script>
 	@endforeach
 
+	<script src="{{ asset('js/numeral.min.js') }}"></script>
+	<script>
+		var nums = document.getElementsByClassName('num-comma');
+
+		for (num in nums) {
+			nums[num].innerHTML = numeral(nums[num].innerHTML).format('0,0');
+		}
+	</script>
+
 	<script>
 		$('.delete-item').on('click',function(){
 			var title = $(this).parent().parent().next().find('h5').text();
-			var id = $(this).attr('product');
+			var id = $(this).attr('currency');
 			var form = $(this).parent();
 
 			swal({   
 				title: "مطمین هستید ؟",   
-				text: "برای پاک کردن مقاله " + title + " مطمین هستید ؟",   
+				text: "برای پاک کردن محصول " + title + " مطمین هستید ؟",   
 				type: "warning",   
 				showCancelButton: true,   
 				confirmButtonColor: "#f83f37",   
@@ -246,7 +269,7 @@
 				if (isConfirm) {
 					form.submit();
 				} else {     
-					swal("لغو شد", "هیچ مقاله ای حذف نشد :)", "error");   
+					swal("لغو شد", "هیچ محصولی حذف نشد :)", "error");   
 				} 
 			});
 			return false;

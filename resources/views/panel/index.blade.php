@@ -49,9 +49,10 @@
 				</div>
 			@endif
 			
+			<h1>shislakfklasjlk</h1>
 			<div class="col-md-4 col-sm-6">
 				<div class="row">
-					<div class="col-sm-12 col-xs-12">
+					{{-- <div class="col-sm-12 col-xs-12">
 						<div class="panel panel-default border-panel card-view">
 							<div class="panel-heading">
 								<div class="pull-right">
@@ -80,7 +81,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> --}}
 					
 					<div class="col-sm-12 col-xs-12">
 						<div class="panel panel-default border-panel card-view panel-refresh">
@@ -96,7 +97,7 @@
 							<div class="panel-wrapper collapse in">
 								<div class="panel-body">
 									<div  class="panel-body">
-										@php $colors = ['info', 'success', 'danger', 'warning']; $x = 0; @endphp
+										{{-- @php $colors = ['info', 'success', 'danger', 'warning']; $x = 0; @endphp
 
 										@foreach ( $top_products as $item )
 											@php if ($x == 4) { $x = 0; } @endphp
@@ -111,7 +112,7 @@
 													<span class="sr-only">85% Complete (success)</span>
 												</div>
 											</div>
-										@endforeach
+										@endforeach --}}
 									</div>									
 								</div>	
 							</div>
@@ -135,29 +136,33 @@
 								<div class="clearfix"></div>
 							</div>
 							<div class="panel-wrapper collapse in">
-							<div class="panel-body row pa-0">
+							{{-- <div class="panel-body row pa-0">
 									<div class="streamline">
 										@foreach($reviews as $review)
 										<div class="sl-item">
 											<div class="sl-content">
 												<div class="per-rating inline-block pull-right">
 													<span class="inline-block">برای {{$review->product->name}}</span>
-													@for ($i = 0; $i < 5; ++$i)
-														<a class="zmdi @if($review->total > 0) zmdi-star <?php --$review->total; ?> @else zmdi-star-outline @endif"></a>
-													@endfor
-												</div>
+													@for ($i = 0; $i < 5; ++$i) --}}
+														{{-- <a class="zmdi @if($review->total > 0) zmdi-star --}}
+														<?php 
+														// $review->total;
+														?>
+														  {{-- @else zmdi-star-outline @endif"></a> --}}
+													{{-- @endfor --}}
+												{{-- </div>
 												<a href="javascript:void(0);"  class="pull-left txt-grey"></a>
 												<div class="clearfix"></div>
 												<div class="inline-block pull-right">
 													<span class="reviewer font-13">
 														<span>توسط</span>
 														<a href="javascript:void(0)" class="inline-block capitalize-font  mb-5">{{$review->full_name}}</a>
-													</span>
-													<?php 
-														$time = new Carbon\Carbon($review->created_at);
-														$created_at = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
+													</span> --}}
+													<?php
+														// $time = new Carbon\Carbon($review->created_at);
+														// $created_at = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
 													?>
-													<span class="inline-block font-13  mb-5">{{$time->hour.':'.$time->minute.' | '.$created_at}}</span>
+													{{-- <span class="inline-block font-13  mb-5">{{$time->hour.':'.$time->minute.' | '.$created_at}}</span>
 												</div>	
 												<div class="clearfix"></div>
 												<p class="mt-5">{{$review->review}}</p>
@@ -166,7 +171,7 @@
 										<hr class="light-grey-hr"/>
 										@endforeach
 									</div>
-								</div>
+								</div> --}}
 							</div>
 						</div>
 					</div>
@@ -196,10 +201,10 @@
 									<ul class="flex-stat flex-stat-2 mt-40">
 										<li>
 											<span class="block">تعداد سفارشات</span>
-											<span class="block txt-dark weight-500 font-18"><span class="counter-anim">{{$orders_count}}</span></span>
+											{{-- <span class="block txt-dark weight-500 font-18"><span class="counter-anim">{{$orders_count}}</span></span>
 											<span class="block @if($order_compare > 0) txt-success @else txt-danger @endif mt-5">
 												<i class="zmdi @if($order_compare > 0) zmdi-caret-up @else zmdi-caret-down @endif pr-5 font-20"></i>
-												<span class="weight-500">{{ $order_compare }}%</span>
+												<span class="weight-500">{{ $order_compare }}%</span> --}}
 											</span>
 											<div class="clearfix"></div>
 										</li>
@@ -211,22 +216,22 @@
 										</li>
 										<li>
 											@php
-												$key = count($total_sales) - 1;
-												if (false) {
-													$diff = $total_sales[$key]->sum - $total_sales[$key - 1]->sum;
-													$diff = $diff * 100 / $total_sales[$key]->sum;	
-												}
-												else {
-													$diff = 0;
-												}
+												// $# = count($total_sales) - 1;
+												// if (false) {
+												// 	$diff = $total_sales[$key]->sum - $total_sales[$key - 1]->sum;
+												// 	$diff = $diff * 100 / $total_sales[$key]->sum;	
+												// }
+												// else {
+												// 	$diff = 0;
+												// }
 											@endphp
-											<span class="block">درآمد آخرین دوره</span>
+											{{-- <span class="block">درآمد آخرین دوره</span>
 											<span class="block txt-dark weight-500 font-18"><span class="counter-anim num-comma">@isset($total_sales[$key]) {{ $total_sales[$key]->sum }} @else 0 @endisset</span> تومان</span>
 												<span class="block @if($diff > 0) txt-success @else txt-danger @endif mt-5">
 												<i class="zmdi @if($diff > 0) zmdi-caret-up @else zmdi-caret-down @endif pr-5 font-20"></i>
 												<span class="weight-500">{{ round( $diff ) }} %</span>
 											</span>
-											<div class="clearfix"></div>
+											<div class="clearfix"></div> --}}
 										</li>
 									</ul>
 								</div>
@@ -262,38 +267,38 @@
 													</tr>
 												</thead>
 
-												<tbody>
+												{{-- <tbody>
 													@foreach ($orders as $order)
 													<tr>
 														<td>#{{$order->id}}</td>
 														<td>{{$order->first_name.' '.$order->last_name}}</td>
 														<td><span class="num-comma">{{$order->total}}</span> تومان</td>
-														<td>
+														<td> --}}
 															<?php
-															switch ($order->status) {
-																case 0: $status = ['پرداخت نشده', 'info']; break;
-																case 1: $status = ['در انتظار پرداخت', 'warning']; break; 
-																case 2: $status = ['پرداخت شده', 'dark']; break;
-																case 3: $status = ['در حال بررسی', 'orange']; break;
-																case 4: $status = ['در حال بسته بندی', 'warning']; break;
-																case 5: $status = ['در حال ارسال', 'primary']; break;
-																case 6: $status = ['ارسال شده', 'success']; break;
-																case 7: $status = ['لغو شده', 'danger']; break;
-																default: $status = ['پرداخت نشده', 'info'];
-															}
+															// switch ($order->status) {
+															// 	case 0: $status = ['پرداخت نشده', 'info']; break;
+															// 	case 1: $status = ['در انتظار پرداخت', 'warning']; break; 
+															// 	case 2: $status = ['پرداخت شده', 'dark']; break;
+															// 	case 3: $status = ['در حال بررسی', 'orange']; break;
+															// 	case 4: $status = ['در حال بسته بندی', 'warning']; break;
+															// 	case 5: $status = ['در حال ارسال', 'primary']; break;
+															// 	case 6: $status = ['ارسال شده', 'success']; break;
+															// 	case 7: $status = ['لغو شده', 'danger']; break;
+															// 	default: $status = ['پرداخت نشده', 'info'];
+															// }
 															?>
-															<span class="label label-{{$status[1]}}">{{$status[0]}}</span>
-														</td>
+															{{-- <span class="label label-{{$status[1]}}">{{$status[0]}}</span>
+														</td> --}}
 														<?php 
-															$time = new Carbon\Carbon($order->created_at);
-															$created_at = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
+															// $time = new Carbon\Carbon($order->created_at);
+															// $created_at = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
 														?>
-														<td>{{$created_at.' | '.$time->hour.':'.$time->minute}}</td>
+														{{-- <td>{{$created_at.' | '.$time->hour.':'.$time->minute}}</td> --}}
 														<?php 
-															$time = new Carbon\Carbon($order->payment);
-															$payment = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
+															// $time = new Carbon\Carbon($order->payment);
+															// $payment = \App\Classes\jdf::gregorian_to_jalali($time->year, $time->month, $time->day, '/');	
 														?>
-														<td>{{$payment.' | '.$time->hour.':'.$time->minute}}</td>
+														{{-- <td>{{$payment.' | '.$time->hour.':'.$time->minute}}</td>
 														<td>
 															<a href="/panel/invoice/{{$order->id}}">
 																<i class="fa fa-file-text-o" aria-hidden="true"></i>
@@ -301,7 +306,7 @@
 														</td>
 													</tr>
 													@endforeach
-												</tbody>
+												</tbody> --}}
 											</table>
 										</div>
 									</div>	
@@ -363,7 +368,7 @@
 		'js/numeral.min.js'
 	]; ?>
 	
-	<script>
+	{{-- <script>
 	var data=[
 		@foreach ($total_sales as $item)
 		{ period: '{{$item->period}}', iphone: {{$item->sum}},},
@@ -381,5 +386,5 @@
 		for (num in nums) {
 			nums[num].innerHTML = numeral(nums[num].innerHTML).format('0,0');
 		}
-	</script>
+	</script> --}}
 @endsection

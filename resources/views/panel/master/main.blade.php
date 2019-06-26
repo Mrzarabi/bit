@@ -10,10 +10,10 @@
 	
 	<!-- Favicon -->
 	<link rel="shortcut icon" href="favicon.ico">
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
+	<link rel="icon" href="favicon.ico" type="/x-icon">
 	
 	<link rel="stylesheet" href="{{ asset('css/font.css') }}">
-	@yield('styles');
+	@yield('styles')
 </head>
 
 <body>
