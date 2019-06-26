@@ -20,16 +20,16 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
         ->where('total_type', 'daily|weekly|monthly|yearly');
     
     // Invoices Routes
-    Route::group(['prefix' => 'invoice'], function () {
+    // Route::group(['prefix' => 'invoice'], function () {
 
-        Route::get('/', 'InvoiceController@index');
-        Route::get('/{order}', 'InvoiceController@get');
-        Route::get('/{order}/description/{description}', 'InvoiceController@description');
-        Route::get('/{order}/status/{status}', 'InvoiceController@status');
-    });
+    //     Route::get('/', 'InvoiceController@index');
+    //     Route::get('/{order}', 'InvoiceController@get');
+    //     Route::get('/{order}/description/{description}', 'InvoiceController@description');
+    //     Route::get('/{order}/status/{status}', 'InvoiceController@status');
+    // });
 
     // Discount code Routes
-    Route::resource('discountCode', 'DiscountCodeController')->except([ 'create', 'show' ]);    
+    // Route::resource('discountCode', 'DiscountCodeController')->except([ 'create', 'show' ]);    
     
     // Setting Route
     Route::group(['prefix' => 'setting'], function () {
@@ -44,17 +44,29 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     });
 
     // Category Route
-    Route::resource('category', 'CategoryController');
+    Route::resource('category', 'CategoryController')->except(['create']);
     Route::get('group/sub/{id}', 'CategoryController@sub');
     
+    // Subject Route
+    Route::resource('subject', 'SubjectController')->except(['create', 'show']);
+    
     // Products panel Route
-    Route::resource('article', 'ArticleController')->except([ 'show' ]);
+    Route::resource('article', 'ArticleController');
     Route::get('/article/search/{query?}', 'ArticleController@search');
     
     // Products panel Route
-    Route::resource('product', 'ProductController')->except([ 'show' ]);
-    Route::get('/product/search/{query?}', 'ProductController@search');
+    Route::resource('currency', 'CurrencyController');
+    Route::get('/currency/search/{query?}', 'CurrencyController@search');
     
+    // Products panel Route
+    Route::resource('comment', 'CommentController');
+    Route::resource('review', 'ReviewController');
+    // Route::get('/currency/search/{query?}', 'CommentController@search');
+    
+    Route::PUT('user/{user}/accept', 'UserController@accept_certificate')->name('accept_certificate');
+    Route::resource('user', 'UserController');
+    Route::resource('user', 'ImageController');
+
     // Discount
 
     // Specification tables handler panel Route
@@ -67,20 +79,20 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     });
     
     // Color panel routes
-    Route::resource('color', 'ColorController')->except([ 'create', 'show' ]);
+    // Route::resource('color', 'ColorController')->except([ 'create', 'show' ]);
     // Warranty panel routes
-    Route::resource('warranty', 'WarrantyController')->except([ 'create', 'show' ]);
+    // Route::resource('warranty', 'WarrantyController')->except([ 'create', 'show' ]);
     // Brand panel routes
-    Route::resource('brand', 'BrandController')->except([ 'create', 'show' ]);
+    // Route::resource('brand', 'BrandController')->except([ 'create', 'show' ]);
 });
 
 // Store Products Routes
 Route::get('/', 'StoreController@index');
-Route::get('/product', 'StoreController@store');
-Route::get('/product/search/{query?}', 'StoreController@store');
-Route::post('/product/{product}/review', 'StoreController@add_review')->middleware('auth');
+Route::get('/currency', 'StoreController@store');
+Route::get('/currency/search/{query?}', 'StoreController@store');
+Route::post('/currency/{currency}/review', 'StoreController@add_review')->middleware('auth');
 Route::get('/category/{category}', 'StoreController@category');
-Route::get('/product/{product}', 'StoreController@product');
+Route::get('/currency/{currency}', 'StoreController@product');
 
 // Cart Rotes
 Route::get('/cart', 'CartController@index');
@@ -96,10 +108,11 @@ Route::get('/checkout', 'CartController@checkout')->middleware('auth');
 Route::post('/checkout', 'CartController@checkout')->middleware('auth');
 
 // Compare Routes
-Route::get('/compare', 'CompareController@index');
-Route::get('/compare/add/{product}', 'CompareController@add');
-Route::get('/compare/remove/{product}', 'CompareController@remove');
+// Route::get('/compare', 'CompareController@index');
+// Route::get('/compare/add/{product}', 'CompareController@add');
+// Route::get('/compare/remove/{product}', 'CompareController@remove');
 
 // Blog Routes
-Route::get('/blog', 'BlogController@index');
-Route::get('/blog/{article}', 'BlogController@show');
+Route::get('/blog', 'BlogController@index')->name('blog');
+Route::get('/blog/{article}', 'BlogController@show')->name('article.blog');
+Route::resource('/panel/article', 'Panel\ArticleController');
