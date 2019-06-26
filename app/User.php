@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use App\Models\Article\Article;
 use App\Models\Currency\Currency;
 use App\Models\Ticket\Ticket;
@@ -15,7 +16,7 @@ use App\Models\Opinion\Review;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, CanResetPassword;
 
     protected $table = 'users';
 
@@ -30,19 +31,23 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'first_name',
-        'second_name',
         'last_name',
-        'social_link',
+        'national_code',
         'phone_number',
         'birthday',
         'address',
         'email',
         'password',
+        'password_confirmation',
         'avatar',
-        'image_social_link',
-        'image_certificate',
+        'image_national_code',
+        'accept_image_national_code',
+        'identify_certificate',
+        'accept_identify_certificate',
         'image_bills',
-        'image_selfie_social_link',
+        'accept_image_bills',
+        'image_selfie_national_code',
+        'accept_image_selfie_national_code',
     ];
 
     /**
@@ -53,6 +58,18 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'accept_image_national_code' => 'boolean',
+        'accept_identify_certificate' => 'boolean',
+        'accept_image_bills' => 'boolean',
+        'accept_image_selfie_national_code' => 'boolean',
     ];
 
     /****************************************
@@ -66,7 +83,17 @@ class User extends Authenticatable
      */
     public function getFullNameAttribute()
     {
-        return $this->first_name . ' ' . $this->second_name . ' ' . $this->last_name;
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    /**
+     * Role & permition
+     *
+     * @return String
+     */
+    public function is_admin($user_id)
+    {
+        return ($this->type == 1) ? true : false;   
     }
 
     /****************************************

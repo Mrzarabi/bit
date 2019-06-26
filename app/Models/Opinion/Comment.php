@@ -64,7 +64,7 @@ class Comment extends Model
     /**
      * This function for answer's comments.
      */
-    public function comments()
+    public function replies()
     {
         return $this->hasMany(Comment::class, 'parent_id');
     }

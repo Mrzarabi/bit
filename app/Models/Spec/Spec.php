@@ -11,6 +11,8 @@ class Spec extends Model
      **             Attributes
      ***************************************/
     
+    protected $table = 'specs';
+
     /**
      * The attributes that are mass assignable.
      *
