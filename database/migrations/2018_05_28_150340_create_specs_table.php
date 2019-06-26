@@ -54,17 +54,6 @@ class CreateSpecsTable extends Migration
 
             $table->full_timestamps();
         });
-
-        $Schema->create('spec_data', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
-
-            $table->foreign_key('spec_row_id', 'spec_rows');
-            $table->foreign_key('currency_id', 'currencies');
-
-            $table->string('data', 255);
-            
-            $table->full_timestamps();
-        });
     }
 
     /**
@@ -77,6 +66,5 @@ class CreateSpecsTable extends Migration
         $Schema->dropIfExists('specs');
         $Schema->dropIfExists('spec_headers');
         $Schema->dropIfExists('spec_rows');
-        $Schema->dropIfExists('spec_data');
     }
 }

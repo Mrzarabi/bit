@@ -27,11 +27,10 @@ class CreateUsersTable extends Migration
             $table->increments('id')->unsigned();
 
             $table->string('first_name', 20);
-            $table->string('second_name', 20);
             $table->string('last_name', 30);
 
-            $table->string('social_link', 10)->nullable();
-            $table->string('phone_number', 11);
+            $table->string('national_code', 10)->nullable();
+            $table->string('phone_number', 15);
             $table->string('birthday')->nullable();
             $table->string('address', 255)->nullable();
 
@@ -40,11 +39,16 @@ class CreateUsersTable extends Migration
             $table->string('password', 100);
 
             $table->string('avatar', 50)->nullable();
+            $table->string('type')->default(0);
 
-            $table->string('image_social_link')->nullable();
-            $table->string('image_certificate')->nullable();
+            $table->string('image_national_code')->nullable();
+            $table->boolean('accept_image_national_code')->default(0);
+            $table->string('identify_certificate')->nullable();
+            $table->boolean('accept_identify_certificate')->default(0);
             $table->string('image_bill')->nullable();
-            $table->string('image_selfie_social_link')->nullable();
+            $table->boolean('accept_image_bill')->default(0);
+            $table->string('image_selfie_national_code')->nullable();
+            $table->boolean('accept_image_selfie_national_code')->default(0);
 
             
             $table->rememberToken();

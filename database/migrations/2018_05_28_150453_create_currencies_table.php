@@ -27,13 +27,28 @@ class CreateCurrenciesTable extends Migration
 
             $table->foreign_key('user_id', 'users');
             $table->foreign_key('category_id', 'categories');
+            $table->foreign_key('spec_id', 'specs');
 
             $table->string('title', 50);
             $table->string('slug', 50);
-            $table->text('description', 255)->nullable();
-            $table->integer('price');
+            $table->text('short_description', 255)->nullable();
+            $table->text('note', 255)->nullable();
+            $table->bigInteger('price');
             $table->string('inventory');
-            $table->string('image')->nullable();
+            $table->tinyInteger('status')->default(1);
+            $table->string('photo')->nullable();
+            $table->string('code')->nullable();
+            
+            $table->full_timestamps();
+        });
+
+        $Schema->create('spec_data', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
+
+            $table->foreign_key('spec_row_id', 'spec_rows');
+            $table->foreign_key('currency_id', 'currencies');
+
+            $table->string('data', 255);
             
             $table->full_timestamps();
         });
@@ -47,5 +62,6 @@ class CreateCurrenciesTable extends Migration
     public function down()
     {
         $Schema->dropIfExists('currencies');
+        $Schema->dropIfExists('spec_data');
     }
 }
