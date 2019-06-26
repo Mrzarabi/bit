@@ -74,11 +74,12 @@ class SubjectTableSeeder extends Seeder
         }));
 
         // Create the articles & relation Users
-        $users->each( function($user) use($commentcount, $articlecount, $users, $replaycommentcount)
+        $users->each( function($user) use($subjects, $commentcount, $articlecount, $users, $replaycommentcount)
         {
             $user->articles()->saveMany(
                 $articles = factory(App\Models\Article\Article::class, $articlecount)->create([
-                    'user_id' => $user->id
+                    'user_id' => $user->id,
+                    'subject_id' => $subjects->random()->id
                 ])
                 // Create the comments & relation Users & articles & replay comment
             )->each( function($article) use($commentcount, $users, $replaycommentcount)

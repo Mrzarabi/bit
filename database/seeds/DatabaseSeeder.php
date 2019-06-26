@@ -14,7 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         Eloquent::unguard();
 
         // Ask for db migration refresh, default is no
@@ -30,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SubjectTableSeeder::class);
         $this->call(CategoryTableSeeder::class);
         $this->call(SpecTableSeeder::class);
+        $this->call(OptionTableSeeder::class);
 
         // $this->command->info("Database seeded.");
 

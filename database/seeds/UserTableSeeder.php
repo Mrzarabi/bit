@@ -28,12 +28,12 @@ class UserTableSeeder extends Seeder
         {
             \App\User::create([
                 'id' => '1',
-                'first_name' => 'محمد',
-                'second_name' => 'هادی',
+                'first_name' => ' محمد هادی',
                 'last_name' => 'ضرابی',
                 'phone_number' => '09030587521',
                 'email' => 'm.hadi.z.1997@Gmail.com',
                 'password' => Hash::make('123456'),
+                'type' => 1
                 
             ]);
             echo "\e[31mm.hadi zarrabi user \e[39mwith id=\e[30m\e[101m1\e[49m \e[39mwas \e[32mcreated\n";

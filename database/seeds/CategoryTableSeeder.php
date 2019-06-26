@@ -81,12 +81,21 @@ class CategoryTableSeeder extends Seeder
             ];
         }));
 
+        // How many genres you need, defaulting 1 to 10
+        $speccount = $this->getCount('specs');
+
+        $this->command->info("Creating a range of {$speccount} Specs .");
+
+        $specs = factory(App\Models\Spec\Spec::class, $speccount)-> create();
+
         // Create the Currencies & relation Users
-        $users->each( function($user) use($reviewcount, $currencycount, $users)
+        $users->each( function($user) use($reviewcount, $currencycount, $users, $categories, $specs)
         {
             $user->currencies()->saveMany(
                 factory(App\Models\Currency\Currency::class, $currencycount)->create([
-                    'user_id' => $user->id
+                    'user_id' => $user->id,
+                    'category_id' => $categories->random()->id,
+                    'spec_id' => $specs->random()->id,
                 ])
                 // Create the reviews & relation Users & Currencies
             )->each( function($currency) use($reviewcount, $users)
