@@ -60,9 +60,6 @@ class UserRequest extends FormRequest
             
             'image_selfie_national_code' => [
                 $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],
-            
-            'type' => 'required|in:image_national_code,identify_certificate,image_bill,image_selfie_national_code',
-            'status' => 'required|boolean'
         ];
     }
 }

@@ -41,13 +41,9 @@ class User extends Authenticatable
         'password_confirmation',
         'avatar',
         'image_national_code',
-        'accept_image_national_code',
         'identify_certificate',
-        'accept_identify_certificate',
         'image_bills',
-        'accept_image_bills',
         'image_selfie_national_code',
-        'accept_image_selfie_national_code',
     ];
 
     /**

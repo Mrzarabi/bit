@@ -114,10 +114,17 @@
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div class="col-md-4">
-                                    <div class="product-pic img-responsive "
-                                        style="background: url('{{ $user->avatar }}') center center;
-                                            background-size: cover; margin: 50px; max-width: 300px; border-radius: 7px;">
-                                    </div>
+                                    @if ($user->avatar)
+                                        <div class="product-pic img-responsive "
+                                            style="background: url('{{ $user->avatar }}') center center;
+                                                background-size: cover; margin: 50px; max-width: 300px; border-radius: 7px;">
+                                        </div>    
+                                    @else
+                                        <div class="product-pic img-responsive "
+                                            style="background: url('/images/placeholder/placeholder.png') center center;
+                                                background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="col-md-8">
                                     <div class="table-wrap">
@@ -170,102 +177,150 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
-
-                                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#image_national_code" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
+                                                            @if ($user->accept_image_national_code)
+                                                                <i style="color:green; padding-right:10px;" class="fa fa-check"></i>
+                                                            @else
+                                                                <i style="color:red; padding-right:20px;" class="ti-close"></i>
+                                                            @endif
+                                                            <div class="modal fade" id="image_national_code" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                 <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-body">
-                                                                        <div class="product-pic img-responsive "
-                                                                        style="background: url('{{ $user->image_national_code }}') center center;
-                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-body">
+                                                                            <div class="product-pic img-responsive "
+                                                                                @if ($user->image_national_code)
+                                                                                    style="background: url('{{ $user->image_national_code }}') center center;
+                                                                                        background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <form action="{{route('accept_certificate', ['user' => $user->id])}}" method="post">
+                                                                                <input type="hidden" name="type" value="image_national_code" />
+                                                                                <button type="submit" name="status" value="0" class="btn btn-secondary">رد</button>
+                                                                                <button type="submit" name="status" value="1" class="btn btn-primary">تایید </button>
+                                                                                @else
+                                                                                    <div class="product-pic img-responsive "
+                                                                                        style="background: url('/images/placeholder/placeholder.png') center center;
+                                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                                    </div>  
+                                                                                @endif
+                                                                                @method('put')
+                                                                                @csrf
+                                                                            </form>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="modal-footer">
-                                                                        <form action="{{route('accept_certificate', ['user' => $user->id])}}" method="post" enctype="multipart/form-data">
-                                                                            <button type="button" class="btn btn-secondary">رد</button>
-                                                                            <a href="{{route('accept_certificate', ['user' => $user->id])}}">
-                                                                                <button type="button" class="btn btn-primary"><i class="fa fa-check"></i><span> تایید </span></button></a>
-                                                                            @method('put')
-                                                                            @csrf
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        {{-- <td>
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
-
-                                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#identify_certificate" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
+                                                            @if ($user->accept_identify_certificate)
+                                                                <i style="color:green; padding-right:10px;" class="fa fa-check"></i>
+                                                            @else
+                                                                <i style="color:red; padding-right:20px;" class="ti-close"></i>
+                                                            @endif
+                                                            <div class="modal fade" id="identify_certificate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                 <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-body">
-                                                                        <div class="product-pic img-responsive "
-                                                                        style="background: url('{{ $user->identify_certificate }}') center center;
-                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-body">
+                                                                            <div class="product-pic img-responsive "
+                                                                                @if ($user->identify_certificate)
+                                                                                    style="background: url('{{ $user->identify_certificate }}') center center;
+                                                                                        background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <form action="{{route('accept_certificate', ['user' => $user->id])}}" method="post">
+                                                                                
+                                                                                <input type="hidden" name="type" value="identify_certificate" />
+                                                                                <button type="submit" name="status" value="0" class="btn btn-secondary">رد</button>
+                                                                                <button type="submit" name="status" value="1" class="btn btn-primary">تایید </button>
+                                                                                @else
+                                                                                    <div class="product-pic img-responsive "
+                                                                                        style="background: url('/images/placeholder/placeholder.png') center center;
+                                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                                    </div>
+                                                                                @endif
+                                                                                @method('put')
+                                                                                @csrf
+                                                                            </form>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="modal-footer">
-                                                                        <form action="{{route('accept_certificate')}}" method="post">
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">رد</button>
-                                                                            <button type="button" class="btn btn-primary">تایید </button>
-                                                                            @method('put')
-                                                                            @csrf
-                                                                        </form>
-                                                                    </div>
                                                                 </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#image_bill" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
+                                                            @if ($user->accept_image_bill)
+                                                                <i style="color:green; padding-right:10px;" class="fa fa-check"></i>
+                                                            @else
+                                                                <i style="color:red; padding-right:20px;" class="ti-close"></i>
+                                                            @endif
+                                                            <div class="modal fade" id="image_bill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-body">
+                                                                            <div class="product-pic img-responsive "
+                                                                                @if ($user->image_bill)
+                                                                                    style="background: url('{{ $user->image_bill }}') center center;
+                                                                                        background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <form action="{{route('accept_certificate', ['user' => $user->id])}}" method="post">
+                                                                                <input type="hidden" name="type" value="image_bill" />
+                                                                                <button type="submit" name="status" value="0" class="btn btn-secondary">رد</button>
+                                                                                <button type="submit" name="status" value="1" class="btn btn-primary">تایید </button>
+                                                                                @else
+                                                                                    <div class="product-pic img-responsive "
+                                                                                        style="background: url('/images/placeholder/placeholder.png') center center;
+                                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                                    </div>
+                                                                                @endif
+                                                                                @method('put')
+                                                                                @csrf
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
-
+                                                            @if ($user->accept_image_selfie_national_code)
+                                                                <i style="color:green; padding-right:10px;" class="fa fa-check"></i>
+                                                            @else
+                                                                <i style="color:red; padding-right:20px;" class="ti-close"></i>
+                                                            @endif
                                                             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                 <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-body">
-                                                                        <div class="product-pic img-responsive "
-                                                                        style="background: url('{{ $user->image_bill }}') center center;
-                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-body">
+                                                                            <div class="product-pic img-responsive "
+                                                                                @if ($user->image_selfie_national_code)
+                                                                                    style="background: url('{{ $user->image_selfie_national_code }}') center center;
+                                                                                        background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <form action="{{route('accept_certificate', ['user' => $user->id])}}" method="post">
+                                                                                <input type="hidden" name="type" value="image_selfie_national_code" />
+                                                                                <button type="submit" name="status" value="0" class="btn btn-secondary">رد</button>
+                                                                                <button type="submit" name="status" value="1" class="btn btn-primary">تایید </button>
+                                                                                @else
+                                                                                    <div class="product-pic img-responsive "
+                                                                                        style="background: url('/images/placeholder/placeholder.png') center center;
+                                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                                    </div>
+                                                                                @endif
+                                                                                @method('put')
+                                                                                @csrf
+                                                                            </form>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="modal-footer">
-                                                                        <form action="{{route('accept_certificate')}}" method="post">
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">رد</button>
-                                                                            <button type="button" class="btn btn-primary">تایید </button>
-                                                                            @method('put')
-                                                                            @csrf
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
-
-                                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-body">
-                                                                        <div class="product-pic img-responsive "
-                                                                        style="background: url('{{ $user->image_selfie_national_code }}') center center;
-                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <form action="{{route('accept_certificate')}}" method="post">
-                                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">رد</button>
-                                                                            <button type="button" class="btn btn-primary">تایید </button>
-                                                                            @method('put')
-                                                                            @csrf
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                                </div>
-                                                            </div>
-                                                        </td> --}}
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -301,25 +356,29 @@
 
                                                                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                         <div class="modal-dialog" role="document">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title" id="exampleModalLabel">تصویر کارت بانکی</h5>
-                                                                            </div>
-                                                                            <div class="modal-body">
-                                                                                <div class="product-pic img-responsive "
-                                                                                style="background: url('{{ $item->image_benk_card }}') center center;
-                                                                                    background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="exampleModalLabel">تصویر کارت بانکی</h5>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="product-pic img-responsive "
+                                                                                    style="background: url('{{ $item->image_benk_card }}') center center;
+                                                                                        background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <form method="post" action="{{route('accept_certificate' , ['user' => $item->id])}}" >
+                                                                                        <div class="panel-body">
+                                                                                            @include('errors.errors-show')
+                                                                                        </div>
+                                                                                        <input type="hidden" name="type" value="image_benk_card" />
+                                                                                        <button type="submit" name="status" value="0" class="btn btn-secondary" data-dismiss="modal">رد</button>
+                                                                                        <button type="submit" name="status" value="1" class="btn btn-primary">تایید </button>
+                                                                                        @method('put')
+                                                                                        @csrf
+                                                                                    </form>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="modal-footer">
-                                                                                <form action="{{route('accept_certificate')}}" method="post">
-                                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">رد</button>
-                                                                                    <button type="button" class="btn btn-primary">تایید </button>
-                                                                                    @method('put')
-                                                                                    @csrf
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
                                                                         </div>
                                                                     </div>
                                                                 </td>
@@ -367,9 +426,9 @@
 	@endforeach
 
 	<script>
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
+        // $('#myModal').on('shown.bs.modal', function () {
+        //     $('#myInput').trigger('focus')
+        // })
 		$('.delete-item').on('click',function(){
 			var title = $(this).parent().parent().next().find('h5').text();
 			var id = $(this).attr('product');

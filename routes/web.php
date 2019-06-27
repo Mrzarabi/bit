@@ -63,9 +63,9 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     Route::resource('review', 'ReviewController');
     // Route::get('/currency/search/{query?}', 'CommentController@search');
     
-    Route::PUT('user/{user}/accept', 'UserController@accept_certificate')->name('accept_certificate');
     Route::resource('user', 'UserController');
-    Route::resource('user', 'ImageController');
+    Route::put('user/{user}/accept', 'UserController@accept_certificate')->name('accept_certificate');
+    // Route::resource('user', 'ImageController');
 
     // Discount
 

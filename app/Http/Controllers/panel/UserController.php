@@ -125,10 +125,6 @@ class UserController extends Controller
 
     public function accept_certificate(AcceptUserCertificate $request, User $user)
     {
-        return  [
-            'fuck'
-        ];
-
         if ( !$request->status )
         {
             if ( file_exists( public_path( $user->{$request->type} ) ) )
@@ -138,10 +134,15 @@ class UserController extends Controller
         // TODO
         // notify the user when accept or not it's certificates
         
-        $user->update([
-            "accept_{$request->type}" => $request->status
+        $user->{"accept_{$request->type}"} = $request->status;
+        $user->save();
+        
+        // return $request;
+        return view('panel.user-show', [
+            'user' => $user,
+            'page_name' => 'show-blog-comment',
+            'page_title' => 'مشاهده مقاله و کامنت ها',
+            'options' => $this->options(['site_name', 'site_logo'])
         ]);
-        return 'fucl';
-
     }
 }
