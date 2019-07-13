@@ -55,9 +55,9 @@ class SubjectTableSeeder extends Seeder
         $this->command->info("Creating a range of {$commentcount} comments for {$users->count()} users.");
         
         // How many genres you need, defaulting 1 to 10
-        $replaycommentcount = $this->getCount('replay comments');
+        $replycommentcount = $this->getCount('reply comments');
         
-        $this->command->info("Creating a range of {$replaycommentcount} comments for {$users->count()} users.");
+        $this->command->info("Creating a range of {$replycommentcount} comments for {$users->count()} users.");
 
         //For using all memory limit
         // ini_set('memory_limit', '-1');
@@ -74,27 +74,27 @@ class SubjectTableSeeder extends Seeder
         }));
 
         // Create the articles & relation Users
-        $users->each( function($user) use($subjects, $commentcount, $articlecount, $users, $replaycommentcount)
+        $users->each( function($user) use($subjects, $commentcount, $articlecount, $users, $replycommentcount)
         {
             $user->articles()->saveMany(
                 $articles = factory(App\Models\Article\Article::class, $articlecount)->create([
                     'user_id' => $user->id,
                     'subject_id' => $subjects->random()->id
                 ])
-                // Create the comments & relation Users & articles & replay comment
-            )->each( function($article) use($commentcount, $users, $replaycommentcount)
+                // Create the comments & relation Users & articles & reply comment
+            )->each( function($article) use($commentcount, $users, $replycommentcount)
             {
                 //For using all memory limit
                 // ini_set('memory_limit', '-1');
 
                 $article->comments()->saveMany(
-                    factory(App\Models\Opinion\Comment::class, $commentcount)->make([
+                    factory(App\Models\Opinion\Comment::class, 1)->make([
                     'user_id' => $users->random()->id
                     ])
-                )->each(function($comment) use($replaycommentcount, $users, $article)
+                )->each(function($comment) use($replycommentcount, $users, $article)
                 {
                     $article->comments()->saveMany(
-                        factory(App\Models\Opinion\Comment::class, $replaycommentcount)->make([
+                        factory(App\Models\Opinion\Comment::class, 3)->make([
                             'parent_id' => $comment->id,
                             'user_id' => $users->random()->id,
                             'article_id' => $article->id

@@ -98,18 +98,19 @@ class CategoryTableSeeder extends Seeder
                     'spec_id' => $specs->random()->id,
                 ])
                 // Create the reviews & relation Users & Currencies
-            )->each( function($currency) use($reviewcount, $users)
-            {
-                //For using all memory limit
-                ini_set('memory_limit', '-1');
-        
-                $currency->reviews()->saveMany(
-                    factory(App\Models\Opinion\Review::class, $reviewcount)->make([
-                    'currency_id' => $currency->id,
-                    'user_id' => $users->random()->id
-                    ])
                 );
-            });
+            // ->each( function($currency) use($reviewcount, $users)
+            // {
+            //     //For using all memory limit
+            //     ini_set('memory_limit', '-1');
+        
+            //     $currency->reviews()->saveMany(
+            //         factory(App\Models\Opinion\Review::class, $reviewcount)->make([
+            //         'currency_id' => $currency->id,
+            //         'user_id' => $users->random()->id
+            //         ])
+            //     );
+            // });
         });
         
         $this->command->info("Categories , SubCategories , Currencies & Reviwes Created! '-'");
