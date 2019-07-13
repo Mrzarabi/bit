@@ -122,7 +122,7 @@
 						<div  class="panel-body">
 							<div class="form-group">
 								<div class="input-group">
-									<input type="text" name="article_title" onkeyup="this.nextElementSibling.href = '/panel/article/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : تلفن همراه">
+									<input type="text" name="article_title" onkeyup="this.nextElementSibling.href = '/panel/article/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : عنوان مقاله">
 									<a href="/panel/article/search/" class="input-group-addon"><i class="ti-search"></i></a>
 								</div>
 							</div>
@@ -140,7 +140,6 @@
 
 		<div class="seprator-block"></div>
 		
-		<!-- Product Row One -->
 		<div class="row">
 			@empty($articles[0])
 			<div class="alert alert-warning alert-dismissable">
@@ -149,55 +148,75 @@
 				<div class="clearfix"></div>
 			</div>
 			@else
-				@foreach ($articles as $item)
-				{{-- <div class="card" onclick="this.classList.toggle('expanded')">
-					<img class="label" src="{{$item->image}}" viewBox="0 0 100 100" height="200" width="200">
-					<div class="text1">
-						<div class="text-content">
-							<h1 class="title">{{$item->title}}</h1>
-							<div class="body-text">{{$item->description}}</div>
-						</div>
-					</div> --}}
-				{{-- <svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 35" width="30"><path d="M5 30L50 5l45 25" fill="none" stroke="#000" stroke-width="5"/></svg> --}}
-				<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 product-card">
-					<div class="panel panel-default card-view pa-0">
+				<div class="col-md-12">
+					<div class="panel panel-default border-panel card-view">
 						<div class="panel-wrapper collapse in">
-							<div class="panel-body pa-0">
-								<article class="col-item">
-									<div class="photo">
-										<div class="options">
-											<form action="{{ route('article.destroy', ['article' => $item->slug]) }}" method="POST">
-												<a href="{{ route('article.edit', ['article' => $item->slug]) }}" class="font-18 txt-grey mr-10 pull-left"><i class="icon ti-pencil"></i></a>
-												<button type="submit" itemid="{{ $item->id }}" class="font-18 txt-grey pull-left delete-item"><i class="icon ti-close"></i></button>
-												@method('delete')
-												@csrf
-											</form>	
-										</div>
-										
-										<a href="{{ route('article.show', ['article' => $item->slug]) }}">
-											<div class="product-pic img-responsive"
-												style="background: url('{{ $item->image }}') center center;
-													background-size: cover;">
-											</div>
-										</a>
+							<div class="panel-body">
+								<div class="table-wrap">
+									<div class="table-responsive">
+										<button style="margin-bottom: 10px" class="btn btn-primary delete_all" data-url="{{ url('panel/article/DeleteAll') }}">Delete All Selected</button>
+										<table id="datable_2" class="table table-hover table-bordered display mb-30">
+											<thead>
+												<tr>
+													<th width="50px"><input type="checkbox" id="master"></th>
+													<th style="font-weight:bold; font-size:20px;">#</th>
+													<th style="font-weight:bold; font-size:20px;">تصویر مقاله</th>
+													<th style="font-weight:bold; font-size:20px;">عنوان مقاله</th>
+													<th style="font-weight:bold; font-size:20px;">عنوان دسته بندی مقاله</th>
+													<th style="font-weight:bold; font-size:20px;">تاریخ ثبت</th>
+													<th style="font-weight:bold; font-size:20px;">عملیات</th>
+												</tr>
+											</thead>
+											<tbody>
+												@php $i = 0 @endphp
+												@foreach ($articles as $article)
+													<tr style="text-align:center;">
+														<td><input type="checkbox" class="sub_chk" data-id="{{$article->id}}"></td>
+														<td>{{ ++$i }}</td>
+														<td>
+															<div class="row" style="display: flex; justify-content: center;">
+																<div class="col-md-8">
+																	@if ($article->image)
+																		<img src="{{ $article->image }}" style="background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%; height: 100%;" alt="تصویر">
+																	@else
+																		<img src="/images/placeholder/placeholder.png" style="background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%; height: 100%;" alt="تصویر">
+																	@endif
+																	</div>
+																</div>
+															</div>
+														</td>
+														<td>{{ $article->title }}</td>
+														<td>{{ $article->subject->title }}</td>
+														<td title="{{ \Morilog\Jalali\Jalalian::forge($article->created_at)->format('%H:i:s - %d %B %Y') }}">
+															{{ \Morilog\Jalali\Jalalian::forge($article->created_at)->ago() }}
+														</td>
+														<td>
+															<div class="font-icon custom-style">
+																<div class="font-icon custom-style">
+																	<form action="{{ route('delete_all', ['article' => $article->slug]) }}" method="POST">
+																		<button title= "حذف مقاله" type="submit" itemid="{{ $article->slug }}" class=" btn-xs btn btn-danger custom-btn-danger"><i class="icon ti-trash custom-icon"> </i></button>
+																		<a title= "ویرایش مقاله" style="padding: 6px 5px !important; margin-right: 19px; margin-left: 19px;" class="d-inline btn btn-xs btn-warning custom-btn-warning" href="{{ route('article.edit', ['article' => $article->slug]) }}">
+																			<i class="icon ti-pencil custom-icon"> </i></a>
+																		@method('delete')
+																		@csrf
+																	</form>
+																	<a title= "دیدن اطلاعات مقاله" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('article.show', ['article' => $article->slug]) }}"><i class="icon ti-plus custom-icon"></i></a>
+																</div>
+															</div>
+														</td>
+													</tr>
+												@endforeach
+											</tbody>
+										</table>
 									</div>
-									<div class="info">
-										<a href="{{ route('article.show', ['article' => $item->slug]) }}"> <h5>{{$item->title}}</h5></a>
-										
-										<p class="head-font block txt-orange-light-1 font-16">{{$item->description}}</p>
-									</div>
-								</article>
-							</div>
+								</div>	
+								{{$articles->links()}}
+							</div>	
 						</div>	
 					</div>	
 				</div>
-				@endforeach	
 			@endempty
-
-			{{ $articles->links() }}
-		</div>	
-		<!-- /Product Row Four -->
-		
+		</div>
 	</div>
 @endsection
 
@@ -251,5 +270,231 @@
 			});
 			return false;
 		});
+
+		$(document).ready(function () {
+	
+			fetch('{{ url('panel/article/DeleteAll') }}', {
+				method: 'delete',
+				data: [139]
+			})
+			.then(
+				function(response) {
+					return console.log( response )
+				}
+			)
+			.catch(function(err) {
+				console.log('Fetch Error :-S', err);
+			});
+	
+			$('#master').on('click', function(e) {
+			 if($(this).is(':checked',true))
+			 {
+				$(".sub_chk").prop('checked', true);
+			 } else {
+				$(".sub_chk").prop('checked',false);
+			 }
+			});
+	
+			var allVals = [];
+			function updateChecked() {
+				allVals = [];
+				$(".sub_chk:checked").each(function() {
+					allVals.push($(this).attr('data-id'));
+				});
+			} 
+	
+			$('.sub_chk').click(function() {
+				updateChecked();
+			});
+
+
+			$('.delete_all').on('click', function(e) {
+
+				console.log(allVals)
+	
+				if(allVals.length <=0)
+				{
+					alert("لطفا سطر های مورد نظر خود را انتخاب کنید .");
+				}  else {
+	
+	
+					var check = confirm("ایا برای حذف کردن این سطر ها مطمئن هستید؟");
+					if(check == true){
+
+						var join_selected_values = allVals.join(",");
+
+						console.log( $(this).data('url') , allVals )
+											
+						$.ajax({
+							url: $(this).data('url'),
+							type: 'DELETE',
+							cache: false,
+							data: allVals,
+							success: function (data) {
+								if (data['success']) {
+									$(".sub_chk:checked").each(function() {
+										$(this).parents("tr").remove();
+									});
+									alert(data['success']);
+								} else if (data['error']) {
+									alert(data['error']);
+								} else {
+									alert('ظاهرا مشکلی بوجود آمده است');
+								}
+							},
+							error: function (data) {
+								alert(data.responseText);
+							}
+						});
+	
+	
+					  $.each(allVals, function( index, value ) {
+						  $('table tr').filter("[data-row-id='" + value + "']").remove();
+					  });
+					}
+				}
+			});
+	
+	
+			$('[data-toggle=confirmation]').confirmation({
+				rootSelector: '[data-toggle=confirmation]',
+				onConfirm: function (event, element) {
+					element.trigger('confirm');
+				}
+			});
+	
+	
+			$(document).on('confirm', function (e) {
+				var ele = e.target;
+				e.preventDefault();
+	
+	
+				$.ajax({
+					url: ele.href,
+					type: 'DELETE',
+					headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+					success: function (data) {
+						if (data['success']) {
+							$("#" + data['tr']).slideUp("slow");
+							alert(data['success']);
+						} else if (data['error']) {
+							alert(data['error']);
+						} else {
+							alert('Whoops Something went wrong!!');
+						}
+					},
+					error: function (data) {
+						alert(data.responseText);
+					}
+				});
+	
+	
+				return false;
+			});
+		});
 	</script>
+	{{-- <script type="text/javascript">
+		$(document).ready(function () {
+	
+	
+			$('#master').on('click', function(e) {
+			 if($(this).is(':checked',true))  
+			 {
+				$(".sub_chk").prop('checked', true);  
+			 } else {  
+				$(".sub_chk").prop('checked',false);  
+			 }  
+			});
+	
+	
+			$('.delete_all').on('click', function(e) {
+	
+	
+				var allVals = [];  
+				$(".sub_chk:checked").each(function() {  
+					allVals.push($(this).attr('data-id'));
+				});  
+	
+	
+				if(allVals.length <=0)  
+				{  
+					alert("لطفا سطر های مورد نظر خود را انتخاب کنید");  
+				}  else {  
+	
+	
+					var check = confirm("ایا برای حذف کردن این سطرها مطمئن هستید؟");  
+					if(check == true){  
+	
+	
+						var join_selected_values = allVals.join(","); 
+	
+	
+						$.ajax({
+							url: $(this).data('url'),
+							type: 'DELETE',
+							headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+							data: 'ids='+join_selected_values,
+							success: function (data) {
+								if (data['success']) {
+									$(".sub_chk:checked").each(function() {  
+										$(this).parents("tr").remove();
+									});
+									alert(data['با موفقیت انجام شد']);
+								} else if (data['error']) {
+									alert(data['error']);
+								} else {
+									alert('ظاهرا مشکلی پیش آمده');
+								}
+							},
+							error: function (data) {
+								alert(data.responseText);
+							}
+						});
+	
+	
+					  $.each(allVals, function( index, value ) {
+						  $('table tr').filter("[data-row-id='" + value + "']").remove();
+					  });
+					}  
+				}  
+			});
+	
+	
+			$('[data-toggle=confirmation]').confirmation({
+				rootSelector: '[data-toggle=confirmation]',
+				onConfirm: function (event, element) {
+					element.trigger('confirm');
+				}
+			});
+	
+	
+			$(document).on('confirm', function (e) {
+				var ele = e.target;
+				e.preventDefault();
+	
+	
+				$.ajax({
+					url: ele.href,
+					type: 'DELETE',
+					headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+					success: function (data) {
+						if (data['success']) {
+							$("#" + data['tr']).slideUp("slow");
+							alert(data['success']);
+						} else if (data['error']) {
+							alert(data['error']);
+						} else {
+							alert('Whoops Something went wrong!!');
+						}
+					},
+					error: function (data) {
+						alert(data.responseText);
+					}
+				});
+	
+	
+				return false;
+			});
+		});
+	</script> --}}
 @endsection

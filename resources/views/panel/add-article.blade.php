@@ -170,8 +170,8 @@
 									</div>
 									
 									<div class="form-actions">
-										<button class="btn btn-orange btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره</span></button>
-										<a href="/panel/products" class="btn btn-default pull-left">لغو</a>
+										<button class="btn btn-orange custom-btn-warning btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره</span></button>
+										<a href="/panel/article" class="btn btn-default custom-btn-gainsboro pull-left">لغو</a>
 										<div class="clearfix"></div>
 									</div>
 
@@ -185,7 +185,6 @@
 			</div>
 		</div>
 		<!-- /Row -->
-
 	</div>
 @endsection
 		
