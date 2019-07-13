@@ -19,7 +19,7 @@ class ArticleController extends Controller
     public function index()
     {
         return view('panel.articles', [
-            'articles' => Article::latest()->paginate(20),
+            'articles' => Article::orderBy('created_at', 'DESC')->paginate(10),
             'page_name' => 'blog',
             'page_title' => 'مقالات',
             'options' => $this->options(['site_name', 'site_logo'])
@@ -52,7 +52,7 @@ class ArticleController extends Controller
     {
         $article = auth()->user()->articles()->create(array_merge($request->all(), [
             'subject_id' => $request->subject_id,
-            'image' => $this->upload_image( Input::file('image') )
+            'image' => isset($request->image) ? $this->upload_image( Input::file('image') ) : null
         ]));
 
         return redirect()->action(
@@ -66,21 +66,26 @@ class ArticleController extends Controller
      * @param  \App\Models\Article\Article  $article
      * @return \Illuminate\Http\Response
      */ 
-    public function show(Article $article, Comment $comment)
+    public function show(Article $article)
     {
         $article->load([
-            'comments',
+            'comments' => function($query) {
+                return $query->orderBy('created_at', 'DESC')->paginate(10);
+            },
             'comments.user',
-            'comments.replies',
+
+            'comments.replies' => function($query) {
+                return $query->orderBy('created_at', 'DESC')->paginate(10);
+            },
             'comments.replies.user'
             ]);
-            
-        return view('panel.show-comments-single-article', [
+
+        return view('panel.show-comments', [
             'article' => $article,
             'page_name' => 'show-blog-comment',
             'page_title' => 'مشاهده مقاله و کامنت ها',
             'options' => $this->options(['site_name', 'site_logo'])
-        ]); 
+        ]);
     }
 
     /**
@@ -137,6 +142,22 @@ class ArticleController extends Controller
         $article->delete();
         return redirect(route('article.index'))->with('message', "مقاله {$article->title} با موفقیت حذف شد");
     }
+
+    /**
+     * Remove the specified Article from storage.
+     *
+     * @param  \App\Models\Article\Article  $article
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteAll(ArticleRequest $request, Article $article)
+    {
+        return $request;
+        return $request->id;
+        $ids = $request->id;
+        Article::whereIn('id', explode(",", $ids))->delete();
+
+        return redirect(route('article.index'))->with('message', "مقاله های مورد نظر با موفقیت حذف شدند");
+    }
     
     /**
      * Show the filtered articles from storage.
@@ -147,7 +168,7 @@ class ArticleController extends Controller
     public function search($query = '')
     {
         return view('panel.articles', [
-            'articles' => Article::latest()->where('title', 'like', "%$query%")->paginate(20),
+            'articles' => Article::latest()->where('title', 'like', "%$query%")->paginate(10),
             'page_name' => 'blog',
             'page_title' => 'مقالات',
             'options' => $this->options(['site_name', 'site_logo'])

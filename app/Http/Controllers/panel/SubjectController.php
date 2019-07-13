@@ -17,7 +17,7 @@ class SubjectController extends Controller
     public function index()
     {
         return view('panel.subject', [
-            'subjects' => Subject::all(),
+            'subjects' => Subject::latest()->paginate(10),
             'page_name' => 'subject',
             'page_title' => 'گروه بندی محصولات',
             'options' => $this->options(['site_name', 'site_logo'])
@@ -57,14 +57,7 @@ class SubjectController extends Controller
      */
     public function show(Subject $subject)
     {
-        // return view('panel.subject', [
-        //     'id' => $subject->id,
-        //     'subject' => $subject,
-        //     'subjects' => Subject::all(),
-        //     'page_name' => 'group',
-        //     'page_title' => 'گروه های زیرمجموعه ' . $subject->title,
-        //     'options' => $this->options(['site_name', 'site_logo'])
-        // ]);
+        //
     }
 
     /**
@@ -121,6 +114,7 @@ class SubjectController extends Controller
     public function destroy(Subject $subject)
     {
         $subject->delete();
+        
         return redirect( route('subject.index') )->with('message', 'گروه '.$subject->title.' با موفقیت حذف شد .');
     }
 }

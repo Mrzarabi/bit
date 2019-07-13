@@ -136,4 +136,20 @@ class CategoryController extends Controller
     {
         return json_encode( Category::select('id', 'title')->where('parent', $id)->get() );
     }
+
+    /**
+     * Show the filtered categories from storage.
+     *
+     * @param  String  $query
+     * @return \Illuminate\Http\Response
+     */
+    public function search($query = '')
+    {
+        return view('panel.category', [
+            'categories' => Category::latest()->where('title', 'like', "%$query%")->paginate(10),
+            'page_name' => 'category',
+            'page_title' => 'گروه بندی محصولات',
+            'options' => $this->options(['site_name', 'site_logo'])
+        ]);
+    }
 }

@@ -19,7 +19,7 @@ class UserController extends Controller
     public function index()
     {
         return view('panel.user', [
-            'users' => User::where('id', '!=', auth()->user()->id)->latest()->paginate(20),
+            'users' => User::where('id', '!=', auth()->user()->id)->orderBy('created_at', 'DESC')->paginate(10),
             'page_name' => 'user',
             'page_title' => 'کاربران',
             'options' => $this->options(['site_name', 'site_logo'])
@@ -50,7 +50,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
@@ -66,7 +66,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
@@ -82,8 +82,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request\V1\User\UserRequest  $request
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function update(UserRequest $request, User $user)
@@ -114,15 +114,23 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)
     {
         $user->delete();
-        return view('user.index')->with('message',  "کاربر {$user->last_name} با موفقیت حذف شد");
+
+        return redirect()->back()->with('message', "کاربر {$user->last_name} با موفقیت حذف شد");
     }
 
+    /**
+     * Accept the specified resource from storage.
+     *
+     * @param  \Illuminate\Http\Request\V1\User\UserRequest  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
     public function accept_certificate(AcceptUserCertificate $request, User $user)
     {
         if ( !$request->status )
@@ -137,11 +145,26 @@ class UserController extends Controller
         $user->{"accept_{$request->type}"} = $request->status;
         $user->save();
         
-        // return $request;
         return view('panel.user-show', [
             'user' => $user,
             'page_name' => 'show-blog-comment',
             'page_title' => 'مشاهده مقاله و کامنت ها',
+            'options' => $this->options(['site_name', 'site_logo'])
+        ]);
+    }
+
+    /**
+     * Show the filtered users from storage.
+     *
+     * @param  String  $query
+     * @return \Illuminate\Http\Response
+     */
+    public function search($query = '')
+    {
+        return view('panel.user', [
+            'users' => User::latest()->where('first_name', 'like', "%$query%")->paginate(10),
+            'page_name' => 'user',
+            'page_title' => 'کاربران',
             'options' => $this->options(['site_name', 'site_logo'])
         ]);
     }

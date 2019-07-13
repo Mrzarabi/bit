@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Opinion\Comment;
 use App\Models\Article\Article;
+use App\Http\Requests\V1\Opinion\CommentRequest;
 
 class CommentController extends Controller
 {
@@ -16,14 +17,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        // $comments = article()->comments();
-        return view('panel.comment',
-        [
-            'comments' => Comment::all(),
-            'page_name' => 'blog',
-            'page_title' => 'مقالات',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
+        //
     }
 
     /**
@@ -42,7 +36,7 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
         //
     }
@@ -84,12 +78,50 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Opinion\Comment  $comment
      * @return \Illuminate\Http\Response
      */
     public function destroy(Comment $comment)
     {
         $comment->delete();
+
         return redirect()->back()->with('message', "کامنت مورد نظر با موفقیت حذف شد");
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Models\Opinion\Comment  $comment
+     * @return \Illuminate\Http\Response
+     */
+    public function is_accept(Comment $comment)
+    { 
+        $comment->update(['is_accept' => true]); 
+        
+        return redirect()->back()->with('message', "کامنت مورد نظر با موفقیت ثبت شد");
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request\V1\Opinion\CommentRequest  $request
+     * @param  \App\Models\Opinion\Comment  $comment
+     * @return \Illuminate\Http\Response
+     */
+    public function replie_comment(CommentRequest $request, Comment $comment, Comment $reply = null)
+    {
+        // dd($reply, $comment);
+
+        $comment->update(['is_accept' => true]);
+
+        if ( $reply )
+            $reply->update(['is_accept' => true]);
+        
+        auth()->user()->comments()->create(array_merge($request->all(), [
+            'parent_id'  => $request->parent_id,
+            'is_accept'  => $request == true
+        ]));
+     
+        return redirect()->back()->with('message', "کامنت مورد نظر با موفقیت تایید و ثبت شد");
     }
 }

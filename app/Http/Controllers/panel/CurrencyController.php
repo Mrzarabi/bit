@@ -21,8 +21,8 @@ class CurrencyController extends Controller
     {
         return view('panel.currency',
         [
-            'currencies' => Currency::latest()->paginate(20),
-            'page_name' => 'products',
+            'currencies' => Currency::orderBy('created_at', 'DESC')->paginate(10),
+            'page_name' => 'currency',
             'page_title' => 'محصولات',
             'options'=> $this->options(['site_name', 'site_logo'])
         ]);
@@ -33,7 +33,7 @@ class CurrencyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create( Category $category )
     {
         return view('panel.add-currency', [
             'groups' => Category::first_levels(),
@@ -49,12 +49,14 @@ class CurrencyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CurrencyRequest $request)
+    public function store(Request $request)
     {
         $currency = auth()->user()->currencies()->create( array_merge( $request->all(), [
             'category_id' => $request->category_id,
-            'photo' => $this->upload_image(Input::file('photo')),
+            'photo' => isset($request->photo) ? $this->upload_image( Input::file('photo') ) : null,
         ] ));
+
+        return $request;
 
         return redirect()->action(
             'panel\CurrencyController@edit', ['slug' => $currency->slug]
@@ -69,11 +71,6 @@ class CurrencyController extends Controller
      */
     public function show(Currency $currency)
     {
-        $currency->load([
-            'reviews',
-            'reviews.user',
-        ]);
-
         return view('panel.show-reviews-single-currency', [
             'currency' => $currency,
             'page_name' => 'show-blog-review',
@@ -88,7 +85,7 @@ class CurrencyController extends Controller
      * @param  \App\Currency  $currency
      * @return \Illuminate\Http\Response
      */
-    public function edit(Currency $currency)
+    public function edit(Currency $currency, Category $category)
     {
         if ( is_null($currency->spec_id) )
         {
@@ -105,9 +102,11 @@ class CurrencyController extends Controller
                     $currency->update([ 'spec_id' => $spec->id ]);
             }
         }
+
         return view('panel.add-currency', [
             'currency'    => Currency::productInfo($currency),
-            'groups'      => Category::first_levels(),
+            'groups'      => Category::all(),
+            // 'child'       => Category::child(),
             'page_name'   => 'currencies',
             'page_title'  => 'ویرایش محصول ',
             'options'     => $this->options(['site_name', 'site_logo'])
@@ -134,11 +133,15 @@ class CurrencyController extends Controller
         {
             $photo = $currency->photo;
         }
+
         
+        return $request;
+        // return $request->parent;        
         $currency->update( array_merge($request->all(), [
             'photo' => $photo,
             'category_id' => $request->parent,
         ]));
+
 
         if ( $request->specs )
         {
@@ -151,7 +154,7 @@ class CurrencyController extends Controller
                     ]));
                 }
                 elseif ( isset($item['data']) && $item['data'] )
-                {
+                {   
                     SpecRow::find($key)->specData()->create(array_merge($item, [
                         'currency_id' => $currency->id,
                         'data' => (gettype($item['data']) == 'array') ? implode(',', $item['data']) : $item['data'] 
@@ -176,12 +179,12 @@ class CurrencyController extends Controller
     }
 
     /**
-     * Show the filtered products from storage.
+     * Show the filtered currencies from storage.
      *
      * @param  String  $query
      * @return \Illuminate\Http\Response
      */
-    public function search ($query = '')
+    public function search($query = '')
     {
         return view('panel.currency', [
             'currencies' => Currency::productCard($query),
@@ -198,7 +201,7 @@ class CurrencyController extends Controller
      * @param File $images
      * @return Array
      */
-    public function upload ($input)
+    public function upload($input)
     {
         if ($input != [])
         {
