@@ -50,7 +50,7 @@
 						<div class="panel-body pt-0">
 							<div class="form-wrap">
 								<form action="@isset($spec) {{ route('specification.update', ['specification' => $spec->id]) }} @else {{ route('specification.store') }} @endisset" method="POST">
-									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="font-20 txt-grey zmdi zmdi-info-outline ml-10"></i>مشخصات برند</h6>
+									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="font-20 txt-grey zmdi zmdi-info-outline ml-10"></i>مشخصات دسته بندی</h6>
 									<hr class="light-grey-hr"/>
 									
 									<div class="panel-body">
@@ -82,7 +82,7 @@
 									<hr class="light-grey-hr"/>
 									
 									<div class="form-actions">
-										<button class="btn @isset($spec) btn-warning @else btn-primary @endisset btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i>
+										<button class="btn @isset($spec) btn-orange custom-btn-warning @else btn-primary custom-btn-primary @endisset btn  btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i>
 											<span>@isset($spec) ویرایش @else ثبت @endisset جدول مشخصات فنی</span>
 										</button>
 										<div class="clearfix"></div>
@@ -122,22 +122,13 @@
 									<table id="datable_2" class="table table-hover table-bordered display mb-30" >
 										<thead>
 											<tr>
-												<th>#</th>
-												<th>گروه</th>
-												<th>تاریخ ثبت</th>
-												<th>تاریخ آخرین ویرایش</th>
-												<th>عملیات</th>
+												<th style="font-weight:bold; font-size:20px;">#</th>
+												<th style="font-weight:bold; font-size:20px;">گروه</th>
+												<th style="font-weight:bold; font-size:20px;">تاریخ ثبت</th>
+												<th style="font-weight:bold; font-size:20px;">تاریخ آخرین ویرایش</th>
+												<th style="font-weight:bold; font-size:20px;">عملیات</th>
 											</tr>
 										</thead>
-										<tfoot>
-											<tr>
-												<th>#</th>
-												<th>گروه</th>
-												<th>تاریخ ثبت</th>
-												<th>تاریخ آخرین ویرایش</th>
-												<th>عملیات</th>
-											</tr>
-										</tfoot>
 										<tbody>
 											@php $i = 0 @endphp
 											@foreach ($specs as $item)
@@ -149,9 +140,9 @@
 													<td>{{ \Morilog\Jalali\Jalalian::forge($item->updated_at)->ago() }}</td>
 													<td>
 														<form action="{{ route('specification.destroy', ['specification' => $item->id]) }}" method="POST">
-															<a href="{{ route('header.index', ['specification' => $item->id]) }}" class="btn btn-warning"><i class="icon ti-pencil"></i> ویرایش</a>
-															<a href="{{ route('specification.edit', ['specification' => $item->id]) }}" class="btn btn-info"><i class="icon ti-layout-grid2-alt"></i> تغییر گروه</a>
-															<button type="submit" itemid="{{ $item->id }}" class="btn btn-danger delete-item"><i class="icon ti-close"></i> حذف</button>
+															<a href="{{ route('header.index', ['specification' => $item->id]) }}" class="btn btn-warning custom-btn-warning "><i class="icon ti-pencil"></i> ویرایش</a>
+															<a href="{{ route('specification.edit', ['specification' => $item->id]) }}" class="btn btn-info custom-btn-info"><i class="icon ti-layout-grid2-alt"></i> تغییر گروه</a>
+															<button type="submit" itemid="{{ $item->id }}" class="btn btn-danger delete-item custom-btn-danger"><i class="icon ti-close"></i> حذف</button>
 															
 															@method('delete')
 															@csrf
