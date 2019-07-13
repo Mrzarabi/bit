@@ -26,7 +26,7 @@ class CreateOpinionsTable extends Migration
             $table->increments('id');
 
             $table->foreign_key('user_id');
-            $table->foreign_key('article_id');
+            $table->foreign_key('article_id', true);
             $table->foreign_key('parent_id', true, 'comments');
 
             $table->mediumText('message');
