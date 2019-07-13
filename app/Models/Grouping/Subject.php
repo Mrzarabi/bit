@@ -4,9 +4,13 @@ namespace App\Models\Grouping;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Article\Article;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class Subject extends Model
 {
+    use SoftDeletes, CascadeSoftDeletes;
+
     /****************************************
      **             Attributes
      ***************************************/
@@ -38,6 +42,15 @@ class Subject extends Model
      */
     protected $dates = [
         'deleted_at'
+    ];
+
+    /**
+     * The attributes that should delete all relation with this model.
+     *
+     * @var array
+     */
+    protected $cascadeDeletes = [
+        'articles'
     ];
 
     /****************************************

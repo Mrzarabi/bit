@@ -2,6 +2,7 @@
 
 namespace App;
 
+// use Laratrust\Traits\LaratrustUserTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,11 +13,14 @@ use App\Models\Ticket\Ticket;
 use App\Models\Ticket\TicketMessage;
 use App\Models\Bank\BankCard;
 use App\Models\Opinion\Comment;
-use App\Models\Opinion\Review;
+use App\Models\Opinion\Review; 
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class User extends Authenticatable
 {
-    use Notifiable, CanResetPassword;
+    use Notifiable, CanResetPassword, SoftDeletes, CascadeSoftDeletes;
+    //  LaratrustUserTrait;
 
     protected $table = 'users';
 
@@ -68,6 +72,30 @@ class User extends Authenticatable
         'accept_image_selfie_national_code' => 'boolean',
     ];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'deleted_at'
+    ];
+    
+    
+    /**
+     * The attributes that should delete all relation with this model.
+     *
+     * @var array
+     */
+    protected $cascadeDeletes = [
+        'articles',
+        'comments',
+        'tickets',
+        'ticketMessages',
+        'currencies',
+        'bankCard',
+    ];
+
     /****************************************
      **         Important Method
      ***************************************/
@@ -115,10 +143,10 @@ class User extends Authenticatable
     /**
      * Get all of the reviews for the user.
      */
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
-    }
+    // public function reviews()
+    // {
+    //     return $this->hasMany(Review::class);
+    // }
 
     /**
      * Get all of the tickets for the user.

@@ -5,9 +5,13 @@ namespace App\Models\Grouping;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Spec\Spec;
 use App\Models\Currency\Currency;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class Category extends Model
 {
+    use SoftDeletes, CascadeSoftDeletes;
+     
     /****************************************
      **             Attributes
      ***************************************/
@@ -31,6 +35,17 @@ class Category extends Model
      */
     protected $dates = [
         'deleted_at'
+    ];
+
+    /**
+     * The attributes that should delete all relation with this model.
+     *
+     * @var array
+     */
+    protected $cascadeDeletes = [
+        'currencies',
+        'childs',
+        'specs'
     ];
 
     /**

@@ -6,10 +6,13 @@ use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use App\models\Grouping\Subject;
 use App\Models\Opinion\Comment;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class Article extends Model
 {
-    use Sluggable;
+    use Sluggable, SoftDeletes, CascadeSoftDeletes;
+    
     /****************************************
      **             Attributes
      ***************************************/
@@ -44,6 +47,15 @@ class Article extends Model
      */
     protected $dates = [
         'deleted_at'
+    ];
+
+    /**
+     * The attributes that should delete all relation with this model.
+     *
+     * @var array
+     */
+    protected $cascadeDeletes = [
+        'comments'
     ];
 
     /****************************************

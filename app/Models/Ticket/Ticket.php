@@ -3,9 +3,14 @@
 namespace App\Models\Ticket;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
+
 
 class Ticket extends Model
 {
+    use SoftDeletes, CascadeSoftDeletes;
+    
     /****************************************
      **             Attributes
      ***************************************/
@@ -16,6 +21,8 @@ class Ticket extends Model
      * @var array
      */
     protected $fillable = [
+        'status',
+        'title',
         'is_close',
     ];
 
@@ -35,6 +42,15 @@ class Ticket extends Model
      */
     protected $dates = [
         'deleted_at'
+    ];
+
+    /**
+     * The attributes that should delete all relation with this model.
+     *
+     * @var array
+     */
+    protected $cascadeDeletes = [
+        'ticketmessages'
     ];
 
     /****************************************

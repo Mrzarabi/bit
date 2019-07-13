@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Spec\Spec;
 use App\Models\Grouping\Category;
 use App\Models\Spec\SpecData;
-use App\Models\Opinion\Review;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class Currency extends Model
 {
-    use Sluggable;
+    use Sluggable, SoftDeletes, CascadeSoftDeletes;
     /****************************************
      **             Attributes
      ***************************************/
@@ -53,6 +54,14 @@ class Currency extends Model
         'deleted_at'
     ];
     
+    /**
+     * The attributes that should delete all relation with this model.
+     *
+     * @var array
+     */
+    protected $cascadeDeletes = [
+        'specData',
+    ];
     /****************************************
      **              Relations
      ***************************************/
@@ -89,10 +98,10 @@ class Currency extends Model
     /**
      * Get all of the reviews for the currency.
      */
-    public function reviews()
-    {
-        return $this->hasMany(Review::class);
-    }
+    // public function reviews()
+    // {
+    //     return $this->hasMany(Review::class);
+    // }
 
     /****************************************
      **           Better Manage
@@ -212,7 +221,7 @@ class Currency extends Model
             $result->latest();
         } 
         // dd($options);
-        return $result->paginate(20);
+        return $result->paginate(10);
     }
 
     public static function productInfo($currency, $options = [])

@@ -4,9 +4,11 @@ namespace App\Models\Opinion;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Article\Article;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
+    use SoftDeletes;
     /****************************************
      **             Attributes
      ***************************************/
@@ -19,7 +21,7 @@ class Comment extends Model
     protected $fillable = [
         'article_id',
         'parent_id',
-        'messages',
+        'message',
         'is_accept'
     ];
 

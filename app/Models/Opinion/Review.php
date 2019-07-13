@@ -17,12 +17,12 @@ class Review extends Model
      * @var array
      */
     protected $fillable = [
-        'currency_id',
-        'ranks',
-        'advantages',
-        'disadvantages',
-        'message',
-        'is_accept'
+        // 'currency_id',
+        // 'ranks',
+        // 'advantages',
+        // 'disadvantages',
+        // 'message',
+        // 'is_accept'
     ];
 
     /**
@@ -31,10 +31,10 @@ class Review extends Model
      * @var array
      */
     protected $casts = [
-        'is_accept'              => 'boolean',
-        'ranks'                  => 'array',
-        'advantages'             => 'array',
-        'disadvantages'          => 'array',
+        // 'is_accept'              => 'boolean',
+        // 'ranks'                  => 'array',
+        // 'advantages'             => 'array',
+        // 'disadvantages'          => 'array',
     ];
 
     /**
@@ -43,7 +43,7 @@ class Review extends Model
      * @var array
      */
     protected $dates = [
-        'deleted_at'
+        // 'deleted_at'
     ];
 
     /****************************************
@@ -53,16 +53,16 @@ class Review extends Model
     /**
      * Get the currency of the review.
      */
-    public function currency()
-    {
-        return $this->belongsTo(Currency::class);
-    }
+    // public function currency()
+    // {
+    //     return $this->belongsTo(Currency::class);
+    // }
 
     /**
      * Get the user of the review.
      */
-    public function user()
-    {
-        return $this->belongsTo(\App\User::class);
-    }
+    // public function user()
+    // {
+    //     return $this->belongsTo(\App\User::class);
+    // }
 }

@@ -3,9 +3,12 @@
 namespace App\Models\Bank;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 
 class BankCard extends Model
 {
+    use SoftDeletes, CascadeSoftDeletes;
     /****************************************
      **             Attributes
      ***************************************/
