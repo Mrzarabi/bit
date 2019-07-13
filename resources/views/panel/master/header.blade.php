@@ -159,6 +159,20 @@
             <a @if($page_name == 'main') class="active" @endif href="/panel"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-bars ml-5" aria-hidden="true"></i>داشبورد</span></div><div class="clearfix"></div></a>
         </li>
         <li>
+            <a @if( in_array($page_name, ['user', 'ticket']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><span class="right-nav-text"><i class="ti-user ml-5" aria-hidden="true"></i>کاربران</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
+            <ul id="ecom_dr" class="collapse collapse-level-1">
+                <li>
+                    <a @if($page_name == 'user') class="active-page" @endif href="/panel/user"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>کاربران</a>
+                </li>
+                <li>
+                    <a @if($page_name == 'ticket') class="active-page" @endif href="/panel/ticket"><i class="fa fa-university ml-5" aria-hidden="true"></i>تیکت ها</a>
+                </li>
+                {{-- <li>
+                    <a @if($page_name == 'specification') class="active-page" @endif href="/panel/specification"><i class="fa fa-table ml-5" aria-hidden="true"></i>جداول مشخصات فنی</a>
+                </li> --}}
+            </ul>
+        </li>
+        <li>
             <a @if( in_array($page_name, ['category', 'subject','specification']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-shopping-basket ml-5" aria-hidden="true"></i>فروشگاه</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
             <ul id="ecom_dr" class="collapse collapse-level-1">
                 <li>
@@ -183,17 +197,17 @@
                 </li>
             </ul>
         </li>
-        <li>
+        {{-- <li>
             <a @if( in_array($page_name, ['comments'] ) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#product_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-th ml-5" aria-hidden="true"></i>محصولات</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
             <ul id="product_dr" class="collapse collapse-level-1">
                 <li>
-                    {{-- <a @if($page_name == 'add_currency') class="active-page" @endif href="/panel/currency/create"><i class="fa fa-cart-plus ml-5" aria-hidden="true"></i>افزودن محصول</a> --}}
+                    <a @if($page_name == 'add_currency') class="active-page" @endif href="/panel/currency/create"><i class="fa fa-cart-plus ml-5" aria-hidden="true"></i>افزودن محصول</a>
                 </li>
                 <li>
                     <a @if($page_name == 'comments') class="active-page" @endif href="/panel/comment"><i class="fa fa-shopping-cart ml-5" aria-hidden="true"></i>لیست کامنت های مفالات</a>
                 </li>
             </ul>
-        </li>
+        </li> --}}
         <li>
             <a @if( in_array($page_name, ['blog', 'add_blog']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#blog_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-newspaper-o ml-5" aria-hidden="true"></i>وبلاگ</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
             <ul id="blog_dr" class="collapse collapse-level-1">
