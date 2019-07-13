@@ -22107,10 +22107,10 @@ form.checkout {
 /* for each card */
 /* @import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:900'); */
 body {
-  align-items: center;
-  display: flex;
+  /* align-items: center; */
+  /* display: flex; */
   height: 100vh;
-  justify-content: center;
+  /* justify-content: center; */
   font-family: sans-serif;
   margin: 0;
   /* background: #6D6027; */

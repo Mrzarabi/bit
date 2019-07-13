@@ -6,7 +6,7 @@ Project:	Splasher
 ++++ Reset ++++
 ++++ Basic ++++
 
-	++Effect 1: YouTube loading++
+	++E1fect 1: YouTube loading++
 	++typography++
 	++Buttons++
 	++Admin Basic++
@@ -8841,4 +8841,98 @@ table th {
 
 .nav.navbar-nav.side-nav li div:first-of-type {
   float: right !important;
+}
+
+/* custom style for btn  */
+.custom-style {
+  display: flex;
+  justify-content: space-around;
+}
+
+.mar-right {
+  margin-right: 10px;
+}
+
+.cus-style-hei {
+  height: 30px;
+}
+
+.custom-style-com {
+  display: flex;
+  float: left;
+}
+
+.custom-pama-btn {
+  padding: 5px 6px !important;
+  margin-left: 10px;
+}
+
+.custom-btn-danger {
+  color: white;
+  border-radius: 7px;
+  box-shadow: 0px 3px 15px -6px #ff1b1b, 0px 2px 10px -7px #000;
+  font-size: 12px !important;
+}
+
+.custom-btn-primary {
+  color: white;
+  border-radius: 7px;
+  box-shadow: 0px 3px 15px -6px #0092ee, 0px 2px 10px -7px #000;
+  font-size: 12px !important;
+}
+
+.custom-btn-warning {
+  color: white;
+  border-radius: 7px;
+  box-shadow: 0px 3px 15px -6px #ffbf36, 0px 2px 10px -7px #000;
+  font-size: 12px !important;
+}
+
+.custom-btn-purple {
+  color: white;
+  border-radius: 7px;
+  box-shadow: 0px 3px 15px -6px #ab26aa, 0px 2px 10px -7px #000;
+  font-size: 12px !important;
+}
+
+.btn-purple {
+  background: #ab26aa;
+}
+
+.custom-btn-success {
+  color: white;
+  border-radius: 7px;
+  box-shadow: 0px 3px 15px -6px #22af47, 0px 2px 10px -7px #000;
+  font-size: 12px !important;
+}
+
+.custom-btn-gainsboro {
+  color: white;
+  border-radius: 7px;
+  box-shadow: 0px 3px 15px -6px gainsboro, 0px 2px 10px -7px #000;
+  font-size: 12px !important;
+}
+
+.custom-btn-info {
+  color: white;
+  border-radius: 7px;
+  box-shadow: 0px 3px 15px -6px #ed1b60, 0px 2px 10px -7px #000;
+  font-size: 12px !important;
+}
+
+.custom-icon {
+  font-weight: bold;
+}
+
+.font-icon i {
+  font-size : 14px !important;
+}
+
+.font-icon button {
+  padding : 5px !important;
+}
+/* custom style for icon */
+
+.over {
+  overflow-x : hidden;
 }
