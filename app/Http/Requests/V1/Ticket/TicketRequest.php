@@ -24,6 +24,8 @@ class TicketRequest extends FormRequest
     public function rules()
     {
         return [
+            'title'    => 'required|string|max:50',
+            'status'   => 'required|min:0|max:3|integer',
             'is_close' => 'boolean'
         ];
     }

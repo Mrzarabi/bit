@@ -24,16 +24,16 @@ class ReviewRequest extends FormRequest
     public function rules()
     {
         return [
-            'ranks'             => 'nullable|array',
-            'ranks.*'           => 'required|string|max:100',
-            'advantages'        => 'nullable|array',
-            'advantages.*'      => 'required|string|max:100',
-            'disadvantages'     => 'nullable|array',
-            'disadvantages.*'   => 'required|string|max:100',
-            'message'           => 'required|string',
+            // 'ranks'             => 'nullable|array',
+            // 'ranks.*'           => 'required|string|max:100',
+            // 'advantages'        => 'nullable|array',
+            // 'advantages.*'      => 'required|string|max:100',
+            // 'disadvantages'     => 'nullable|array',
+            // 'disadvantages.*'   => 'required|string|max:100',
+            // 'message'           => 'required|string',
 
             /*Relation*/
-            'currency_id'    => 'required|integer|exists:currencies,id',
+            // 'currency_id'    => 'required|integer|exists:currencies,id',
         ];
     }
 }

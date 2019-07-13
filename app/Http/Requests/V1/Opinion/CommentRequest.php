@@ -28,7 +28,7 @@ class CommentRequest extends FormRequest
             
             /*Relation*/
             'parent_id'     => 'nullable|integer|exists:comments,id',
-            'article_id'    => 'required|integer|exists:articles,id',
+            'article_id'    => 'nullable|integer|exists:articles,id',
         ];
     }
 }

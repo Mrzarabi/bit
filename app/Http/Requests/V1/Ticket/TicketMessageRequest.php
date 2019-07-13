@@ -24,7 +24,8 @@ class TicketMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'message'       => 'required|string|min:5',
+            'title'        => 'required|string|max:50',
+            'message'      => 'required|string|min:5',
             
             /* relateion */
             'ticket_id'    => 'required|integer|exists:tickets,id',
