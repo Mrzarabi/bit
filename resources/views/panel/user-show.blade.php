@@ -107,294 +107,298 @@
 			<!-- /Breadcrumb -->
 		</div>
 		<!-- /Title -->
-		<div class="seprator-block"></div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default border-panel card-view">
-                        <div class="panel-wrapper collapse in">
-                            <div class="panel-body">
-                                <div class="col-md-4">
-                                    @if ($user->avatar)
-                                        <div class="product-pic img-responsive "
-                                            style="background: url('{{ $user->avatar }}') center center;
-                                                background-size: cover; margin: 50px; max-width: 300px; border-radius: 7px;">
-                                        </div>    
-                                    @else
-                                        <div class="product-pic img-responsive "
-                                            style="background: url('/images/placeholder/placeholder.png') center center;
-                                                background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
-                                        </div>
-                                    @endif
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="table-wrap">
-                                        <div class="table-responsive">
-                                            <table id="datable_2" class="table table-hover table-bordered display mb-30" >
-                                                <thead>
-                                                    <tr>
-                                                        <th>نام</th>
-                                                        <th>نام خانوادگی</th>
-                                                        <th>کد ملی</th>
-                                                        <th>شماره تماس</th>
-                                                        <th>تاریخ تولد</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>{{ $user->first_name }}</td>
-                                                        <td>{{ $user->last_name }}</td>
-                                                        <td>{{ $user->national_code }}</td>
-                                                        <td>{{ $user->phone_number }}</td>
-                                                        <td>{{ $user->birthday }}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <table id="datable_2" class="table table-hover table-bordered display mb-30" >
-                                                <thead style="margin-top:10px;">
-                                                    <tr>
-                                                        <th>آدرس</th>
-                                                        <th>ایمیل</th>
-                                                        <th>تاریخ ثبت</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>{{ $user->address }}</td>
-                                                        <td>{{ $user->email }}</td>
-                                                        <td>{{ $user->created_at }}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <table id="datable_2" class="table table-hover table-bordered display mb-30" >
-                                                <thead style="margin-top:10px;">
-                                                    <tr>
-                                                        <th>تصویر کد ملی</th>
-                                                        <th>تصویر شناسنامه</th>
-                                                        <th>تصویر قبض</th>
-                                                        <th>تصویر سلفی با کارت ملی</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#image_national_code" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
-                                                            @if ($user->accept_image_national_code)
-                                                                <i style="color:green; padding-right:10px;" class="fa fa-check"></i>
-                                                            @else
-                                                                <i style="color:red; padding-right:20px;" class="ti-close"></i>
-                                                            @endif
-                                                            <div class="modal fade" id="image_national_code" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-body">
-                                                                            <div class="product-pic img-responsive "
-                                                                                @if ($user->image_national_code)
-                                                                                    style="background: url('{{ $user->image_national_code }}') center center;
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default border-panel card-view">
+                    <div class="panel-wrapper collapse in">
+                        <div class="panel-body">
+                            <a href="{{route('user.index')}}"><button title="بازگشت به صفحه اصلی کاربران" class="btn btn-xs btn-purple pull-left custom-btn-purple custom-pama-btn" style="margin-bottom: 10px !important;"><i class="ti-back-left"></i></button></a>
+                            <div class="col-md-4">
+                                @if ($user->avatar)
+                                    <div class="product-pic img-responsive "
+                                        style="background: url('{{ $user->avatar }}') center center;
+                                            background-size: cover; margin: 50px; max-width: 300px; border-radius: 7px;">
+                                    </div>    
+                                @else
+                                    <div class="product-pic img-responsive "
+                                        style="background: url('/images/placeholder/placeholder.png') center center;
+                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="col-md-8">
+                                <div class="table-wrap">
+                                    <div class="table-responsive">
+                                        <table id="datable_2" class="table table-hover table-bordered display mb-30" >
+                                            <thead>
+                                                <tr>
+                                                    <th>نام</th>
+                                                    <th>نام خانوادگی</th>
+                                                    <th>کد ملی</th>
+                                                    <th>شماره تماس</th>
+                                                    <th>تاریخ تولد</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr style="text-align: center;">
+                                                    <td>{{ $user->first_name }}</td>
+                                                    <td>{{ $user->last_name }}</td>
+                                                    <td>{{ $user->national_code }}</td>
+                                                    <td>{{ $user->phone_number }}</td>
+                                                    <td>
+                                                        <p title="میلادی : {{$user->birthday}}">
+                                                            {{ \Morilog\Jalali\Jalalian::forge($user->birthday)->format('%d %B %Y') }}
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table id="datable_2" class="table table-hover table-bordered display mb-30" >
+                                            <thead style="margin-top:10px;">
+                                                <tr>
+                                                    <th>آدرس</th>
+                                                    <th>ایمیل</th>
+                                                    <th>تاریخ ورود</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr style="text-align: center;">
+                                                    <td>{{ $user->address }}</td>
+                                                    <td>{{ $user->email }}</td>
+                                                    <td>
+                                                        <p title="{{ \Morilog\Jalali\Jalalian::forge($user->created_at)->format('%H:i:s - %d %B %Y') }}">
+                                                            {{ \Morilog\Jalali\Jalalian::forge($user->created_at)->ago() }}
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table id="datable_2" class="table table-hover table-bordered display mb-30" >
+                                            <thead style="margin-top:10px;">
+                                                <tr>
+                                                    <th>تصویر کد ملی</th>
+                                                    <th>تصویر شناسنامه</th>
+                                                    <th>تصویر قبض</th>
+                                                    <th>تصویر سلفی با کارت ملی</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr style="text-align: center;">
+                                                    <td>
+                                                        <button type="button" class="custom-btn-primary btn btn-primary" data-toggle="modal" data-target="#image_national_code" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
+                                                        @if ($user->accept_image_national_code)
+                                                            <i style="color:green; padding-right:10px;" class="fa fa-check"></i>
+                                                        @else
+                                                            <i style="color:red; padding-right:20px;" class="ti-close"></i>
+                                                        @endif
+                                                        <div class="modal fade" id="image_national_code" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-body">
+                                                                        @if ($user->image_national_code)
+                                                                        <div class="product-pic img-responsive "
+                                                                            style="background: url('{{ $user->image_national_code }}') center center;
+                                                                                background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <form action="{{route('accept_certificate', ['user' => $user->id])}}" method="post">
+                                                                            <input type="hidden" name="type" value="image_national_code" />
+                                                                            <button type="submit" name="status" value="1" class="btn btn-orange custom-btn-warning btn-icon pull-left">تایید </button>
+                                                                            <button type="submit" name="status" value="0" class="btn btn-secondary custom-btn-gainsboro btn-icon pull-left">رد</button>
+                                                                            @else
+                                                                                <div class="product-pic img-responsive "
+                                                                                    style="background: url('/images/placeholder/placeholder.png') center center;
                                                                                         background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <form action="{{route('accept_certificate', ['user' => $user->id])}}" method="post">
-                                                                                <input type="hidden" name="type" value="image_national_code" />
-                                                                                <button type="submit" name="status" value="0" class="btn btn-secondary">رد</button>
-                                                                                <button type="submit" name="status" value="1" class="btn btn-primary">تایید </button>
-                                                                                @else
-                                                                                    <div class="product-pic img-responsive "
-                                                                                        style="background: url('/images/placeholder/placeholder.png') center center;
-                                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
-                                                                                    </div>  
-                                                                                @endif
-                                                                                @method('put')
-                                                                                @csrf
-                                                                            </form>
-                                                                        </div>
+                                                                                </div>  
+                                                                            @endif
+                                                                            @method('put')
+                                                                            @csrf
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#identify_certificate" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
-                                                            @if ($user->accept_identify_certificate)
-                                                                <i style="color:green; padding-right:10px;" class="fa fa-check"></i>
-                                                            @else
-                                                                <i style="color:red; padding-right:20px;" class="ti-close"></i>
-                                                            @endif
-                                                            <div class="modal fade" id="identify_certificate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-body">
-                                                                            <div class="product-pic img-responsive "
-                                                                                @if ($user->identify_certificate)
-                                                                                    style="background: url('{{ $user->identify_certificate }}') center center;
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="custom-btn-primary btn btn-primary" data-toggle="modal" data-target="#identify_certificate" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
+                                                        @if ($user->accept_identify_certificate)
+                                                            <i style="color:green; padding-right:10px;" class="fa fa-check"></i>
+                                                        @else
+                                                            <i style="color:red; padding-right:20px;" class="ti-close"></i>
+                                                        @endif
+                                                        <div class="modal fade" id="identify_certificate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-body">
+                                                                        @if ($user->identify_certificate)
+                                                                        <div class="product-pic img-responsive "
+                                                                            style="background: url('{{ $user->identify_certificate }}') center center;
+                                                                                background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <form action="{{route('accept_certificate', ['user' => $user->id])}}" method="post">
+                                                                            
+                                                                            <input type="hidden" name="type" value="identify_certificate" />
+                                                                            <button type="submit" name="status" value="1" class="btn btn-orange custom-btn-warning btn-icon pull-left">تایید </button>
+                                                                            <button type="submit" name="status" value="0" class="btn btn-secondary custom-btn-gainsboro btn-icon pull-left">رد</button>
+                                                                            @else
+                                                                                <div class="product-pic img-responsive "
+                                                                                    style="background: url('/images/placeholder/placeholder.png') center center;
                                                                                         background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <form action="{{route('accept_certificate', ['user' => $user->id])}}" method="post">
-                                                                                
-                                                                                <input type="hidden" name="type" value="identify_certificate" />
-                                                                                <button type="submit" name="status" value="0" class="btn btn-secondary">رد</button>
-                                                                                <button type="submit" name="status" value="1" class="btn btn-primary">تایید </button>
-                                                                                @else
-                                                                                    <div class="product-pic img-responsive "
-                                                                                        style="background: url('/images/placeholder/placeholder.png') center center;
-                                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
-                                                                                    </div>
-                                                                                @endif
-                                                                                @method('put')
-                                                                                @csrf
-                                                                            </form>
-                                                                        </div>
+                                                                                </div>
+                                                                            @endif
+                                                                            @method('put')
+                                                                            @csrf
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#image_bill" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
-                                                            @if ($user->accept_image_bill)
-                                                                <i style="color:green; padding-right:10px;" class="fa fa-check"></i>
-                                                            @else
-                                                                <i style="color:red; padding-right:20px;" class="ti-close"></i>
-                                                            @endif
-                                                            <div class="modal fade" id="image_bill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-body">
-                                                                            <div class="product-pic img-responsive "
-                                                                                @if ($user->image_bill)
-                                                                                    style="background: url('{{ $user->image_bill }}') center center;
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="custom-btn-primary btn btn-primary" data-toggle="modal" data-target="#image_bill" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
+                                                        @if ($user->accept_image_bill)
+                                                            <i style="color:green; padding-right:10px;" class="fa fa-check"></i>
+                                                        @else
+                                                            <i style="color:red; padding-right:20px;" class="ti-close"></i>
+                                                        @endif
+                                                        <div class="modal fade" id="image_bill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-body">
+                                                                        @if ($user->image_bill)
+                                                                        <div class="product-pic img-responsive "
+                                                                            style="background: url('{{ $user->image_bill }}') center center;
+                                                                                background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <form action="{{route('accept_certificate', ['user' => $user->id])}}" method="post">
+                                                                            <input type="hidden" name="type" value="image_bill" />
+                                                                            <button type="submit" name="status" value="1" class="btn btn-orange custom-btn-warning btn-icon pull-left">تایید </button>
+                                                                            <button type="submit" name="status" value="0" class="btn btn-secondary custom-btn-gainsboro btn-icon pull-left">رد</button>
+                                                                            @else
+                                                                                <div class="product-pic img-responsive "
+                                                                                    style="background: url('/images/placeholder/placeholder.png') center center;
                                                                                         background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <form action="{{route('accept_certificate', ['user' => $user->id])}}" method="post">
-                                                                                <input type="hidden" name="type" value="image_bill" />
-                                                                                <button type="submit" name="status" value="0" class="btn btn-secondary">رد</button>
-                                                                                <button type="submit" name="status" value="1" class="btn btn-primary">تایید </button>
-                                                                                @else
-                                                                                    <div class="product-pic img-responsive "
-                                                                                        style="background: url('/images/placeholder/placeholder.png') center center;
-                                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
-                                                                                    </div>
-                                                                                @endif
-                                                                                @method('put')
-                                                                                @csrf
-                                                                            </form>
-                                                                        </div>
+                                                                                </div>
+                                                                            @endif
+                                                                            @method('put')
+                                                                            @csrf
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
-                                                            @if ($user->accept_image_selfie_national_code)
-                                                                <i style="color:green; padding-right:10px;" class="fa fa-check"></i>
-                                                            @else
-                                                                <i style="color:red; padding-right:20px;" class="ti-close"></i>
-                                                            @endif
-                                                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-body">
-                                                                            <div class="product-pic img-responsive "
-                                                                                @if ($user->image_selfie_national_code)
-                                                                                    style="background: url('{{ $user->image_selfie_national_code }}') center center;
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="custom-btn-primary btn btn-primary" data-toggle="modal" data-target="#image_selfie_national_code" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
+                                                        @if ($user->accept_image_selfie_national_code)
+                                                            <i style="color:green; padding-right:10px;" class="fa fa-check"></i>
+                                                        @else
+                                                            <i style="color:red; padding-right:20px;" class="ti-close"></i>
+                                                        @endif
+                                                        <div class="modal fade" id="image_selfie_national_code" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-body">
+                                                                        @if ($user->image_selfie_national_code)
+                                                                        <div class="product-pic img-responsive "
+                                                                            style="background: url('{{ $user->image_selfie_national_code }}') center center;
+                                                                                background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <form action="{{route('accept_certificate', ['user' => $user->id])}}" method="post">
+                                                                            <input type="hidden" name="type" value="image_selfie_national_code" />
+                                                                            <button type="submit" name="status" value="1" class="btn btn-orange custom-btn-warning btn-icon pull-left">تایید </button>
+                                                                            <button type="submit" name="status" value="0" class="btn btn-secondary custom-btn-gainsboro btn-icon pull-left">رد</button>
+                                                                            @else
+                                                                                <div class="product-pic img-responsive "
+                                                                                    style="background: url('/images/placeholder/placeholder.png') center center;
                                                                                         background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="modal-footer">
-                                                                            <form action="{{route('accept_certificate', ['user' => $user->id])}}" method="post">
-                                                                                <input type="hidden" name="type" value="image_selfie_national_code" />
-                                                                                <button type="submit" name="status" value="0" class="btn btn-secondary">رد</button>
-                                                                                <button type="submit" name="status" value="1" class="btn btn-primary">تایید </button>
-                                                                                @else
-                                                                                    <div class="product-pic img-responsive "
-                                                                                        style="background: url('/images/placeholder/placeholder.png') center center;
-                                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
-                                                                                    </div>
-                                                                                @endif
-                                                                                @method('put')
-                                                                                @csrf
-                                                                            </form>
-                                                                        </div>
+                                                                                </div>
+                                                                            @endif
+                                                                            @method('put')
+                                                                            @csrf
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    <div class="table-wrap">
-                                        <div class="table-responsive">
-                                            <table id="datable_2" class="table table-hover table-bordered display mb-30" >
-                                                <thead style="margin-top:10px;">
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>نام بانک</th>
-                                                        <th>شماره بانک</th>
-                                                        <th>شماره شبا</th>
-                                                        <th>تاریخ ثبت</th>
-                                                        <th>تصویر کارت بانکی</th>
-                                                    </tr>
-                                                </thead>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-wrap">
+                                    <div class="table-responsive">
+                                        <table id="datable_2" class="table table-hover table-bordered display mb-30" >
+                                            <thead style="margin-top:10px;">
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>نام بانک</th>
+                                                    <th>شماره بانک</th>
+                                                    <th>شماره شبا</th>
+                                                    <th>تاریخ ثبت</th>
+                                                    <th>تصویر کارت بانکی</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
                                                 <tbody>
-                                                    <tbody>
-                                                        @php $i = 0 @endphp
-                                                        @foreach ($user->bankCard as $item)
-                                                            <tr>
-                                                                <td>{{ ++$i }}</td>
-                                                                <td>{{ $item->bank_name }}</td>
-                                                                <td>{{ $item->bank_card }}</td>
-                                                                <td>{{ $item->code }}</td>
-                                                                <td>{{ $item->created_at }}</td>
-                                                                <td>
-                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
+                                                    @php $i = 0 @endphp
+                                                    @foreach ($user->bankCard as $item)
+                                                        <tr style="text-align: center;">
+                                                            <td>{{ ++$i }}</td>
+                                                            <td>{{ $item->bank_name }}</td>
+                                                            <td>{{ $item->bank_card }}</td>
+                                                            <td>{{ $item->code }}</td>
+                                                            <td>
+                                                                <p title="{{ \Morilog\Jalali\Jalalian::forge($item->created_at)->format('%H:i:s - %d %B %Y') }}">
+                                                                    {{ \Morilog\Jalali\Jalalian::forge($item->created_at)->ago() }}
+                                                                </p>
+                                                            </td>
+                                                            <td>
+                                                                <button type="button" class="custom-btn-primary btn btn-primary" data-toggle="modal" data-target="#image_benk_card" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
 
-                                                                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                        <div class="modal-dialog" role="document">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <h5 class="modal-title" id="exampleModalLabel">تصویر کارت بانکی</h5>
-                                                                                </div>
-                                                                                <div class="modal-body">
+                                                                <div class="modal fade" id="image_benk_card" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-body">
+                                                                                @if ($item->image_benk_card)
                                                                                     <div class="product-pic img-responsive "
-                                                                                    style="background: url('{{ $item->image_benk_card }}') center center;
-                                                                                        background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                                        style="background: url('{{ $item->image_benk_card }}') center center;
+                                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                                    </div>    
+                                                                                @else
+                                                                                    <div class="product-pic img-responsive "
+                                                                                        style="background: url('/images/placeholder/placeholder.png') center center;
+                                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="modal-footer">
-                                                                                    <form method="post" action="{{route('accept_certificate' , ['user' => $item->id])}}" >
-                                                                                        <div class="panel-body">
-                                                                                            @include('errors.errors-show')
-                                                                                        </div>
-                                                                                        <input type="hidden" name="type" value="image_benk_card" />
-                                                                                        <button type="submit" name="status" value="0" class="btn btn-secondary" data-dismiss="modal">رد</button>
-                                                                                        <button type="submit" name="status" value="1" class="btn btn-primary">تایید </button>
-                                                                                        @method('put')
-                                                                                        @csrf
-                                                                                    </form>
-                                                                                </div>
+                                                                                @endif
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
-                                            </table>
-                                        </div>
-                                    </div>	
-                                </div>
-                            </div>	
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>	
+                            </div>
                         </div>	
-                    </div>
+                    </div>	
                 </div>
             </div>
+        </div>
 		<!-- /Product Row Four -->
 		
 	</div>

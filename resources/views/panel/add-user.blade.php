@@ -98,70 +98,100 @@
                                                 </div>	
                                             </div>
                                             <div class="col-md-8">
-                                                <div class="form-group @if( $errors->has('first_name') ) has-error @endif">
-                                                    <label class="control-label mb-10"> نام :</label>
-                                                    <div class="input-group">
-                                                        <input type="text" name="first_name" @if(isset($user) && !empty($user->first_name)) value="{{$user->first_name}}" @else value="{{old('first_name')}}" @endif id="title" class="form-control" placeholder="نام اول کاربر">
-                                                        <div class="input-group-addon"><i class="ti-text"></i></div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group @if( $errors->has('first_name') ) has-error @endif">
+                                                            <label class="control-label mb-10"> نام :</label>
+                                                            <div class="input-group">
+                                                                <input type="text" name="first_name" @if(isset($user) && !empty($user->first_name)) value="{{$user->first_name}}" @else value="{{old('first_name')}}" @endif id="title" class="form-control" placeholder="نام اول کاربر">
+                                                                <div class="input-group-addon"><i class="ti-text"></i></div>
+                                                            </div>
+                                                            @if( $errors->has('first_name') )
+                                                                <span class="help-block">{{ $errors->first('first_name') }}</span>
+                                                            @endif
+                                                        </div>
                                                     </div>
-                                                    @if( $errors->has('first_name') )
-                                                        <span class="help-block">{{ $errors->first('first_name') }}</span>
-                                                    @endif
+                                                    <div class="col-md-6">
+                                                        <div class="form-group @if( $errors->has('last_name') ) has-error @endif">
+                                                            <label class="control-label mb-10">نام خانوادگی :</label>
+                                                            <div class="input-group">
+                                                                <input type="text" name="last_name" @if(isset($user) && !empty($user->last_name)) value="{{$user->last_name}}" @else value="{{old('last_name')}}" @endif id="title" class="form-control" placeholder="نام خانوادگی کاربر">
+                                                                <div class="input-group-addon"><i class="ti-text"></i></div>
+                                                            </div>
+                                                            @if( $errors->has('last_name') )
+                                                                <span class="help-block">{{ $errors->first('last_name') }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
                                                 </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group @if( $errors->has('national_code') ) has-error @endif">
+                                                            <label class="control-label mb-10">شماره کارت ملی :</label>
+                                                            <div class="input-group">
+                                                                <input type="text" name="national_code" @if(isset($user) && !empty($user->national_code)) value="{{$user->national_code}}" @else value="{{old('social_link')}}" @endif id="title" class="form-control" placeholder="شماره کارت ملی کاربر">
+                                                                <div class="input-group-addon"><i class="ti-text"></i></div>
+                                                            </div>
+                                                            @if( $errors->has('national_code') )
+                                                                <span class="help-block">{{ $errors->first('national_code') }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group @if( $errors->has('phone_number') ) has-error @endif">
+                                                            <label class="control-label mb-10">تلفن کاربر :</label>
+                                                            <div class="input-group">
+                                                                <input type="text" name="phone_number" @if(isset($user) && !empty($user->phone_number)) value="{{$user->phone_number}}" @else value="{{old('phone_number')}}" @endif id="title" class="form-control" placeholder="تلفن کاربر">
+                                                                <div class="input-group-addon"><i class="ti-text"></i></div>
+                                                            </div>
+                                                            @if( $errors->has('phone_number') )
+                                                                <span class="help-block">{{ $errors->first('phone_number') }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group @if( $errors->has('created_at') ) has-error @endif">
+                                                            <label class="control-label mb-10"> تاریخ ثبت نام :</label>
+                                                            <div class="input-group">
+                                                                <input type="text" name="created_at" @if(isset($user) && !empty($user->created_at)) value="{{$user->created_at}}" @else value="{{old('created_at')}}" @endif id="title" class="form-control" placeholder="تاریخ ثبت نام کاربر">
+                                                                <div class="input-group-addon"><i class="ti-text"></i></div>
+                                                            </div>
+                                                            @if( $errors->has('created_at') )
+                                                                <span class="help-block">{{ $errors->first('created_at') }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group @if( $errors->has('birthday') ) has-error @endif">
+                                                            <label class="control-label mb-10">تاریخ تولد کاربر :</label>
+                                                            <div class="input-group">
+                                                                <input type="text" name="birthday" @if(isset($user) && !empty($user->birthday)) value="{{$user->birthday}}" @else value="{{old('birthday')}}" @endif id="title" class="form-control" placeholder="تاریخ تولد کاربر">
+                                                                <div class="input-group-addon"><i class="ti-text"></i></div>
+                                                            </div>
+                                                            @if( $errors->has('birthday') )
+                                                                <span class="help-block">{{ $errors->first('birthday') }}</span>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
                                             <div class="col-md-8">
-                                                <div class="form-group @if( $errors->has('last_name') ) has-error @endif">
-                                                    <label class="control-label mb-10">نام خانوادگی :</label>
+                                                <div class="form-group @if( $errors->has('address') ) has-error @endif">
+                                                    <label class="control-label mb-10">آدرس :</label>
                                                     <div class="input-group">
-                                                        <input type="text" name="last_name" @if(isset($user) && !empty($user->last_name)) value="{{$user->last_name}}" @else value="{{old('last_name')}}" @endif id="title" class="form-control" placeholder="نام خانوادگی کاربر">
+                                                        <input type="text" name="address" @if(isset($user) && !empty($user->address)) value="{{$user->address}}" @else value="{{old('address')}}" @endif id="title" class="form-control" placeholder="آدرس کاربر">
                                                         <div class="input-group-addon"><i class="ti-text"></i></div>
                                                     </div>
-                                                    @if( $errors->has('last_name') )
-                                                        <span class="help-block">{{ $errors->first('last_name') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="col-md-6">
-                                                <div class="form-group @if( $errors->has('national_code') ) has-error @endif">
-                                                    <label class="control-label mb-10">شماره کارت ملی :</label>
-                                                    <div class="input-group">
-                                                        <input type="text" name="national_code" @if(isset($user) && !empty($user->national_code)) value="{{$user->national_code}}" @else value="{{old('social_link')}}" @endif id="title" class="form-control" placeholder="شماره کارت ملی کاربر">
-                                                        <div class="input-group-addon"><i class="ti-text"></i></div>
-                                                    </div>
-                                                    @if( $errors->has('national_code') )
-                                                        <span class="help-block">{{ $errors->first('national_code') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group @if( $errors->has('phone_number') ) has-error @endif">
-                                                    <label class="control-label mb-10">تلفن کاربر :</label>
-                                                    <div class="input-group">
-                                                        <input type="text" name="phone_number" @if(isset($user) && !empty($user->phone_number)) value="{{$user->phone_number}}" @else value="{{old('phone_number')}}" @endif id="title" class="form-control" placeholder="تلفن کاربر">
-                                                        <div class="input-group-addon"><i class="ti-text"></i></div>
-                                                    </div>
-                                                    @if( $errors->has('phone_number') )
-                                                        <span class="help-block">{{ $errors->first('phone_number') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="col-md-4">
-                                                <div class="form-group @if( $errors->has('birthday') ) has-error @endif">
-                                                    <label class="control-label mb-10">تاریخ تولد کاربر :</label>
-                                                    <div class="input-group">
-                                                        <input type="text" name="birthday" @if(isset($user) && !empty($user->birthday)) value="{{$user->birthday}}" @else value="{{old('birthday')}}" @endif id="title" class="form-control" placeholder="تاریخ تولد کاربر">
-                                                        <div class="input-group-addon"><i class="ti-text"></i></div>
-                                                    </div>
-                                                    @if( $errors->has('birthday') )
-                                                        <span class="help-block">{{ $errors->first('birthday') }}</span>
+                                                    @if( $errors->has('address') )
+                                                        <span class="help-block">{{ $errors->first('address') }}</span>
                                                     @endif
                                                 </div>
                                             </div>
@@ -177,39 +207,11 @@
                                                     @endif
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group @if( $errors->has('created_at') ) has-error @endif">
-                                                    <label class="control-label mb-10"> تاریخ ثبت نام :</label>
-                                                    <div class="input-group">
-                                                        <input type="text" name="created_at" @if(isset($user) && !empty($user->created_at)) value="{{$user->created_at}}" @else value="{{old('created_at')}}" @endif id="title" class="form-control" placeholder="تاریخ ثبت نام کاربر">
-                                                        <div class="input-group-addon"><i class="ti-text"></i></div>
-                                                    </div>
-                                                    @if( $errors->has('created_at') )
-                                                        <span class="help-block">{{ $errors->first('created_at') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="col-md-12">
-                                                <div class="form-group @if( $errors->has('address') ) has-error @endif">
-                                                    <label class="control-label mb-10">آدرس :</label>
-                                                    <div class="input-group">
-                                                        <input type="text" name="address" @if(isset($user) && !empty($user->address)) value="{{$user->address}}" @else value="{{old('address')}}" @endif id="title" class="form-control" placeholder="آدرس کاربر">
-                                                        <div class="input-group-addon"><i class="ti-text"></i></div>
-                                                    </div>
-                                                    @if( $errors->has('address') )
-                                                        <span class="help-block">{{ $errors->first('address') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                                                <h5 class="txt-dark">@isset($user) ویرایش پسورد کاربر @endisset</h5>
+                                        <div class="col-lg-12 col-md-4 col-sm-4 col-xs-12">
+                                            <h5 class="txt-dark">@isset($user) ویرایش پسورد کاربر @endisset</h5>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -237,30 +239,10 @@
                                                         <span class="help-block">{{ $errors->first('password_confirmation') }}</span>
                                                     @endif
                                                 </div>
-                                            </div>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
-
-                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-body">
-                                                                <input type="file" @isset($user) data-default-file="{{ $user->image_national_code }}" @endisset/>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <form action="{{ route('user.update', ['user' => $user->id]) }}" method="post" enctype="multipart/form-data">
-                                                                    <button type="button" class="btn btn-secondary">رد</button>
-                                                                    <a href="{{ route('user.update', ['user' => $user->id]) }}">
-                                                                        <button type="button" class="btn btn-primary"><i class="fa fa-check"></i><span> تایید </span></button></a>
-                                                                    @method('put')
-                                                                    @csrf
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                            </div>                                                
                                             <div class="form-actions">
-                                                <button class="btn btn-orange btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره</span></button>
-                                                <a href="/panel/users" class="btn btn-default pull-left">لغو</a>
+                                                <button class="btn btn-orange custom-btn-warning btn-icon right-icon mr-10 pull-left" > <i class="fa fa-check"></i> <span>ذخیره</span></button>
+                                                <a href="{{route('user.index')}}" class="btn btn-default custom-btn-gainsboro pull-left" style="border-radius: 7px;">لغو</a>
                                                 <div class="clearfix"></div>
                                             </div>
                                         </div>

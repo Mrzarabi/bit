@@ -122,7 +122,7 @@
 						<div  class="panel-body">
 							<div class="form-group">
 								<div class="input-group">
-									<input type="text" name="article_title" onkeyup="this.nextElementSibling.href = '/panel/article/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : تلفن همراه">
+									<input type="text" name="first_name" onkeyup="this.nextElementSibling.href = '/panel/user/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : نام کاربر">
 									<a href="/panel/article/search/" class="input-group-addon"><i class="ti-search"></i></a>
 								</div>
 							</div>
@@ -134,12 +134,10 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
-		<!-- Group Row -->
 
 		<div class="seprator-block"></div>
-		
+	
 		<!-- Product Row One -->
 		<div class="row">
 			@empty($users[0])
@@ -148,55 +146,80 @@
 				<p class="pull-right">هیچ کاربری یافت نشد !</p>
 				<div class="clearfix"></div>
 			</div>
-			@else
-				@foreach ($users as $user)
-				{{-- <div class="card" onclick="this.classList.toggle('expanded')">
-					<img class="label" src="{{$item->image}}" viewBox="0 0 100 100" height="200" width="200">
-					<div class="text1">
-						<div class="text-content">
-							<h1 class="title">{{$item->title}}</h1>
-							<div class="body-text">{{$item->description}}</div>
-						</div>
-					</div> --}}
-				{{-- <svg class="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 35" width="30"><path d="M5 30L50 5l45 25" fill="none" stroke="#000" stroke-width="5"/></svg> --}}
-				<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 product-card">
-					<div class="panel panel-default card-view pa-0">
-						<div class="panel-wrapper collapse in">
-							<div class="panel-body pa-0">
-								<article class="col-item">
-									<div class="photo">
-										<div class="options">
-											<form action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
-												<a href="{{ route('user.edit', ['user' => $user->id]) }}" class="font-18 txt-grey mr-10 pull-left"><i class="icon ti-pencil"></i></a>
-												<button type="submit" itemid="{{ $user->id }}" class="font-18 txt-grey pull-left delete-item"><i class="icon ti-close"></i></button>
-												@method('delete')
-												@csrf
-											</form>	
-										</div>
-										
-										<a href="{{ route('user.show', ['user' => $user->id]) }}">
-											<div class="product-pic img-responsive"
-												style="background: url('{{ $user->avatar }}') center center;
-													background-size: cover;">
-											</div>
-										</a>
-									</div>
-									<div class="info">
-                                        <a href="{{ route('user.show', ['user' => $user->id]) }}"> <h5>{{$user->first_name}} {{$user->last_name}}</h5></a>
-										
-										<p class="head-font block txt-orange-light-1 font-16">{{$user->phone_number}}</p>
-									</div>
-								</article>
-							</div>
-						</div>	
-					</div>	
-				</div>
-				@endforeach	
 			@endempty
-
+			<div class="col-md-12">
+				<div class="panel panel-default card-view">
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body">
+							<div class="table-wrap">
+								<div class="table-responsive over" style="overflow-x: hidden !important;">
+									<table id="datable_2" class="table table-hover table-bordered display mb-30">
+										<h2 style="margin:15px;">کاربران</h2>
+										<thead>
+											<tr>
+											<th style="font-weight:bold; font-size:20px;">#</th>
+												<th style="font-weight:bold; font-size:20px;">تصویر کاربر</th>
+												<th style="font-weight:bold; font-size:20px;">نام و نام خانوادگی</th>
+												<th style="font-weight:bold; font-size:20px;">تلفن</th>
+												<th style="font-weight:bold; font-size:20px;">کد ملی</th>
+												<th style="font-weight:bold; font-size:20px;">تولد</th>
+												<th style="font-weight:bold; font-size:20px;">تاریخ وررود</th>
+												<th style="font-weight:bold; font-size:20px;">عملیات</th>
+											</tr>
+										</thead>
+										<tbody>
+											@php $i = 0 @endphp
+											@foreach ($users as $user)
+													<tr style="text-align:center;">
+														<td>{{ ++$i }}</td>
+														<td>
+															<div class="row" style="display: flex; justify-content: center;">
+																<div class="col-md-3"></div>
+																<div class="col-md-8">
+																	@if ($user->avatar)
+																	<div class="product-pic img-responsive"
+																		style="background: url('{{ $user->avatar }}') center center;
+																			background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%;">
+																	@else
+																		<div class="product-pic img-responsive "
+																			style="background: url('/images/placeholder/download.png') center center;
+																				background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%;">
+																		</div>
+																	@endif
+																	</div>
+																</div>
+															</div>
+														</td>
+														<td>{{ $user->first_name . ' ' . $user->last_name }}</td>
+														<td>{{ $user->phone_number }}</td>
+														<td>{{ $user->national_code }}</td>
+														<td>{{ \Morilog\Jalali\Jalalian::forge($user->birthday)->format('%d %B %Y') }}</td>
+														<td title="{{ \Morilog\Jalali\Jalalian::forge($user->created_at)->format('%H:i:s - %d %B %Y')  }}">
+															{{ \Morilog\Jalali\Jalalian::forge($user->created_at)->ago() }}
+														</td>
+														<td>
+															<div class="font-icon custom-style">
+																<form action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
+																	<button title= "حذف کاربر" type="submit" itemid="{{ $user->id }}" class="delete-item btn-xs btn btn-danger custom-btn-danger"><i class="icon ti-trash custom-icon"> </i></button>
+																	<a title= "ویرایش کاربر" style="padding: 6px 5px !important; margin-right: 19px;" class="d-inline btn btn-xs btn-warning custom-btn-warning" href="{{ route('user.edit', ['user' => $user->id]) }}"><i class="icon ti-pencil custom-icon"> </i></a>
+																	@method('delete')
+																	@csrf
+																</form>
+																<a title= "دیدن اطلاعات کاربر" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('user.show', ['user' => $user->id]) }}"><i class="icon ti-plus custom-icon"></i></a>
+															</div>
+														</td>
+													</tr>
+											@endforeach
+										</tbody>
+									</table>
+								</div>
+							</div>
+							{{$users->links()}}
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>	
-		<!-- /Product Row Four -->
-		
 	</div>
 @endsection
 
