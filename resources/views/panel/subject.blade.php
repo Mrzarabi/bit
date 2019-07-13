@@ -73,7 +73,7 @@
                                     @include('errors.errors-show')
 									<div class="row">
 										<div class="col-md-9">
-											<div class="@isset($subject) col-md-12 @else col-md-6 @endisset">
+											<div class="col-md-12">
 												<div class="form-group">
 													<label class="control-label mb-10">نام گروه</label>
 													<div class="input-group">
@@ -82,30 +82,6 @@
 													</div>
 												</div>
 											</div>
-	
-											{{-- @if(!isset($category))
-											<div class="col-md-6">
-												<div class="form-group">
-													<label class="control-label mb-10">گروه مادر</label>
-													<div class="input-group">
-														<select name="parent" class="form-control select2 categories">
-															@if (isset($category))
-															<option value="{{$id}}">زیر مجموعه گروه {{ $category->title }}</option>
-															@else
-															<option value="">ثبت به عنوان گروه اصلی</option>
-															@endif
-	
-															@foreach ($categories as $item)
-															<option value="{{ $item->id}}">{{$item->title}}</option>
-															@endforeach
-														</select>
-														<div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
-													</div>
-												</div>
-											</div>
-											@endif --}}
-											<!--/span-->
-											
 											<div class="col-md-12">
 												<div class="form-group">
 													<label class="control-label mb-10">توضیح کوتاه</label>
@@ -133,7 +109,7 @@
 									<hr class="light-grey-hr"/>
 									
 									<div class="form-actions">
-										<button class="btn @isset($subject) btn-warning @else btn-primary @endisset btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i>
+										<button class="btn @isset($subject) btn-orange custom-btn-warning @else btn-primary custom-btn-primary @endisset btn  btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i>
 											<span>@isset($subject) ویرایش گروه @else ثبت گروه @endisset</span>
 										</button>
 										<div class="clearfix"></div>
@@ -157,104 +133,80 @@
 			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
 				<h5 class="txt-dark">لیست گروه ها</h5>
 			</div>
-
-			{{-- <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-				<ol class="breadcrumb">
-					@isset($breadcrumb)
-						@if (!empty($breadcrumb[0]))
-							@foreach ($breadcrumb as $item)
-								<li>
-									<a href="/panel/category/{{ $item->id }}">
-										{{ $item->title }}
-									</a>
-								</li>
-							@endforeach
-						@endif
-					@endisset
-					<li><a href="/panel/category/">دسته های اصلی</a></li>
-				</ol>
-			</div> --}}
-			<!-- /Breadcrumb -->
 		</div>
-		<!-- /Title -->
-		<!-- Row -->
 		<div class="row">
-			{{-- @empty($categories->first())
+			@empty($subjects)
 				<div class="alert alert-warning alert-dismissable">
 					<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
-					@if (isset($category))
-						<p class="pull-right">هیچ زیر مجموعه ای برای گروه "{{ $category->title }}" ثبت نشده است !</p>
-					@else
-						<p class="pull-right">هیچ گروهی تاکنون ثبت نشده است !</p>
-					@endif
+					<p class="pull-right">هیچ گروهی تاکنون ثبت نشده است !</p>
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 					<div class="clearfix"></div>
 				</div>
-			@endempty --}}
-
-			@php $colors = ['danger', 'warning', 'info', 'primary', 'success']; $i = $x = 0; @endphp		
-
-			@foreach ($subjects as $item)
-				<div class="col-md-3 col-sm-6 col-xs-12">
-					@php if ($x == 5) { $x = 0; } @endphp
-					<div class="panel panel-{{ $colors[$x] }} card-view panel-refresh">
-						<div class="refresh-container">
-							<div class="la-anim-1"></div>
-						</div>
-						<div class="panel-heading">
-							<div class="pull-right" style="display: flex;">
-								<div>
-									@if ($item->logo == null)
-										<img src="/s/banner-02.jpg"  alt="subject logo" style="width: 65px; height: 65px; border-radius: 50%; margin-top:-40px; border: 2px solid #777777; position: absolute;">
-									@else
-										<img src="{{ $item->logo }}" alt="subject logo" style="width: 65px; height: 65px; border-radius: 50%; margin-top:-40px; border: 2px solid #777777; position: absolute;">
-									@endif
+			@endempty
+			<div class="col-md-12">
+				<div class="panel panel-default border-panel card-view">
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body">
+							<div class="table-wrap">
+								<div class="table-responsive">
+									<table id="datable_2" class="table table-hover table-bordered display mb-30">
+										<h2 style="margin:15px;">دسته بندی اصلی</h2>
+										<thead>
+											<tr>
+												<th style="font-weight:bold; font-size:20px;">#</th>
+												<th style="font-weight:bold; font-size:20px;">تصویر دسته بندی</th>
+												<th style="font-weight:bold; font-size:20px;">عنوان دسته بندی</th>
+												<th style="font-weight:bold; font-size:20px;">تاریخ ثبت</th>
+												<th style="font-weight:bold; font-size:20px;">عملیات</th>
+											</tr>
+										</thead>
+										<tbody>
+											@php $i = 0 @endphp
+											@foreach ($subjects as $subject)
+												<tr style="text-align:center;">
+													<td>{{ ++$i }}</td>
+													<td>
+														<div class="row" style="display: flex; justify-content: center;">
+															<div class="col-md-8">
+																@if ($subject->logo)
+																	<img src="{{ $subject->logo }}" style="background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%; height: 100%;" alt="تصویر">
+																@else
+																	<img src="/images/placeholder/placeholder.png" style="background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%; height: 100%;" alt="تصویر">
+																@endif
+															</div>
+														</div>
+													</td>
+													<td>{{ $subject->title }}</td>
+													<td title="{{ \Morilog\Jalali\Jalalian::forge($subject->created_at)->format('%H:i:s - %d %B %Y')  }}">
+														{{ \Morilog\Jalali\Jalalian::forge($subject->created_at)->ago() }}
+													</td>
+													<td>
+														<div class="font-icon custom-style">
+															<div class="font-icon custom-style">
+																<form action="{{ route('subject.destroy', ['subject' => $subject->id]) }}" method="POST">
+																	<button title= "حذف دسته بندی" type="submit" itemid="{{ $subject->id }}" class=" btn-xs btn btn-danger custom-btn-danger"><i class="icon ti-trash custom-icon"> </i></button>
+																	<a title= "ویرایش دسته بندی" style="padding: 6px 5px !important; margin-right: 19px; margin-left: 19px;" class="d-inline btn btn-xs btn-warning custom-btn-warning" href="{{ route('subject.edit', ['subject' => $subject->id]) }}">
+																		<i class="icon ti-pencil custom-icon"> </i></a>
+																	@method('delete')
+																	@csrf
+																</form>
+															</div>
+														</div>
+													</td>
+												</tr>
+											@endforeach
+										</tbody>
+									</table>
+									<div style="display: flex; justify-content: center;">
+									{{-- {{$subjects->links()}} --}}
+									</div>
 								</div>
-								<div style="padding-right: 100px;">
-									<h6 class="panel-title txt-light" >{{ $item->title }}</h6>
-								</div>
-							</div>
-							<div class="pull-left">
-								<a class="pull-left inline-block mr-15" data-toggle="collapse" href="#collapse_{{$i}}" aria-expanded="true">
-									<i class="zmdi zmdi-chevron-down"></i>
-									<i class="zmdi zmdi-chevron-up"></i>
-								</a>
-
-								<form action="{{ route('subject.destroy', ['subject' => $item->id]) }}" method="POST" class="pull-left inline-block mr-15">
-									<a href="{{ route('subject.edit', ['subject' => $item->id]) }}">
-										<i class="zmdi zmdi-edit"></i>
-									</a>
-									<button type="submit" itemid="{{ $item->id }}" class="delete-item">
-										<i class="zmdi zmdi-close"></i></img>
-									</button>
-									
-									@method('delete')
-									@csrf
-								</form>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div  id="collapse_{{$i}}" class="panel-wrapper collapse in group-card">
-							<div  class="panel-body">
-								<div class="col-md-6">
-									@empty($item->description)
-										<div class="alert alert-warning alert-dismissable">
-											<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
-											<p class="pull-right">توضیحی ثبت نشده است !</p>
-											<div class="clearfix"></div>
-										</div>
-									@endempty
-									<p>{{ $item->description}}</p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>				
-				@php ++$i; ++$x @endphp					
-			@endforeach
-
-		{{-- </div>	 --}}
-		<!-- /Row -->
+							</div>	
+						</div>	
+					</div>	
+				</div>	
+			</div>
+		</div>
 	</div>
 @endsection
 		

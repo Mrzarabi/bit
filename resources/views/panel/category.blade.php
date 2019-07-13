@@ -93,7 +93,7 @@
 												<div class="form-group">
 													<label class="control-label mb-10">نام گروه</label>
 													<div class="input-group">
-														<input type="text" name="title" id="firstName" @isset($category) value="{{$category->title}}" @else value="{{old('title')}}" @endisset class="form-control" placeholder="مثلا : تلفن همراه">
+														<input type="text" name="title" id="firstName" @isset($category) value="{{$category->title}}" @else value="{{old('title')}}" @endisset class="form-control" placeholder="مثلا : ارز دیجیتال">
 														<div class="input-group-addon"><i class="ti-text"></i></div>
 													</div>
 												</div>
@@ -149,7 +149,7 @@
 									<hr class="light-grey-hr"/>
 									
 									<div class="form-actions">
-										<button class="btn @isset($category) btn-warning @else btn-primary @endisset btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i>
+										<button class="btn @isset($category) btn-orange custom-btn-warning @else btn-primary custom-btn-primary @endisset btn  btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i>
 											<span>@isset($category) ویرایش گروه @else ثبت گروه @endisset</span>
 										</button>
 										<div class="clearfix"></div>
@@ -207,66 +207,69 @@
 					<div class="clearfix"></div>
 				</div>
 			@endempty
-
-			<?php $colors = ['danger', 'warning', 'info', 'primary', 'success']; $i = $x = 0; ?>
-
-			@foreach ($categories as $item)
-				<div class="col-md-3 col-sm-6 col-xs-12">
-					<?php if ($x == 5) { $x = 0; } ?>
-					<div class="panel panel-{{ $colors[$x] }} card-view panel-refresh">
-						<div class="refresh-container">
-							<div class="la-anim-1"></div>
-						</div>
-						<div class="panel-heading">
-							<div class="pull-right">
-								<a href="/panel/category/{{ $item->id }}">
-									<h6 class="panel-title txt-light">{{ $item->title }}</h6>
-								</a>
-							</div>
-							<div class="pull-left">
-								<a class="pull-left inline-block mr-15" data-toggle="collapse" href="#collapse_<?=$i?>" aria-expanded="true">
-									<i class="zmdi zmdi-chevron-down"></i>
-									<i class="zmdi zmdi-chevron-up"></i>
-								</a>
-
-								<form action="{{ route('category.destroy', ['category' => $item->id]) }}" method="POST" class="pull-left inline-block mr-15">
-									<a href="{{ route('category.edit', ['category' => $item->id]) }}">
-										<i class="zmdi zmdi-edit"></i>
-									</a>
-									<button type="submit" itemid="{{ $item->id }}" class="delete-item">
-										<i class="zmdi zmdi-close"></i></i>
-									</button>
-									
-									@method('delete')
-									@csrf
-								</form>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						<div  id="collapse_<?=$i?>" class="panel-wrapper collapse in group-card">
-							<div  class="panel-body">
-								@if ($item->logo)
-									<div class="col-md-6">
-										<img src="{{ $item->logo }}" alt="Category Logo">
-									</div>
-								@endif
-								<div class="col-md-6">
-									@empty($item->description)
-										<div class="alert alert-warning alert-dismissable">
-											<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
-											<p class="pull-right">توضیحی ثبت نشده است !</p>
-											<div class="clearfix"></div>
-										</div>
-									@endempty
-									<p>{{ $item->description}}</p>
+			<div class="col-md-12">
+				<div class="panel panel-default border-panel card-view">
+					<div class="panel-wrapper collapse in">
+						<div class="panel-body">
+							<div class="table-wrap">
+								<div class="table-responsive">
+									<table id="datable_2" class="table table-hover table-bordered display mb-30">
+										<h2 style="margin:15px;">دسته بندی اصلی</h2>
+										<thead>
+											<tr>
+											  <th style="font-weight:bold; font-size:20px;">#</th>
+												<th style="font-weight:bold; font-size:20px;">تصویر دسته بندی</th>
+												<th style="font-weight:bold; font-size:20px;">عنوان دسته بندی</th>
+												<th style="font-weight:bold; font-size:20px;">تاریخ ثبت</th>
+											  <th style="font-weight:bold; font-size:20px;">عملیات</th>
+											</tr>
+										</thead>
+										<tbody>
+											@php $i = 0 @endphp
+											@foreach ($categories as $category)
+												<tr style="text-align:center;">
+													<td>{{ ++$i }}</td>
+													<td>
+														<div class="row" style="display: flex; justify-content: center;">
+															<div class="col-md-8">
+																@if ($category->logo)
+																	<img src="{{ $category->logo }}" style="background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%; height: 100%;" alt="تصویر">
+																@else
+																	<img src="/images/placeholder/placeholder.png" style="background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%; height: 100%;" alt="تصویر">
+																@endif
+																</div>
+															</div>
+														</div>
+													</td>
+													<td>{{ $category->title }}</td>
+													<td title="{{ \Morilog\Jalali\Jalalian::forge($category->created_at)->format('%H:i:s - %d %B %Y')  }}">
+														{{ \Morilog\Jalali\Jalalian::forge($category->created_at)->ago() }}
+													</td>
+													<td>
+														<div class="font-icon custom-style">
+															<div class="font-icon custom-style">
+																<form action="{{ route('category.destroy', ['category' => $category->id]) }}" method="POST">
+																	<button title= "حذف دسته بندی" type="submit" itemid="{{ $category->id }}" class=" btn-xs btn btn-danger custom-btn-danger"><i class="icon ti-trash custom-icon"> </i></button>
+																	<a title= "ویرایش دسته بندی" style="padding: 6px 5px !important; margin-right: 19px; margin-left: 19px;" class="d-inline btn btn-xs btn-warning custom-btn-warning" href="{{ route('category.edit', ['category' => $category->id]) }}">
+																		<i class="icon ti-pencil custom-icon"> </i></a>
+																	@method('delete')
+																	@csrf
+																</form>
+																<a title= "دیدن اطلاعات دسته بندی" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('category.show', ['category' => $category->id]) }}"><i class="icon ti-plus custom-icon"></i></a>
+															</div>
+														</div>
+													</td>
+												</tr>
+											@endforeach
+										</tbody>
+									</table>
+									{{-- {{$categories->links()}} --}}
 								</div>
-							</div>
-						</div>
-					</div>
-				</div>				
-				<?php ++$i; ++$x ?>				
-			@endforeach
-
+							</div>	
+						</div>	
+					</div>	
+				</div>	
+			</div>
 		</div>
 		<!-- /Row -->
 	</div>
