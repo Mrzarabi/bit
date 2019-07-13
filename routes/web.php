@@ -43,32 +43,27 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
         Route::get('/dollar_cost/{dollar_cost}', 'PanelController@dollar_cost');
     });
 
+    // Users panel Route
+    Route::resource('user', 'UserController')->except([ 'create', 'store' ]);
+    Route::put('user/{user}/accept', 'UserController@accept_certificate')->name('accept_certificate');
+    Route::get('/user/search/{query?}', 'UserController@search');
+    
+
+    // Tickets & TicketMessages panel Route
+    Route::resource('ticket', 'TicketController')->except([ 'create', 'show', 'update' ]);
+    Route::put('ticket/{ticket}/is_close', 'TicketController@is_close')->name('ticket.is_close');
+    Route::get('/ticket/search/{query?}', 'TicketController@search');
+
+    Route::resource('ticket_message', 'TicketMessageController');
+    
     // Category Route
     Route::resource('category', 'CategoryController')->except(['create']);
     Route::get('group/sub/{id}', 'CategoryController@sub');
     
-    // Subject Route
-    Route::resource('subject', 'SubjectController')->except(['create', 'show']);
-    
-    // Products panel Route
-    Route::resource('article', 'ArticleController');
-    Route::get('/article/search/{query?}', 'ArticleController@search');
-    
-    // Products panel Route
+    // Currencies panel Route
     Route::resource('currency', 'CurrencyController');
     Route::get('/currency/search/{query?}', 'CurrencyController@search');
     
-    // Products panel Route
-    Route::resource('comment', 'CommentController');
-    Route::resource('review', 'ReviewController');
-    // Route::get('/currency/search/{query?}', 'CommentController@search');
-    
-    Route::resource('user', 'UserController');
-    Route::put('user/{user}/accept', 'UserController@accept_certificate')->name('accept_certificate');
-    // Route::resource('user', 'ImageController');
-
-    // Discount
-
     // Specification tables handler panel Route
     Route::resource('specification', 'Spec\SpecificationController')->except([ 'create', 'show' ]);
     Route::group(['prefix' => 'specification/{specification}'], function () {
@@ -77,6 +72,20 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     Route::group(['prefix' => 'specification/header/{header}'], function () {
         Route::resource('row', 'Spec\SpecRowController')->except([ 'create', 'show' ]);
     });
+    
+    // Subject Route
+    Route::resource('subject', 'SubjectController')->except(['create', 'show']);
+    
+    // Articles panel Route
+    Route::resource('article', 'ArticleController');
+    Route::get('/article/search/{query?}', 'ArticleController@search');
+    Route::delete('/article/DeleteAll/{article
+    }', 'ArticleController@deleteAll')->name('delete_all');
+    
+    // Comments panel Route
+    Route::resource('comment', 'CommentController')->except([ 'index', 'create', 'store', 'show', 'edit', 'update' ]);
+    Route::put('comment/{comment}/is_accept', 'CommentController@is_accept')->name('is_accept');
+    Route::put('comment/{comment}/replie_comment/{reply?}', 'CommentController@replie_comment')->name('replie_comment');
     
     // Color panel routes
     // Route::resource('color', 'ColorController')->except([ 'create', 'show' ]);
