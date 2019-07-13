@@ -149,52 +149,83 @@
 				<div class="clearfix"></div>
 			</div>
 			@else
-				@foreach ($currencies as $item)
-				<div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 product-card">
-					<div class="panel panel-default card-view pa-0">
+				<div class="col-md-12">
+					<div class="panel panel-default border-panel card-view">
 						<div class="panel-wrapper collapse in">
-							<div class="panel-body pa-0">
-								<article class="col-item">
-									<div class="photo">
-										<div class="options">
-											<form action="{{ route('currency.destroy', ['currency' => $item->slug]) }}" method="POST">
-												<a href="{{ route('currency.edit', ['currency' => $item->slug]) }}" class="font-18 txt-grey mr-10 pull-left"><i class="icon ti-pencil"></i></a>
-												<button type="submit" itemid="{{ $item->id }}" class="font-18 txt-grey pull-left delete-item"><i class="icon ti-close"></i></button>
-												
-												@method('delete')
-												@csrf
-											</form>	
-										</div>
-										{{-- @php
-											dd($item['title'])
-										@endphp --}}
-										<a href="{{ route('currency.show', ['slug' => $item->slug]) }}">
-											<div class="product-pic img-responsive"
-												{{-- style="background: url('{{ asset('uploads/'.$product->photo) }}') center center; --}}
-												style="background: url('{{ $item->photo }}') center center;
-													background-size: cover;">
-											</div>
-										</a>
+							<div class="panel-body">
+								<div class="table-wrap">
+									<div class="table-responsive">
+										<table id="datable_2" class="table table-hover table-bordered display mb-30">
+											<thead>
+												<tr>
+													<th style="font-weight:bold; font-size:20px;">#</th>
+													<th style="font-weight:bold; font-size:20px;">تصویر محصول</th>
+													<th style="font-weight:bold; font-size:20px;">عنوان محصول</th>
+													<th style="font-weight:bold; font-size:20px;">عنوان دسته بندی محصول</th>
+													<th style="font-weight:bold; font-size:20px;">کد محصول</th>
+													<th style="font-weight:bold; font-size:20px;">قیمت محصول</th>
+													<th style="font-weight:bold; font-size:20px;">موجودی محصول</th>
+													<th style="font-weight:bold; font-size:20px;">تاریخ ثبت</th>
+													<th style="font-weight:bold; font-size:20px;">عملیات</th>
+												</tr>
+											</thead>
+											<tbody>
+												@php $i = 0 @endphp
+												@foreach ($currencies as $currency)
+													<tr style="text-align:center;">
+														<td>{{ ++$i }}</td>
+														<td>
+															<div class="row" style="display: flex; justify-content: center;">
+																<div class="col-md-8">
+																	@if ($currency->photo)
+																		<img src="{{ $currency->photo }}" style="background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%; height: 100%;" alt="تصویر">
+																	@else
+																		<img src="/images/placeholder/placeholder.png" style="background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%; height: 100%;" alt="تصویر">
+																	@endif
+																	</div>
+																</div>
+															</div>
+														</td>
+														@php
+															// dd($currency->category->childs)
+														@endphp
+														<td>{{ $currency->title }}</td>
+														<td>{{ $currency->category->title ?? null }}</td>
+														<td>{{ $currency->code }}</td>
+														<td>{{ $currency->price }}</td>
+														<td>{{ $currency->inventory }}</td>
+														<td title="{{ \Morilog\Jalali\Jalalian::forge($currency->created_at)->format('%H:i:s - %d %B %Y') }}">
+															{{ \Morilog\Jalali\Jalalian::forge($currency->created_at)->ago() }}
+														</td>
+														<td>
+															<div class="font-icon custom-style">
+																<div class="font-icon custom-style">
+																	<form action="{{ route('currency.destroy', ['currency' => $currency->slug]) }}" method="POST">
+																		<div style="display: flex;">
+																			<button title= "حذف دسته بندی" type="submit" itemid="{{ $currency->slug }}" class=" btn-xs btn btn-danger custom-btn-danger"><i class="icon ti-trash custom-icon"> </i></button>
+																			<a title= "ویرایش دسته بندی" style="padding: 6px 5px !important; margin-right: 19px;" class="d-inline btn btn-xs btn-warning custom-btn-warning" href="{{ route('currency.edit', ['currency' => $currency->slug]) }}">
+																			<i class="icon ti-pencil custom-icon"> </i></a>
+																			@method('delete')
+																			@csrf
+																		</div>
+																	</form>
+																	{{-- <a title= "دیدن اطلاعات محصول" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('currency.show', ['currency' => $currency->slug]) }}"><i class="icon ti-plus custom-icon"></i></a> --}}
+																</div>
+															</div>
+														</td>
+													</tr>
+												@endforeach
+											</tbody>
+										</table>
 									</div>
-									<div class="info">
-										<a href="{{ route('currency.show', ['slug' => $item->slug]) }}"><h5>{{$item->title}}</h5></a>
-										@if ($item->code)
-											<h6>شناسه : {{$item->code}}</h6>
-										@endif
-										<span class="head-font block txt-orange-light-1 font-16"><span class="num-comma">{{$item['price']}}</span>
-									</div>
-								</article>
-							</div>
+								</div>	
+								{{$currencies->links()}}
+							</div>	
 						</div>	
 					</div>	
 				</div>
-				@endforeach	
 			@endempty
-
-			{{-- {{ $currencies->links() }} --}}
 		</div>	
-		<!-- /Currency Row Four -->
-		
 	</div>
 @endsection
 

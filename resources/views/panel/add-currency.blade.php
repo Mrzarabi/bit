@@ -182,11 +182,11 @@
 														<div class="form-group @if( $errors->has('category_id') ) has-error @endif">
 															<label class="control-label mb-10">گروه</label>
 															<div class="input-group">
-																<select name="category_id" class="form-control select2 categories">
+																<select name="parent" class="form-control select2 categories">
 																	<option value="">دسته بندی نشده</option>
 																	@foreach ($groups as $group)
 																		<option value="{{$group['id']}}"
-																			@if( isset($currency) && $currency->category_id === $group['id'] ) selected @endif>
+																			@if( isset($currency) && $currency->category_id === $group['id']) selected @endif>
 																			{{$group['title']}}
 																		</option>
 																	@endforeach
@@ -253,7 +253,7 @@
 												<hr class="light-grey-hr"/>
 											</div>
 
-											<div id="pictures" class="tab-pane fade" role="tabpanel">
+											{{-- <div id="pictures" class="tab-pane fade" role="tabpanel">
 												<div class="row">
 													<div class="col-sm-12">
 														<div class="panel panel-default border-panel card-view">
@@ -269,7 +269,7 @@
 														</div>
 													</div>
 												</div>
-											</div>
+											</div> --}}
 											<div id="specifications" class="tab-pane fade" role="tabpanel">
 												<div class="container">
 													<div class="specs-table row">
@@ -412,8 +412,8 @@
 										</div>
 									</div>	
 									<div class="form-actions">
-										<button class="btn btn-orange btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره</span></button>
-										<a href="/panel/currency" class="btn btn-default pull-left">لغو</a>
+										<button class="btn btn-orange custom-btn-warning btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره</span></button>
+										<a href="/panel/currency" class="btn btn-default btn-secondary custom-btn-gainsboro pull-left">لغو</a>
 										<div class="clearfix"></div>
 									</div>
 
