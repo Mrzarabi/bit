@@ -163,7 +163,8 @@
 																<div class="custom-style-com">
 																	<form action="{{route('is_accept', ['comment' =>$comment->id])}}" method="POST">
 																		@if (!$comment->is_accept)
-																			<button title= "تایید کامنت" type="submit" class="btn-xs btn btn-success custom-btn-success pull-left custom-pama-btn"><i class="icon ti-plus custom-icon"> </i></button>
+																			<button title= "تایید کامنت" type="submit" class="btn-xs btn btn-success custom-btn-success pull-left custom-pama-btn">
+																				<i class="icon fa fa-check custom-icon"> </i></button>
 																		@endif
 																		@method('put')
 																		@csrf
@@ -227,13 +228,14 @@
 																	<div class="custom-style-com">
 																		<form action="{{route('is_accept', ['comment' =>$reply->id])}}" method="POST">
 																			@if (!$reply->is_accept)
-																				<button title= "تایید کامنت" type="submit" class="btn-xs btn btn-success custom-btn-success pull-left custom-pama-btn"><i class="icon ti-plus custom-icon"> </i></button>
+																				<button title= "تایید کامنت" type="submit" class="btn-xs btn btn-success custom-btn-success pull-left custom-pama-btn"><i class="icon fa fa-check custom-icon"></i></button>
 																			@endif
 																			@method('put')
 																			@csrf
 																		</form>
 																		<form action="{{route('comment.destroy', ['comment' =>$reply->id])}}" method="POST">
-																			<button title= "حذف کامنت" type="submit" itemid="{{ $reply->id }}" class="btn-xs btn btn-danger custom-btn-danger pull-left custom-pama-btn"><i class="icon ti-trash custom-icon"> </i></button>
+																			<button title= "حذف کامنت" type="submit" itemid="{{ $reply->id }}" class="btn-xs btn btn-danger custom-btn-danger pull-left custom-pama-btn">
+																				<i class="icon ti-trash custom-icon"> </i></button>
 																			@method('delete')
 																			@csrf
 																		</form>
