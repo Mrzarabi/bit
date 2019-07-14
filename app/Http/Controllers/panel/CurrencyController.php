@@ -33,10 +33,10 @@ class CurrencyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create( Category $category )
+    public function create()
     {
         return view('panel.add-currency', [
-            'groups' => Category::first_levels(),
+            'groups' => Category::all(),
             'page_name' => 'add_currency',
             'page_title' => 'ثبت محصول',
             'options' => $this->options(['site_name', 'site_logo'])
@@ -52,15 +52,13 @@ class CurrencyController extends Controller
     public function store(Request $request)
     {
         $currency = auth()->user()->currencies()->create( array_merge( $request->all(), [
-            'category_id' => $request->category_id,
+            'category_id' => $request->parent,
             'photo' => isset($request->photo) ? $this->upload_image( Input::file('photo') ) : null,
         ] ));
 
-        return $request;
+        // return $request;
 
-        return redirect()->action(
-            'panel\CurrencyController@edit', ['slug' => $currency->slug]
-        )->with('message', 'محصول '.$currency->title.' با موفقیت ثبت شد .');
+        return redirect(route('currency.index'))->with('message', 'محصول '.$currency->title.' با موفقیت ثبت شد .');
     }
 
     /**
@@ -135,7 +133,7 @@ class CurrencyController extends Controller
         }
 
         
-        return $request;
+        // return $request;
         // return $request->parent;        
         $currency->update( array_merge($request->all(), [
             'photo' => $photo,
@@ -187,10 +185,10 @@ class CurrencyController extends Controller
     public function search($query = '')
     {
         return view('panel.currency', [
-            'currencies' => Currency::productCard($query),
+            'currencies' => Currency::latest()->where('title', 'like', "%$query%")->paginate(10),
             'page_name' => 'currencies',
-            'query' => $query,
-            'page_title' => 'جستجوی محصولات برای "' . $query . '"',
+            // 'query' => $query,
+            'page_title' => 'جستجوی محصولات ',
             'options'=> $this->options(['site_name', 'site_logo'])
         ]);
     }
