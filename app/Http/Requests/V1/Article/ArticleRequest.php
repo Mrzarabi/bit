@@ -27,10 +27,10 @@ class ArticleRequest extends FormRequest
             'title'          => 'required|string|max:50',
             'description'    => 'nullable|string|max:255',
             'body'           => 'required|string',
-            'image'          => 'nullable|image|mimes:jpeg,jpg,png|max:1024',
+            'image'          => 'required|image|mimes:jpeg,jpg,png|max:1024',
             
             /* relateion */
-            'subject_id'    => 'required|integer|exists:subjects,id',
+            'subject_id'    => 'nullable|integer|exists:subjects,id',
         ];
     }
 }
