@@ -94,7 +94,7 @@
 									<hr class="light-grey-hr"/>
 									
 									<div class="form-actions">
-										<button class="btn @isset($header) btn-warning @else btn-primary @endisset btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i>
+										<button class="btn @isset($header) btn-warning custom-btn-warning @else btn-primary custom-btn-primary @endisset btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i>
 											<span>@isset($header) ویرایش @else ثبت @endisset عنوان جدول مشخصات فنی</span>
 										</button>
 										<div class="clearfix"></div>
@@ -139,39 +139,31 @@
 									<table id="datable_2" class="table table-hover table-bordered display mb-30" >
 										<thead>
 											<tr>
-												<th>#</th>
-												<th>عنوان</th>
-												<th>توضیح کوتاه</th>
-												<th>تاریخ ثبت</th>
-												<th>تاریخ آخرین ویرایش</th>
-												<th>عملیات</th>
+												<th style="font-weight:bold; font-size:20px;">#</th>
+												<th style="font-weight:bold; font-size:20px;">عنوان</th>
+												<th style="font-weight:bold; font-size:20px;">توضیح کوتاه</th>
+												<th style="font-weight:bold; font-size:20px;">تاریخ ثبت</th>
+												<th style="font-weight:bold; font-size:20px;">تاریخ آخرین ویرایش</th>
+												<th style="font-weight:bold; font-size:20px;">عملیات</th>
 											</tr>
 										</thead>
-										<tfoot>
-											<tr>
-												<th>#</th>
-												<th>عنوان</th>
-												<th>توضیح کوتاه</th>
-												<th>تاریخ ثبت</th>
-												<th>تاریخ آخرین ویرایش</th>
-												<th>عملیات</th>
-											</tr>
-										</tfoot>
 										<tbody>
 											@php $i = 0 @endphp
 
 											@foreach ($headers as $item)
-											<tr>
+											<tr style="text-align:center;">
 												<td>{{ ++$i }}</td>
 												<td>{{ $item->title }}</td>
-												<td>{{ $item->description }}</td>
-												<td>{{ \Morilog\Jalali\Jalalian::forge($item->created_at)->format('%H:%S - %d %B %Y') }}</td>
-												<td>{{ \Morilog\Jalali\Jalalian::forge($item->updated_at)->ago() }}</td>
+												<td title="{{$item->description}}">{{ str_limit($item->description, 30 ) }}</td>
+												<td title="{{ \Morilog\Jalali\Jalalian::forge($item->created_at)->format('%H:i:s - %d %B %Y') }}">
+													{{ \Morilog\Jalali\Jalalian::forge($item->created_at)->ago() }}</td>
+												<td title="{{ \Morilog\Jalali\Jalalian::forge($item->updated_at)->format('%H:i:s - %d %B %Y') }}">
+													{{ \Morilog\Jalali\Jalalian::forge($item->updated_at)->ago() }}</td>
 												<td>
 													<form action="{{ route('header.destroy', ['specification' => $specification->id, 'header' => $item->id]) }}" method="POST">
-														<a href="{{ route('row.index', ['header' => $item->id]) }}" class="btn btn-warning"><i class="icon ti-menu"></i> سطرها</a>
-														<a href="{{ route('header.edit', ['specification' => $specification->id, 'header' => $item->id]) }}" class="btn btn-info"><i class="icon ti-pencil"></i> ویرایش</a>
-														<button type="submit" itemid="{{ $item->id }}" class="btn btn-danger delete-item"><i class="icon ti-close"></i> حذف</button>
+														<a href="{{ route('row.index', ['header' => $item->id]) }}" class="btn btn-warning custom-btn-warning"><i class="icon ti-menu"></i> سطرها</a>
+														<a href="{{ route('header.edit', ['specification' => $specification->id, 'header' => $item->id]) }}" class="btn btn-info custom-btn-info"><i class="icon ti-pencil"></i> ویرایش</a>
+														<button type="submit" itemid="{{ $item->id }}" class="btn btn-danger custom-btn-danger delete-item"><i class="icon ti-close"></i> حذف</button>
 														
 														@method('delete')
 														@csrf

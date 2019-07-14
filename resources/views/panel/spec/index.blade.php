@@ -133,11 +133,15 @@
 											@php $i = 0 @endphp
 											@foreach ($specs as $item)
 												@isset($item->category_id)
-												<tr>
+												<tr style="text-align:center;">
 													<td>{{ ++$i }}</td>
 													<td>{{ $item->category->title }}</td>
-													<td>{{ \Morilog\Jalali\Jalalian::forge($item->created_at)->format('%H:%S - %d %B %Y') }}</td>
-													<td>{{ \Morilog\Jalali\Jalalian::forge($item->updated_at)->ago() }}</td>
+													<td title="{{ \Morilog\Jalali\Jalalian::forge($item->created_at)->format('%H:i:s - %d %B %Y') }}">
+														{{ \Morilog\Jalali\Jalalian::forge($item->created_at)->ago() }}
+													</td>
+													<td title="{{ \Morilog\Jalali\Jalalian::forge($item->updated_at)->format('%H:i:s - %d %B %Y') }}">
+														{{ \Morilog\Jalali\Jalalian::forge($item->updated_at)->ago() }}
+													</td>
 													<td>
 														<form action="{{ route('specification.destroy', ['specification' => $item->id]) }}" method="POST">
 															<a href="{{ route('header.index', ['specification' => $item->id]) }}" class="btn btn-warning custom-btn-warning "><i class="icon ti-pencil"></i> ویرایش</a>
