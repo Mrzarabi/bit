@@ -8843,6 +8843,16 @@ table th {
   float: right !important;
 }
 
+/* custom style for scale pagination */
+.custom-scale .pagination>li>span {
+  transform: scaleX(-1)
+}
+
+.custom-scale-x .pagination>li>a {
+  transform: scaleX(-1)
+}
+/* end */
+
 /* custom style for btn  */
 .custom-style {
   display: flex;
