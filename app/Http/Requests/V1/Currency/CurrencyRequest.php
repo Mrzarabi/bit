@@ -31,11 +31,11 @@ class CurrencyRequest extends FormRequest
             'inventory'            => 'required|integer',
             'code'                 => 'nullable|string',
             'status'               => 'required|integer',
-            // 'photo'                => [
-                // $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'
-            // ],
+            'photo'                => [
+                $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'
+            ],
             
-            'photo'          => 'required|image|mimes:jpeg,jpg,png|max:1024',
+            // 'photo'          => 'required|image|mimes:jpeg,jpg,png|max:1024',
             
             /* relateion */
             'categories.*'         => 'required|integer|exists:categories,id',
