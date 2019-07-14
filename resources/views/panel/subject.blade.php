@@ -60,6 +60,33 @@
 		</div>
 		<!-- /Title -->
 
+
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="panel panel-default card-view">
+					<div class="panel-heading">
+						<div class="pull-right">
+							<h6 class="panel-title txt-dark">جستجو در دسته بندی محصولات</h6>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div  class="panel-wrapper collapse in">
+						<div  class="panel-body">
+							<div class="form-group">
+								<div class="input-group">
+									<input type="text" name="category_title" onkeyup="this.nextElementSibling.href = '/panel/category/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : عنوان دسته بندی">
+									<a href="/panel/article/search/" class="input-group-addon"><i class="ti-search"></i></a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+						@include('errors.errors-show')
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- Row -->
 		<div class="row">
 			<div class="col-sm-12">
@@ -197,8 +224,8 @@
 											@endforeach
 										</tbody>
 									</table>
-									<div style="display: flex; justify-content: center;">
-									{{-- {{$subjects->links()}} --}}
+									<div style="disply: flex; text-align: center; transform: scaleX(-1);  " class="custom-scale custom-scale-x">
+										{{ $subjects->links() }}
 									</div>
 								</div>
 							</div>	

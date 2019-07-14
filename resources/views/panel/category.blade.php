@@ -167,6 +167,32 @@
 		</div>
 		<!-- /Row -->
 
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="panel panel-default card-view">
+					<div class="panel-heading">
+						<div class="pull-right">
+							<h6 class="panel-title txt-dark">جستجو در مقالات</h6>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div  class="panel-wrapper collapse in">
+						<div  class="panel-body">
+							<div class="form-group">
+								<div class="input-group">
+									<input type="text" name="category_title" onkeyup="this.nextElementSibling.href = '/panel/category/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : عنوان دسته بندی">
+									<a href="/panel/category/search/" class="input-group-addon"><i class="ti-search"></i></a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+						@include('errors.errors-show')
+					</div>
+				</div>
+			</div>
+		</div>
+
 		<!-- Title -->
 		<div class="row heading-bg">
 			<!-- Breadcrumb -->
@@ -263,7 +289,9 @@
 											@endforeach
 										</tbody>
 									</table>
-									{{-- {{$categories->links()}} --}}
+									<div style="disply: flex; text-align: center; transform: scaleX(-1);  " class="custom-scale custom-scale-x">
+										{{ $category->parent == null ? $categories->links() : ""}}
+									</div>
 								</div>
 							</div>	
 						</div>	
