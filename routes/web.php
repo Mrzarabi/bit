@@ -59,7 +59,8 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     // Category Route
     Route::resource('category', 'CategoryController')->except(['create']);
     Route::get('group/sub/{id}', 'CategoryController@sub');
-    
+    Route::get('/category/search/{query?}', 'CategoryController@search');
+
     // Currencies panel Route
     Route::resource('currency', 'CurrencyController');
     Route::get('/currency/search/{query?}', 'CurrencyController@search');
