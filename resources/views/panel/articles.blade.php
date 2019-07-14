@@ -179,9 +179,8 @@
 																	@if ($article->image)
 																		<img src="{{ $article->image }}" style="background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%; height: 100%;" alt="تصویر">
 																	@else
-																		<img src="/images/placeholder/placeholder.png" style="background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%; height: 100%;" alt="تصویر">
+																		<img src="/images/placeholder/placeholder.png" style="background-size: cover; max-width: 80px; max-height: 60px; border-radius: 5px; height: 100%;" alt="تصویر">
 																	@endif
-																	</div>
 																</div>
 															</div>
 														</td>
