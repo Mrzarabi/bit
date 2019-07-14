@@ -45,7 +45,8 @@ class SubjectController extends Controller
         Subject::create(array_merge($request->all(), [
             'logo' => $request->hasFile('logo') ? $this->upload_image( Input::file('logo') ) : null,
         ]));
-        
+     
+        // return $request->logo;   
         return redirect()->back()->with('message', 'گروه '.$request->title.' با موفقیت ثبت شد .');
     }
 
@@ -71,7 +72,7 @@ class SubjectController extends Controller
         return view('panel.subject', [
             'id' => $subject->id,
             'subject' => $subject,
-            'subjects' => Subject::all(),
+            'subjects' => Subject::latest()->paginate(10),
             'page_name' => 'subject',
             'page_title' => 'ویرایش گروه ' . $subject->title,
             'options' => $this->options(['site_name', 'site_logo'])

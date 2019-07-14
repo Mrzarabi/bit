@@ -17,7 +17,7 @@ class CategoryController extends Controller
     public function index()
     {
         return view('panel.category', [
-            'categories' => Category::first_levels(),
+            'categories' => Category::orderBy('created_at', 'DESC')->where('parent', null)->paginate(10),
             'page_name' => 'category',
             'page_title' => 'گروه بندی محصولات',
             'options' => $this->options(['site_name', 'site_logo'])
@@ -42,10 +42,10 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        Category::create(array_merge($request->all(), [
+        Category::create( array_merge($request->all(), [
             'logo' => $request->hasFile('logo') ? $this->upload_image( Input::file('logo') ) : null,
         ]));
-        // return $request->logo;
+// return $request->logo;
         return redirect()->back()->with('message', 'گروه '.$request->title.' با موفقیت ثبت شد .');
     }
 
@@ -57,8 +57,12 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+        $categories = $category->childs()->get();
+        $categories->orderBy('created_at', 'DESC')->get();
+        return $categories;
         return view('panel.category', [
             'categories' => $category->childs()->get(),
+
             'id' => $category->id,
             'category' => $category,
             'breadcrumb' => $this -> breadcrumb($category),
@@ -96,6 +100,7 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, Category $category)
     {
+        // return $category->title;
         if ($request->hasFile('logo'))
         {
             $logo = $this->upload_image( Input::file('logo') );
