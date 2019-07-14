@@ -161,6 +161,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Ybazli\Faker\FakerServiceProvider::class,
+        Laratrust\LaratrustServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -225,6 +226,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Faker' => Ybazli\Faker\Facades\Faker::class,
+        'Laratrust'   => Laratrust\LaratrustFacade::class,
 
     ],
 

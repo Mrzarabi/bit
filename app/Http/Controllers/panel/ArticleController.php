@@ -74,9 +74,7 @@ class ArticleController extends Controller
             },
             'comments.user',
 
-            'comments.replies' => function($query) {
-                return $query->orderBy('created_at', 'DESC')->paginate(10);
-            },
+            'comments.replies',
             'comments.replies.user'
             ]);
 

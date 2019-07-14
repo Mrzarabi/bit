@@ -16,11 +16,12 @@ use App\Models\Opinion\Comment;
 use App\Models\Opinion\Review; 
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
+// use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable
 {
     use Notifiable, CanResetPassword, SoftDeletes, CascadeSoftDeletes;
-    //  LaratrustUserTrait;
+    // , LaratrustUserTrait;
 
     protected $table = 'users';
 

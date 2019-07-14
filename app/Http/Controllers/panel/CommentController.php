@@ -110,7 +110,7 @@ class CommentController extends Controller
      */
     public function replie_comment(CommentRequest $request, Comment $comment, Comment $reply = null)
     {
-        // dd($reply, $comment);
+        dd($reply, $comment);
 
         $comment->update(['is_accept' => true]);
 
