@@ -99,9 +99,9 @@
 			
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
-					<li><a href="index.html">داشبورد</a></li>
-					<li><a href="#"><span>فروشگاه</span></a></li>
 					<li class="active"><span>مقالات</span></li>
+					<li><a href="#"><span>فروشگاه</span></a></li>
+					<li><a href="">داشبورد</a></li>
 				</ol>
 			</div>
 			<!-- /Breadcrumb -->
@@ -177,7 +177,7 @@
 															<div class="row" style="display: flex; justify-content: center;">
 																<div class="col-md-8">
 																	@if ($article->image)
-																		<img src="{{ $article->image }}" style="background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%; height: 100%;" alt="تصویر">
+																		<img src="{{ $article->image }}" style="background-size: cover; max-width: 80px; max-height: 60px; border-radius: 5px; width: 100%; height: 100%;" alt="تصویر">
 																	@else
 																		<img src="/images/placeholder/placeholder.png" style="background-size: cover; max-width: 80px; max-height: 60px; border-radius: 5px; height: 100%;" alt="تصویر">
 																	@endif

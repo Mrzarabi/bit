@@ -239,14 +239,13 @@
 																			@method('delete')
 																			@csrf
 																		</form>
-																		<button type="button" title="نوشتن کامنت" class="btn-xs btn btn-primary custom-btn-primary custom-pama-btn cus-style-hei" data-toggle="modal" data-target="#reply" data-reply="{{$reply->id}}" data-whatever="@getbootstrap">
+																		<button type="button" title="نوشتن کامنت" class="btn-xs btn btn-primary custom-btn-primary custom-pama-btn cus-style-hei" data-toggle="modal" data-target="#reply" data-whatever="@getbootstrap">
 																			<i class="icon ti-pencil"></i></button>
 																		<div class="modal fade" id="reply" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 																			<div class="modal-dialog" role="document">
 																				<div class="modal-content">
 																					<div class="modal-footer">
 																						<form action="{{route('replie_comment', ['comment' => $comment->id, 'reply' => $reply->id ])}}" method="post">
-																							{{-- @include('replie_comment', ['reply' => $reply->id]) --}}
 																							<div class="row">
 																								@php
 																									// dd($reply)
@@ -268,7 +267,6 @@
 																							</div>
 																							<button type="submit" value="reply" class="btn btn-primary custom-btn-primary pull-left mar-right">ارسال</button>
 																							<input type="hidden" name="parent_id" value="{{$comment->id}}" />
-																							{{-- <input type="hidden" name="reply" value="{{$reply->id}}" /> --}}
 																							<a href="/panel/article.show" class="btn custom-btn-gainsboro btn-default pull-left">لغو</a>
 																							@method('put')
 																							@csrf
