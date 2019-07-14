@@ -53,11 +53,11 @@ class Category extends Model
      *
      * @return Collection
      */
-    public static function first_levels()
-    {
-        return Static::select('id', 'title', 'description', 'logo')
-            ->where('parent', null)->latest()->get();
-    }
+    // public static function first_levels()
+    // {
+    //     return Static::select('id', 'title', 'description', 'logo')
+    //         ->where('parent', null)->latest()->get();
+    // }
 
     /**
      * The attributes that should be cast to native types.
