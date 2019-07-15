@@ -83,11 +83,41 @@ class LaratrustSeeder extends Seeder
                 $email = "{$username}@{$key}.com";
                 // Create default user for each role
 
+            //     $table->string('first_name', 20);
+            // $table->string('last_name', 30);
+
+            // $table->string('national_code', 10)->nullable();
+            // $table->string('phone_number', 15);
+            // $table->string('birthday')->nullable();
+            // $table->string('address', 255)->nullable();
+
+            // $table->string('email', 100)->unique();
+            // $table->timestamp('email_verified_at')->nullable();
+            // $table->string('password', 100);
+
+            // $table->string('avatar', 50)->nullable();
+            // $table->string('type')->default(0);
+
+            // $table->string('image_national_code')->nullable();
+            // $table->boolean('accept_image_national_code')->default(0);
+            // $table->string('identify_certificate')->nullable();
+            // $table->boolean('accept_identify_certificate')->default(0);
+            // $table->string('image_bill')->nullable();
+            // $table->boolean('accept_image_bill')->default(0);
+            // $table->string('image_selfie_national_code')->nullable();
+            // $table->boolean('accept_image_selfie_national_code')->default(0);
                 $user = \App\User::firstOrCreate([
-                    'email' => $email
+                    'first_name'    => 'محمد هادی'
                 ], [
-                    'password' => bcrypt( $password )
+                    'last_name'     => 'ضرابی'
+                ], [
+                    'phone_number' => '09030587521',
+                ], [
+                    'email'        => $email
+                ], [
+                    'password'     => bcrypt( $password )
                 ]);
+
                 // echo $user->id . PHP_EOL . $role->id . PHP_EOL;
                 $user->attachRole($role);
             });

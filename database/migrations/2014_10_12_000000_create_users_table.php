@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name', 30);
 
             $table->string('national_code', 10)->nullable();
-            $table->string('phone_number', 15);
+            $table->string('phone_number', 15)->nullable();
             $table->string('birthday')->nullable();
             $table->string('address', 255)->nullable();
 

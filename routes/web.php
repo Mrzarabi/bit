@@ -48,7 +48,8 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     Route::put('user/{user}/accept', 'UserController@accept_certificate')->name('accept_certificate');
     Route::get('/user/search/{query?}', 'UserController@search');
     
-
+    Route::resource('role', 'RoleController');
+    
     // Tickets & TicketMessages panel Route
     Route::resource('ticket', 'TicketController')->except([ 'create', 'show', 'update' ]);
     Route::put('ticket/{ticket}/is_close', 'TicketController@is_close')->name('ticket.is_close');
