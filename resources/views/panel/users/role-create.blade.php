@@ -86,11 +86,7 @@
 					<div class="panel-wrapper collapse in">
 						<div class="panel-body pt-0">
 							<div class="form-wrap">
-                                @php
-                                    // dd($role)
-                                @endphp
 								<form action="@isset($role) {{ route('role.update', ['role' => $role->id]) }} @else {{ route('role.store') }} @endisset" enctype="multipart/form-data" method="POST">
-									
 									<div class="panel-body">
 										@include('errors.errors-show')
 									</div>
@@ -134,25 +130,33 @@
 														@endif
 													</div>
 												</div>
-												{{-- <div class="col-md-12">
-													<div class="form-group @if( $errors->has('description') ) has-error @endif">
-														<label class="control-label mb-10">توضیح</label>
-														<div class="input-group">
-															<textarea class="form-control" id="description" name="description" style="resize:none;" placeholder="یک توضیح یک خطی درباره مقاله" rows="5">@isset($role){{$role->description}}@else{{old('description')}}@endisset</textarea>
-															<div class="input-group-addon"><i class="ti-comment-alt"></i></div>
+											</div>
+											<div class="col-md-12">
+												<h3>سطح دسترسی ها :</h3>
+												<div >
+													<form action="{{route('updatePermissions', ['role' => $role->id])}}" method="POST">
+														<div class="row">
+															<div class="col-md-12" style="margin-bottom: 20px;">
+																@foreach ($permissions as $permission)
+																	<div class="col-md-3">
+																		<input type="checkbox" name="permission_id[]" value="{{$permission['id']}}"
+																		@if($role->permissions->contains($permission->id)) checked=checked @endif>
+																			{{$permission['display_name']}}<br>
+																	</div>
+																@endforeach
+															</div>
 														</div>
-														@if( $errors->has('description') )
-															<span class="help-block">{{ $errors->first('description') }}</span>
-														@endif
-													</div>
-                                                </div> --}}
-                                                {{--  --}}
+														<input class="btn btn-primary custom-btn-primary" type="submit">
+														@isset($role) @method('put') @endisset
+														@csrf
+													</form>
+												</div>
 											</div>
 										</div>
 									</div>
 									<div class="form-actions">
 										<button class="btn btn-orange custom-btn-warning btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره</span></button>
-										<a href="/panel/article" class="btn btn-default custom-btn-gainsboro pull-left">لغو</a>
+										<a href="/panel/role" class="btn btn-default custom-btn-gainsboro pull-left">لغو</a>
 										<div class="clearfix"></div>
 									</div>
 

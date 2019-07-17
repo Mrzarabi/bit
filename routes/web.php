@@ -49,6 +49,7 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     Route::get('/user/search/{query?}', 'UserController@search');
     
     Route::resource('role', 'RoleController');
+    Route::put('role/{$role}/updatePermissions', 'RoleController@updatePermissions')->name('updatePermissions');
     
     // Tickets & TicketMessages panel Route
     Route::resource('ticket', 'TicketController')->except([ 'create', 'show', 'update' ]);

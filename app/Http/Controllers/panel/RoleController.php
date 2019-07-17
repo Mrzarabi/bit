@@ -87,13 +87,14 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
+        // return uth::User()->hasRole('owner');
         try {
             return view('panel.users.role-create', [
-                'role' => Role::findOrFail($id),
-                'permissions' => Permission::all(),   
-                'role_permissions' => $id->permissions()->get()->pluck('id')->toArray(),
+                'role'  => $role,
+                'permissions' => Permission::all() ,   
+                'role_permissions' => $role->permissions()->get()->pluck('id' , 'name')->toArray(),
                 'page_name' => 'show-role',
                 'page_title' => 'مشاهده نقش ها',
                 'options' => $this->options(['site_name', 'site_logo'])
@@ -114,12 +115,38 @@ class RoleController extends Controller
      */
     public function update(RoleRequest $request, Role $role)
     {
+        // return DB::table("permission_role")->where("permission_role.role_id");
         try {
             $role = Role::findOrFail($role);
             $role->name = $request->input('name');
             $role->display_name = $request->input('display_name');
             $role->description = $request->input('description');
-            $role->save();
+            // $role->save();
+
+            DB::table("permission_role")->where("permission_role.role_id", $role)->delete();
+            // Attach permission to role
+            // foreach ($request->input('permission_id') as $key => $value) {
+            //     $role->attachPermission($value);
+            // }
+            return redirect()->route('role.index')->with('success', "The role <strong>$role->name</strong> has successfully been updated.");
+        } catch (ModelNotFoundException $ex) {
+            if ($ex instanceof ModelNotFoundException) {
+                return response()->view('errors.' . '404');
+            }
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePermissions(Request $request, Role $role)
+    {
+        return $request;
+        try {
             DB::table("permission_role")->where("permission_role.role_id", $role)->delete();
             // Attach permission to role
             foreach ($request->input('permission_id') as $key => $value) {

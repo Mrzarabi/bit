@@ -127,7 +127,6 @@
 														@if( $errors->has('subject_id') )
 															<span class="help-block">{{ $errors->first('subject_id') }}</span>
 														@endif
-														
 													</div>
 												</div>
 	
