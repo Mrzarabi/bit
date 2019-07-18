@@ -159,10 +159,13 @@
             <a @if($page_name == 'main') class="active" @endif href="/panel"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-bars ml-5" aria-hidden="true"></i>داشبورد</span></div><div class="clearfix"></div></a>
         </li>
         <li>
-            <a @if( in_array($page_name, ['user', 'ticket']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><span class="right-nav-text"><i class="ti-user ml-5" aria-hidden="true"></i>کاربران</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
+            <a @if( in_array($page_name, ['user', 'ticket', 'role']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><span class="right-nav-text"><i class="ti-user ml-5" aria-hidden="true"></i>کاربران</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
             <ul id="ecom_dr" class="collapse collapse-level-1">
                 <li>
                     <a @if($page_name == 'user') class="active-page" @endif href="/panel/user"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>کاربران</a>
+                </li>
+                <li>
+                    <a @if($page_name == 'role') class="active-page" @endif href="/panel/role"><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>نقش ها</a>
                 </li>
                 <li>
                     <a @if($page_name == 'ticket') class="active-page" @endif href="/panel/ticket"><i class="fa fa-university ml-5" aria-hidden="true"></i>تیکت ها</a>
