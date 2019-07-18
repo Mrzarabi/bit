@@ -124,6 +124,9 @@
 							<div class="panel-body">
 								<div class="table-wrap">
 									<div class="table-responsive">
+										<div class="panel-body">
+											@include('errors.errors-show')
+										</div>
                                         <a href="{{route('role.create')}}" class="btn btn-primary custom-btn-primary pull-left" style="margin-bottom: 10px !important;" >ایجاد نقش</a>
 										<table id="datable_2" class="table table-hover table-bordered display mb-30">
 											<thead>

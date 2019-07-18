@@ -93,63 +93,56 @@
 
 									<div class="row">
 										<div class="col-md-12">
-											<div class="col-md-9">
-												<div class="col-md-12">
-													<div class="form-group @if( $errors->has('name') ) has-error @endif">
-														<label class="control-label mb-10">عنوان نقش</label>
-														<div class="input-group">
-															<input type="text" name="name" @if(isset($role) && !empty($role->name)) value="{{$role->name}}" @else value="{{old('name')}}" @endif id="title" class="form-control" placeholder="عنوان نقش مورد نظر">
-															<div class="input-group-addon"><i class="ti-text"></i></div>
-														</div>
-														@if( $errors->has('name') )
-															<span class="help-block">{{ $errors->first('name') }}</span>
-														@endif
+											<div class="col-md-6">
+												<div class="form-group @if( $errors->has('name') ) has-error @endif">
+													<label class="control-label mb-10">عنوان نقش</label>
+													<div class="input-group">
+														<input type="text" name="name" @if(isset($role) && !empty($role->name)) value="{{$role->name}}" @else value="{{old('name')}}" @endif id="title" class="form-control" placeholder="عنوان نقش مورد نظر">
+														<div class="input-group-addon"><i class="ti-text"></i></div>
 													</div>
-                                                </div>
-												<div class="col-md-12">
-													<div class="form-group @if( $errors->has('display_name') ) has-error @endif">
-														<label class="control-label mb-10">نمایش نام</label>
-														<div class="input-group">
-															<input type="text" name="display_name" @if(isset($role) && !empty($role->display_name)) value="{{$role->display_name}}" @else value="{{old('display_name')}}" @endif id="title" class="form-control" placeholder="عنوان نمایش نام مورد نظر">
-															<div class="input-group-addon"><i class="ti-text"></i></div>
-														</div>
-														@if( $errors->has('display_name') )
-															<span class="help-block">{{ $errors->first('display_name') }}</span>
-														@endif
-													</div>
+													@if( $errors->has('name') )
+														<span class="help-block">{{ $errors->first('name') }}</span>
+													@endif
 												</div>
-												<div class="col-md-12">
-													<div class="form-group @if( $errors->has('description') ) has-error @endif">
-														<label class="control-label mb-10">نمایش نام</label>
-														<div class="input-group">
-															<input type="text" name="description" @if(isset($role) && !empty($role->description)) value="{{$role->description}}" @else value="{{old('description')}}" @endif id="title" class="form-control" placeholder="عنوان نمایش نام مورد نظر">
-															<div class="input-group-addon"><i class="ti-text"></i></div>
-														</div>
-														@if( $errors->has('description') )
-															<span class="help-block">{{ $errors->first('description') }}</span>
-														@endif
+											</div>
+											<div class="col-md-6">
+												<div class="form-group @if( $errors->has('display_name') ) has-error @endif">
+													<label class="control-label mb-10">نمایش نام</label>
+													<div class="input-group">
+														<input type="text" name="display_name" @if(isset($role) && !empty($role->display_name)) value="{{$role->display_name}}" @else value="{{old('display_name')}}" @endif id="title" class="form-control" placeholder="عنوان نمایش نام مورد نظر">
+														<div class="input-group-addon"><i class="ti-text"></i></div>
 													</div>
+													@if( $errors->has('display_name') )
+														<span class="help-block">{{ $errors->first('display_name') }}</span>
+													@endif
+												</div>
+											</div>
+											<div class="col-md-12">
+												<div class="form-group @if( $errors->has('description') ) has-error @endif">
+													<label class="control-label mb-10">توضیحات</label>
+													<div class="input-group">
+														<input type="text" name="description" @if(isset($role) && !empty($role->description)) value="{{$role->description}}" @else value="{{old('description')}}" @endif id="title" class="form-control" placeholder="توضیحات نقش مورد نظر">
+														<div class="input-group-addon"><i class="ti-text"></i></div>
+													</div>
+													@if( $errors->has('description') )
+														<span class="help-block">{{ $errors->first('description') }}</span>
+													@endif
 												</div>
 											</div>
 											<div class="col-md-12">
 												<h3>سطح دسترسی ها :</h3>
-												<div >
-													<form action="{{route('updatePermissions', ['role' => $role->id])}}" method="POST">
-														<div class="row">
-															<div class="col-md-12" style="margin-bottom: 20px;">
-																@foreach ($permissions as $permission)
-																	<div class="col-md-3">
-																		<input type="checkbox" name="permission_id[]" value="{{$permission['id']}}"
-																		@if($role->permissions->contains($permission->id)) checked=checked @endif>
+												<div>
+													<div class="row">
+														<div class="col-md-12" style="margin-bottom: 20px;">
+															@foreach ($permissions as $permission)
+																<div class="col-md-3">
+																	<input type="checkbox" name="permission_id[]" value="{{$permission['id']}}"
+																		@isset($role) @if($role->permissions->contains($permission->id))  checked=checked  @endisset @endif >
 																			{{$permission['display_name']}}<br>
-																	</div>
-																@endforeach
-															</div>
+																</div>
+															@endforeach
 														</div>
-														<input class="btn btn-primary custom-btn-primary" type="submit">
-														@isset($role) @method('put') @endisset
-														@csrf
-													</form>
+													</div>
 												</div>
 											</div>
 										</div>

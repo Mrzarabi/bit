@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class RoleRequest extends FormRequest
 {
@@ -25,8 +26,9 @@ class RoleRequest extends FormRequest
     {
         return [
             'name'          => [
-                // $this->method() === "POST" ? 'required' : 'nullbale', 'unique:roles'
+                Rule::unique('roles')->ignore( request()->route('id') )->where('deleted_at', null)
             ],
+            
             'display_name'  => 'required',
             'description'   => 'required',
         ];

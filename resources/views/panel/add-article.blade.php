@@ -87,11 +87,9 @@
 						<div class="panel-body pt-0">
 							<div class="form-wrap">
 								<form action="@isset($article) {{ route('article.update', ['article' => $article->slug]) }} @else {{ route('article.store') }} @endisset" enctype="multipart/form-data" method="POST">
-									
 									<div class="panel-body">
 										@include('errors.errors-show')
 									</div>
-
 									<div class="row">
 										<div class="col-md-12">
 											<div class="col-md-9">

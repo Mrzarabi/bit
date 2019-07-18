@@ -2,17 +2,15 @@
 
 namespace App\Http\Controllers\panel;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Role;
 use App\Permission;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\V1\User\RoleRequest;
 
 class RoleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the role.
      *
      * @return \Illuminate\Http\Response
      */
@@ -27,7 +25,7 @@ class RoleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new role.
      *
      * @return \Illuminate\Http\Response
      */
@@ -42,9 +40,9 @@ class RoleController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created role in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request\V1\User\RoleRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(RoleRequest $request)
@@ -54,132 +52,85 @@ class RoleController extends Controller
             'display_name' => $request->input('display_name'),
             'description' => $request->input('description'),
         ]);
-     
-        return redirect()->route('role.index')
-            ->with('message', "نقش {$request->display_name} با موفقیت ثبت شد");
+
+        $role->syncPermissions( $request->permission_id );
+        
+        return redirect()->route('role.index'
+            )->with('message', "نقش {$request->display_name} با موفقیت ثبت شد");
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified role.
      *
-     * @param  int  $id
+     * @param  \App\Role $role
      * @return \Illuminate\Http\Response
      */
     public function show(Role $role)
     {
-        try {
-            return view('admin.roles.roles_delete', [
-                'role' => Role::findOrFail($role),
-                'page_name' => 'show-role',
-                'page_title' => 'مشاهده نقش ها',
-                'options' => $this->options(['site_name', 'site_logo'])
-            ]);
-        } catch (ModelNotFoundException $ex) {
-            if ($ex instanceof ModelNotFoundException) {
-                return response()->view('errors.' . '404');
-            }
-        }
+        return view('admin.roles.roles_delete', [
+            'role' => $role,
+            'page_name' => 'show-role',
+            'page_title' => 'مشاهده نقش ها',
+            'options' => $this->options(['site_name', 'site_logo'])
+        ]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified role.
      *
-     * @param  int  $id
+     * @param  \App\Role $role
      * @return \Illuminate\Http\Response
      */
     public function edit(Role $role)
     {
-        // return uth::User()->hasRole('owner');
-        try {
-            return view('panel.users.role-create', [
-                'role'  => $role,
-                'permissions' => Permission::all() ,   
-                'role_permissions' => $role->permissions()->get()->pluck('id' , 'name')->toArray(),
-                'page_name' => 'show-role',
-                'page_title' => 'مشاهده نقش ها',
-                'options' => $this->options(['site_name', 'site_logo'])
-            ]);
-        } catch (ModelNotFoundException $ex) {
-            if ($ex instanceof ModelNotFoundException) {
-                return response()->view('errors.' . '404');
-            }
+        
+        if ($role->name === 'owner') {
+            return redirect()->route('role.index'
+            )->with('message', " متاسفانه شما قادر به ایجاد تغییر در نقش {$role->display_name} نیستید");
+        } else{
+
+        return view('panel.users.role-create', [
+            'role'  => $role,
+            'permissions' => Permission::all() ,   
+            'role_permissions' => $role->permissions()->get()->pluck('id' , 'name')->toArray(),
+            'page_name' => 'show-role',
+            'page_title' => 'مشاهده نقش ها',
+            'options' => $this->options(['site_name', 'site_logo'])
+        ]);
         }
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified role in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request\V1\User\RoleRequest  $request
+     * @param  \App\Role
      * @return \Illuminate\Http\Response
      */
     public function update(RoleRequest $request, Role $role)
     {
-        // return DB::table("permission_role")->where("permission_role.role_id");
-        try {
-            $role = Role::findOrFail($role);
-            $role->name = $request->input('name');
-            $role->display_name = $request->input('display_name');
-            $role->description = $request->input('description');
-            // $role->save();
-
-            DB::table("permission_role")->where("permission_role.role_id", $role)->delete();
-            // Attach permission to role
-            // foreach ($request->input('permission_id') as $key => $value) {
-            //     $role->attachPermission($value);
-            // }
-            return redirect()->route('role.index')->with('success', "The role <strong>$role->name</strong> has successfully been updated.");
-        } catch (ModelNotFoundException $ex) {
-            if ($ex instanceof ModelNotFoundException) {
-                return response()->view('errors.' . '404');
-            }
-        }
+        $role->syncPermissions( $request->permission_id );
+        $role->update( $request->only('name', 'display_name', 'description') );
+        
+        return redirect()->route('role.index'
+            )->with('message', "نقش {$request->display_name} با موفقیت به روز رسانی شد");
     }
 
     /**
-     * Update the specified resource in storage.
+     * Remove the specified role from storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updatePermissions(Request $request, Role $role)
-    {
-        return $request;
-        try {
-            DB::table("permission_role")->where("permission_role.role_id", $role)->delete();
-            // Attach permission to role
-            foreach ($request->input('permission_id') as $key => $value) {
-                $role->attachPermission($value);
-            }
-            return redirect()->route('roles.index')->with('success', "The role <strong>$role->name</strong> has successfully been updated.");
-        } catch (ModelNotFoundException $ex) {
-            if ($ex instanceof ModelNotFoundException) {
-                return response()->view('errors.' . '404');
-            }
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
+     * @param  \App\Role
      * @return \Illuminate\Http\Response
      */
     public function destroy(Role $role)
     {
-        try {
-            $role = Role::findOrFail($role);
-            //$role->delete();
-            // Force Delete
-            $role->users()->sync([]); // Delete relationship data
-            $role->permissions()->sync([]); // Delete relationship data
-            $role->forceDelete(); // Now force delete will work regardless of whether the pivot table has cascading delete
-            return redirect()->route('roles.index')->with('success', "The Role <strong>$role->name</strong> has successfully been archived.");
-        } catch (ModelNotFoundException $ex) {
-            if ($ex instanceof ModelNotFoundException) {
-                return response()->view('errors.' . '404');
-            }
+        if ($role->name === 'owner') {
+            return redirect()->route('role.index'
+            )->with('message', " متاسفانه شما قادر به حذف کردن نقش {$role->display_name} نیستید");
+        } else{
+            $role->delete();
+            return redirect()->route('role.index'
+                )->with('message', "نقش {$role->display_name} با موفقیت حذف شد");
         }
     }
 }
