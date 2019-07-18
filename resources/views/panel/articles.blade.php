@@ -192,7 +192,7 @@
 														<td>
 															<div class="font-icon custom-style">
 																<div class="font-icon custom-style">
-																	<form action="{{ route('delete_all', ['article' => $article->slug]) }}" method="POST">
+																	<form action="{{ route('article.destroy', ['article' => $article->slug]) }}" method="POST">
 																		<button title= "حذف مقاله" type="submit" itemid="{{ $article->slug }}" class=" btn-xs btn btn-danger custom-btn-danger"><i class="icon ti-trash custom-icon"> </i></button>
 																		<a title= "ویرایش مقاله" style="padding: 6px 5px !important; margin-right: 19px; margin-left: 19px;" class="d-inline btn btn-xs btn-warning custom-btn-warning" href="{{ route('article.edit', ['article' => $article->slug]) }}">
 																			<i class="icon ti-pencil custom-icon"> </i></a>
