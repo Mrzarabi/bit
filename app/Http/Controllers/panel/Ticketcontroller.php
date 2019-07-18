@@ -139,7 +139,7 @@ class Ticketcontroller extends Controller
     public function search($query = '')
     {
         return view('panel.tickets', [
-            'tickets' => Ticket::latest()->where('title', 'like', "%$query%")->paginate(10),
+            'tickets' => Ticket::latest()->where('id', 'like', "%$query%")->paginate(10),
             'page_name' => 'ticket',
             'page_title' => 'تیکت',
             'options' => $this->options(['site_name', 'site_logo'])

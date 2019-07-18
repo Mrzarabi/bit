@@ -116,7 +116,10 @@
 				<p class="pull-right">هیچ تیکتی یافت نشد !</p>
 				<div class="clearfix"></div>
 			</div>
-            @else
+			@else
+			<div class="panel-body">
+				@include('errors.errors-show')
+			</div>
 			<div class="col-md-12">
 				<a href="{{route('ticket.index')}}"><button title="بازگشت به صفحه اصلی تیکت ها" class="btn btn-xs btn-purple pull-left custom-btn-purple custom-pama-btn" style="margin-left: 50px; margin-bottom: 10px !important;"><i class="ti-back-left"></i></button></a>
 

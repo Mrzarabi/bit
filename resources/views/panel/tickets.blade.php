@@ -121,7 +121,7 @@
 						<div  class="panel-body">
 							<div class="form-group">
 								<div class="input-group">
-									<input type="text" name="article_title" onkeyup="this.nextElementSibling.href = '/panel/ticket/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : عنوان تیکت">
+									<input type="text" name="id" onkeyup="this.nextElementSibling.href = '/panel/ticket/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : کد تیکت">
 									<a href="/panel/article/search/" class="input-group-addon"><i class="ti-search"></i></a>
 								</div>
 							</div>
@@ -151,13 +151,17 @@
 							<div class="panel-body">
 								<div class="table-wrap">
 									<div class="table-responsive">
+											<div class="panel-body">
+												@include('errors.errors-show')
+											</div>
 										<table id="datable_2" class="table table-hover table-bordered display mb-30">
 											<h2 style="margin:15px;">تیکت ها</h2>
 											<thead>
 												<tr>
-												  <th style="font-weight:bold; font-size:20px;">#</th>
+												    <th style="font-weight:bold; font-size:20px;">#</th>
 													<th style="font-weight:bold; font-size:20px;">تصویر کاربر</th>
 													<th style="font-weight:bold; font-size:20px;">عنوان تیکت</th>
+												    <th style="font-weight:bold; font-size:20px;">کد تیکت</th>
 													<th style="font-weight:bold; font-size:20px;">وضعیت</th>
 													<th style="font-weight:bold; font-size:20px;">نام و نام خانوادگی</th>
 													<th style="font-weight:bold; font-size:20px;">تاریخ شروع</th>
@@ -190,6 +194,7 @@
 																</div>
 															</td>
 															<td>{{ $ticket->title }}</td>
+															<td>{{ $ticket->id }}</td>
 															<td>
 																@php
 																	switch ($ticket->status) {
@@ -235,6 +240,7 @@
 													<th style="font-weight:bold; font-size:20px;">#</th>
 													<th style="font-weight:bold; font-size:20px;">تصویر کاربر</th>
 													<th style="font-weight:bold; font-size:20px;">عنوان تیکت</th>
+													<th style="font-weight:bold; font-size:20px;">کد  تیکت</th>
 													<th style="font-weight:bold; font-size:20px;">نام و نام خانوادگی</th>
 													<th style="font-weight:bold; font-size:20px;">تاریخ ثبت</th>
 													<th style="font-weight:bold; font-size:20px;">تاریخ بسته شدن </th>
@@ -266,6 +272,7 @@
 																</div>
 															</td>
 															<td>{{ $ticket->title }}</td>
+															<td>{{ $ticket->id }}</td>
 															<td>{{ $ticket->user->first_name .' '. $ticket->user->last_name }}</td>
 															<td title="{{ \Morilog\Jalali\Jalalian::forge($ticket->created_at)->format('%H:i:s - %d %B %Y')  }}">
 																{{ \Morilog\Jalali\Jalalian::forge($ticket->created_at)->ago() }}
