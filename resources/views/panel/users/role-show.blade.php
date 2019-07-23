@@ -114,7 +114,7 @@
 			@empty($roles[0])
 			<div class="alert alert-warning alert-dismissable">
 				<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
-				<p class="pull-right">هیچ نقشی یافت نشد !</p>
+				<p class="pull-right">هیچ کاربری با این نقش یافت نشد !</p>
 				<div class="clearfix"></div>
 			</div>
 			@else
@@ -127,46 +127,44 @@
 										<div class="panel-body">
 											@include('errors.errors-show')
 										</div>
-                                        <a href="{{route('role.create')}}" class="btn btn-primary custom-btn-primary pull-left" style="margin-bottom: 10px !important;" >ایجاد نقش</a>
+                                        {{-- <a href="{{route('role.create')}}" class="btn btn-primary custom-btn-primary pull-left" style="margin-bottom: 10px !important;" >ایجاد نقش</a> --}}
 										<table id="datable_2" class="table table-hover table-bordered display mb-30">
 											<thead>
 												<tr>
 													{{-- <th width="50px"><input type="checkbox" id="master"></th> --}}
 													<th style="font-weight:bold; font-size:20px;">#</th>
-													<th style="font-weight:bold; font-size:20px;">نام نقش</th>
-													<th style="font-weight:bold; font-size:20px;">نمایش نام</th>
-													<th style="font-weight:bold; font-size:20px;">توضیح کوتاه</th>
+													<th style="font-weight:bold; font-size:20px;">تصویر کاربر</th>
+													<th style="font-weight:bold; font-size:20px;">نام و نام خانوادگی</th>
+													{{-- <th style="font-weight:bold; font-size:20px;">تاریخ ثبت</th> --}}
 													<th style="font-weight:bold; font-size:20px;">تاریخ ثبت</th>
-													<th style="font-weight:bold; font-size:20px;">عملیات</th>
+													{{-- <th style="font-weight:bold; font-size:20px;">عملیات</th> --}}
 												</tr>
 											</thead>
 											<tbody>
 												@php $i = 0 @endphp
-												@foreach ($roles as $role)
+												@foreach ($users as $user)
 													<tr style="text-align:center;">
 														{{-- <td><input type="checkbox" class="sub_chk" data-id="{{$article->id}}"></td> --}}
 														<td>{{ ++$i }}</td>
-														<td>{{ $role->name }}</td>
-														<td>{{ $role->display_name }}</td>
-														<td>{{ $role->description }}</td>
-														<td title="{{ \Morilog\Jalali\Jalalian::forge($role->created_at)->format('%H:i:s - %d %B %Y') }}">
-															{{ \Morilog\Jalali\Jalalian::forge($role->created_at)->ago() }}
+														<td>{{ $user->avatar }}</td>
+														<td>{{ $user->first_name.' '. $role->user->last_name }}</td>
+														<td title="{{ \Morilog\Jalali\Jalalian::forge($user->created_at)->format('%H:i:s - %d %B %Y') }}">
+															{{ \Morilog\Jalali\Jalalian::forge($user->created_at)->ago() }}
 														</td>
-														<td>
+														{{-- <td>
 															<div class="font-icon custom-style">
 																<div class="font-icon custom-style">
 																	<form action="{{ route('role.destroy', ['role' => $role->id]) }}" method="POST">
-																		<button title= "حذف نقش" type="submit" class="delete-item btn-xs btn btn-danger custom-btn-danger"><i class="icon ti-trash custom-icon"> </i></button>
-																		<a title= "ویرایش نقش" style="padding: 6px 5px !important; margin-right: 19px; margin-left: 19px;" class="d-inline btn btn-xs btn-warning custom-btn-warning" href="{{ route('role.edit', ['role' => $role->id]) }}">
+																		<button title= "حذف مقاله" type="submit" itemid="{{ $role->id }}" class=" btn-xs btn btn-danger custom-btn-danger"><i class="icon ti-trash custom-icon"> </i></button>
+																		<a title= "ویرایش مقاله" style="padding: 6px 5px !important; margin-right: 19px; margin-left: 19px;" class="d-inline btn btn-xs btn-warning custom-btn-warning" href="{{ route('role.edit', ['role' => $role->id]) }}">
 																			<i class="icon ti-pencil custom-icon"> </i></a>
 																		@method('delete')
 																		@csrf
 																	</form>
-																	<a title= "دیدن کاربران این نقش" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('role.show', ['role' => $role->id]) }}">
-																		<i class="icon ti-plus custom-icon"></i></a>
+																	<a title= "دیدن اطلاعات مقاله" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('article.show', ['article' => $article->slug]) }}"><i class="icon ti-plus custom-icon"></i></a>
 																</div>
 															</div>
-														</td>
+														</td> --}}
 													</tr>
 												@endforeach
 											</tbody>

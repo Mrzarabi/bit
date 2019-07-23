@@ -210,36 +210,50 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-12 col-md-4 col-sm-4 col-xs-12">
-                                            <h5 class="txt-dark">@isset($user) ویرایش پسورد کاربر @endisset</h5>
+                                        <div class="col-md-12">
+                                            <div class="col-md-12">
+                                                {{-- <div class="col-md-6">
+                                                    <div class="form-group @if( $errors->has('category_id') ) has-error @endif">
+                                                        <label class="control-label mb-10">گروه</label>
+                                                        <div class="input-group">
+                                                            <select name="parent" class="form-control select2 categories">
+                                                                <option value="">دسته بندی نشده</option>
+                                                                @foreach ($groups as $group)
+                                                                    <option value="{{$group['id']}}"
+                                                                        @if( isset($currency) && $currency->category_id === $group['id']) selected @endif>
+                                                                        {{$group['title']}}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
+                                                        </div>
+                                                        @if( $errors->has('category_id') )
+                                                            <span class="help-block">{{ $errors->first('category_id') }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div> --}}
+                                                <div class="form-group @if( $errors->has('role_id') ) has-error @endif">
+                                                    <label class="control-label mb-10">نقش</label>
+                                                    <div class="input-group">
+                                                        <select name="roles[]" class="form-control select2 categories" multiple>
+                                                            @foreach ($roles as $role)
+                                                                <option value="{{$role['id']}}"
+                                                                    @if( isset($user) && $user->role_id === $role['id']) selected @endif>
+                                                                    {{$role['display_name']}}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                            {{-- @php
+                                                                dd( $user->role);
+                                                            @endphp --}}
+                                                        <div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="col-md-6">
-                                                <div class="form-group @if( $errors->has('password') ) has-error @endif">
-                                                    <label class="control-label mb-10"> پسورد :</label>
-                                                    <div class="input-group">
-                                                        <input type="password" name="password" @if(isset($user) && !empty($user->password)) @endif id="title" class="form-control" placeholder="پسورد">
-                                                        <div class="input-group-addon"><i class="ti-text"></i></div>
-                                                    </div>
-                                                    @if( $errors->has('password') )
-                                                        <span class="help-block">{{ $errors->first('password') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group @if( $errors->has('password_confirmation') ) has-error @endif">
-                                                    <label class="control-label mb-10"> تایید پسورد :</label>
-                                                    <div class="input-group">
-                                                        <input type="password" name="password_confirmation" @if(isset($user) && !empty($user->password_confirmation)) value="{{$user->password_confirmation}}" @else value="{{old('password_confirmation')}}" @endif id="title" class="form-control" placeholder="تایید پسورد">
-                                                        <div class="input-group-addon"><i class="ti-text"></i></div>
-                                                    </div>
-                                                    @if( $errors->has('password_confirmation') )
-                                                        <span class="help-block">{{ $errors->first('password_confirmation') }}</span>
-                                                    @endif
-                                                </div>
-                                            </div>                                                
+                                        <div class="col-sm-12">                                                
                                             <div class="form-actions">
                                                 <button class="btn btn-orange custom-btn-warning btn-icon right-icon mr-10 pull-left" > <i class="fa fa-check"></i> <span>ذخیره</span></button>
                                                 <a href="{{route('user.index')}}" class="btn btn-default custom-btn-gainsboro pull-left" style="border-radius: 7px;">لغو</a>

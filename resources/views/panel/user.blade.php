@@ -160,6 +160,7 @@
 											<th style="font-weight:bold; font-size:20px;">#</th>
 												<th style="font-weight:bold; font-size:20px;">تصویر کاربر</th>
 												<th style="font-weight:bold; font-size:20px;">نام و نام خانوادگی</th>
+												<th style="font-weight:bold; font-size:20px;">نقش</th>
 												<th style="font-weight:bold; font-size:20px;">تلفن</th>
 												<th style="font-weight:bold; font-size:20px;">کد ملی</th>
 												<th style="font-weight:bold; font-size:20px;">تولد</th>
@@ -191,6 +192,16 @@
 															</div>
 														</td>
 														<td>{{ $user->first_name . ' ' . $user->last_name }}</td>
+														<td>
+															@if ($user->roles)
+																@foreach ($user->roles as $role)
+																
+																	{{ $user->roles[0]['display_name'] }}	
+																@endforeach
+															@else
+																<h5>کاربر معمولی</h5>
+															@endif
+														</td>
 														<td>{{ $user->phone_number }}</td>
 														<td>{{ $user->national_code }}</td>
 														<td>{{ \Morilog\Jalali\Jalalian::forge($user->birthday)->format('%d %B %Y') }}</td>
@@ -201,11 +212,12 @@
 															<div class="font-icon custom-style">
 																<form action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
 																	<button title= "حذف کاربر" type="submit" itemid="{{ $user->id }}" class="delete-item btn-xs btn btn-danger custom-btn-danger"><i class="icon ti-trash custom-icon"> </i></button>
-																	<a title= "ویرایش کاربر" style="padding: 6px 5px !important; margin-right: 19px;" class="d-inline btn btn-xs btn-warning custom-btn-warning" href="{{ route('user.edit', ['user' => $user->id]) }}"><i class="icon ti-pencil custom-icon"> </i></a>
+																	<a title= "ویرایش کاربر" style="padding: 6px 5px !important; margin-right: 8px;" class="d-inline btn btn-xs btn-warning custom-btn-warning" href="{{ route('user.edit', ['user' => $user->id]) }}"><i class="icon ti-pencil custom-icon"> </i></a>
 																	@method('delete')
 																	@csrf
 																</form>
 																<a title= "دیدن اطلاعات کاربر" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('user.show', ['user' => $user->id]) }}"><i class="icon ti-plus custom-icon"></i></a>
+																<a title= "تغییر پسورد کاربر" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-info btn-xs custom-btn-info" href="{{ route('editPass', ['user' => $user->id]) }}"><i class="ti-key custom-icon"></i></a>
 															</div>
 														</td>
 													</tr>
