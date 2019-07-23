@@ -43,11 +43,10 @@ class UserRequest extends FormRequest
                 'nullable',
                 Rule::unique('users')->ignore( request()->route()->user->id ),
             ],
-            'password'                   => [ 
-                $this->method() === 'POST' ? 'required' : 'nullable', 'string', 'min:4', 'confirmed'
+            
+            'avatar'                     => [
+                $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'
             ],
-
-            'avatar'                     => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
 
             'image_national_code'        => [
                 $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],

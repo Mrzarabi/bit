@@ -29,7 +29,7 @@ class CreateGroupingTable extends Migration
                     
             $table->string('title', 50);
             $table->text('description', 255)->nullable();
-            $table->string('logo')->nullable();
+            $table->string('logo');
             
             $table->full_timestamps();
         });
@@ -41,7 +41,7 @@ class CreateGroupingTable extends Migration
             
             $table->string('title', 50);
             $table->text('description', 255)->nullable();
-            $table->string('logo')->nullable();
+            $table->string('logo');
 
             $table->full_timestamps();
         });

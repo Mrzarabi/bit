@@ -26,7 +26,9 @@ class CategoryRequest extends FormRequest
         return [
             'title'         => 'required|string|max:50',
             'description'   => 'nullable|string|max:255',
-            'logo'          => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
+            'logo'          => [
+                $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'
+            ],
 
             /*Relation */
             'parent_id'     => 'nullable|integer|exists:categories,id',

@@ -33,7 +33,7 @@ class CreateArticlesTable extends Migration
             $table->string('slug', 50);
             $table->string('description', 255)->nullable();
             $table->text('body');
-            $table->string('image', 100);
+            $table->string('image');
 
             $table->full_timestamps();
         });

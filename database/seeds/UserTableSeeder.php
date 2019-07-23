@@ -32,9 +32,9 @@ class UserTableSeeder extends Seeder
                 'last_name' => 'ضرابی',
                 'phone_number' => '09030587521',
                 'email' => 'm.hadi.z.1997@Gmail.com',
+                'avatar'  => "/images/placeholder/download.png",
                 'password' => Hash::make('123456'),
                 'type' => 1
-                
             ]);
             echo "\e[31mm.hadi zarrabi user \e[39mwith id=\e[30m\e[101m1\e[49m \e[39mwas \e[32mcreated\n";
         }
