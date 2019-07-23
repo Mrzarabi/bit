@@ -208,53 +208,6 @@
 						</div>
 					</div>
 				</div>
-
-
-				{{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#answer" data-whatever="@getbootstrap" style="border-radius: 7px;">پاسخ دادن</button>
-				<div class="modal fade" id="answer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-footer">
-								<div class="row">
-									<form action="{{ route('ticket.store') }}" enctype="multipart/form-data" method="POST">
-										<div class="col-md-12">
-											<div class="form-group @if( $errors->has('title') ) has-error @endif">
-												<label class="control-label mb-10">عنوان تیکت </label>
-												<div class="input-group">
-													<input type="text" name="title" id="title" class="form-control" placeholder="عنوان تیکت ">
-													<div class="input-group-addon"><i class="ti-text"></i></div>
-												</div>
-												@if( $errors->has('title') )
-													<span class="help-block">{{ $errors->first('title') }}</span>
-												@endif
-											</div>
-										</div>
-										<div class="col-md-12">
-											<div class="form-group @if( $errors->has('message') ) has-error @endif">
-												<label class="control-label mb-10">متن تیکت</label>
-												<div class="input-group">
-													<textarea class="form-control" id="description" name="message" style="resize:none;" placeholder="متن تیکت خود را وارد کنید" rows="5"></textarea>
-													<div class="input-group-addon"><i class="ti-comment-alt"></i></div>
-												</div>
-												@if( $errors->has('message') )
-													<span class="help-block">{{ $errors->first('message') }}</span>
-												@endif
-											</div>
-										</div>
-
-										<div class="col-md-12">
-											<div class="form-actions">
-												<button class="btn btn-orange btn-icon right-icon mr-10 pull-left"> <i class="fa fa-check"></i> <span>ذخیره</span></button>
-												<input type="hidden" name="ticket_id" value="{{ $ticket->id }}" />
-											</div>
-										</div>
-										@csrf
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div> --}}
 			</div>
 			@endempty
 		</div>

@@ -127,10 +127,6 @@
 							</div>
 						</div>
 					</div>
-
-					<div class="panel-body">
-						@include('errors.errors-show')
-					</div>
 				</div>
 			</div>
 		</div>

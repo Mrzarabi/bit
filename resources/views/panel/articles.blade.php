@@ -154,11 +154,12 @@
 							<div class="panel-body">
 								<div class="table-wrap">
 									<div class="table-responsive">
-										<button style="margin-bottom: 10px" class="btn btn-primary delete_all" data-url="{{ url('panel/article/DeleteAll') }}">Delete All Selected</button>
+										{{-- <button style="margin: 5px;" class="btn btn-danger btn-xs delete-all" data-url="">Delete All</button> --}}
+										{{-- <button style="margin-bottom: 10px" class="btn btn-primary delete_all" data-url="{{ url('panel/article/DeleteAll') }}">Delete All Selected</button> --}}
 										<table id="datable_2" class="table table-hover table-bordered display mb-30">
 											<thead>
 												<tr>
-													<th width="50px"><input type="checkbox" id="master"></th>
+													{{-- <th width="50px"><input type="checkbox" id="check_all"></th> --}}
 													<th style="font-weight:bold; font-size:20px;">#</th>
 													<th style="font-weight:bold; font-size:20px;">تصویر مقاله</th>
 													<th style="font-weight:bold; font-size:20px;">عنوان مقاله</th>
@@ -171,7 +172,12 @@
 												@php $i = 0 @endphp
 												@foreach ($articles as $article)
 													<tr style="text-align:center;">
-														<td><input type="checkbox" class="sub_chk" data-id="{{$article->id}}"></td>
+														{{-- <td><input type="checkbox" class="checkbox" data-id="{{$article->id}}"></td> --}}
+														{{-- <td>
+																<input type="checkbox" name="article[]" value="{{$article['id']}}"
+																	@isset($article) @if($article->contains($article->id))  checked=checked  @endisset @endif >
+																		{{$article['title']}}<br>
+														</td> --}}
 														<td>{{ ++$i }}</td>
 														<td>
 															<div class="row" style="display: flex; justify-content: center;">
@@ -193,7 +199,7 @@
 															<div class="font-icon custom-style">
 																<div class="font-icon custom-style">
 																	<form action="{{ route('article.destroy', ['article' => $article->slug]) }}" method="POST">
-																		<button title= "حذف مقاله" type="submit" itemid="{{ $article->slug }}" class=" btn-xs btn btn-danger custom-btn-danger"><i class="icon ti-trash custom-icon"> </i></button>
+																		<button title= "حذف مقاله" type="submit" class="delete-item btn-xs btn btn-danger custom-btn-danger"><i class="icon ti-trash custom-icon"> </i></button>
 																		<a title= "ویرایش مقاله" style="padding: 6px 5px !important; margin-right: 19px; margin-left: 19px;" class="d-inline btn btn-xs btn-warning custom-btn-warning" href="{{ route('article.edit', ['article' => $article->slug]) }}">
 																			<i class="icon ti-pencil custom-icon"> </i></a>
 																		@method('delete')
@@ -269,6 +275,87 @@
 			});
 			return false;
 		});
+
+		$(document).ready(function () {
+			$('#check_all').on('click', function(e) {
+				if($(this).is(':checked',true))  
+				{
+					$(".checkbox").prop('checked', true);  
+				} else {  
+					$(".checkbox").prop('checked',false);  
+				}  
+			});
+
+			$('.checkbox').on('click',function() {
+				if($('.checkbox:checked').length == $('.checkbox').length)
+				{
+					$('#check_all').prop('checked',true);
+				} else {
+					$('#check_all').prop('checked',false);
+				}
+			});
+
+			$('.delete-all').on('click', function(e) {
+				var idsArr = [];  
+				$(".checkbox:checked").each(function() {  
+					idsArr.push($(this).attr('data-id'));
+			});  
+
+			if(idsArr.length <=0)  
+			{  
+				alert("لطفا گزینه های مورد نظر برای حذف شدن را انتخاب کنید . ");  
+			}  else {  
+				if(confirm("آیا برای حذف کردن مطمئن هستید؟"))
+				{	
+					var strIds = idsArr.join(","); 
+
+					$.ajax({
+					url: "{{ route('deleteMultiple') }}",
+					type: 'DELETE',
+					headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+					data: 'ids='+strIds,
+						success: function (data) {
+							if (data['status'] == true) {
+								$(".checkbox:checked").each(function() {  
+									$(this).parents("tr").remove();
+								});
+								alert('data['message']');
+							} else {
+								alert('ظاهرا مشکلی بوجود آمده !!');
+							}
+						},
+						error: function (data) {
+							alert(data.responseText);
+						}
+					});
+				}  
+			}  
+		});
+
+	$('[data-toggle=confirmation]').confirmation({
+		rootSelector: '[data-toggle=confirmation]',
+		onConfirm: function (event, element) {
+			element.closest('form').submit();
+		}
+	});
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		$(document).ready(function () {
 	
