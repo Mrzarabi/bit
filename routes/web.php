@@ -46,6 +46,8 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     // Users panel Route
     Route::resource('user', 'UserController')->except([ 'create', 'store' ]);
     Route::put('user/{user}/accept', 'UserController@accept_certificate')->name('accept_certificate');
+    Route::get('user/{user}/editPass', 'UserController@editPass')->name('editPass');
+    Route::put('user/{user}/updatePass', 'UserController@updatePass')->name('updatePass');
     Route::get('/user/search/{query?}', 'UserController@search');
     
     Route::resource('role', 'RoleController');
@@ -82,8 +84,7 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     // Articles panel Route
     Route::resource('article', 'ArticleController');
     Route::get('/article/search/{query?}', 'ArticleController@search');
-    Route::delete('/article/DeleteAll/{article
-    }', 'ArticleController@deleteAll')->name('delete_all');
+    Route::delete('/article/delete-multiple', 'ArticleController@deleteMultiple')->name('deleteMultiple');
     
     // Comments panel Route
     Route::resource('comment', 'CommentController')->except([ 'index', 'create', 'store', 'show', 'edit', 'update' ]);
@@ -128,3 +129,7 @@ Route::post('/checkout', 'CartController@checkout')->middleware('auth');
 Route::get('/blog', 'BlogController@index')->name('blog');
 Route::get('/blog/{article}', 'BlogController@show')->name('article.blog');
 Route::resource('/panel/article', 'Panel\ArticleController');
+
+Route::get('index', function() {
+    return view('front.index');
+});
