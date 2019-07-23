@@ -16,7 +16,7 @@ class Ticketcontroller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(TicketMessage $ticket_message, Ticket $ticket, User $user)
+    public function index(TicketMessage $ticket_message, User $user)
     {
         return view('panel.tickets', [
             'tickets' => Ticket::orderBy('created_at', 'DESC')->paginate(20),
@@ -50,7 +50,7 @@ class Ticketcontroller extends Controller
             'ticket_id' => $request->ticket_id,
         ]));
 
-        return redirect()->back()->with('message', "مقاله  {$request->title} با موفقیت ثبت شد");
+        return redirect()->back()->with('message', "تیکت  {$request->title} با موفقیت ثبت شد");
     }
 
     /**

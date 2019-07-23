@@ -9,11 +9,12 @@ use App\User;
 use Illuminate\Support\Facades\Input;
 use App\Http\Requests\V1\User\AcceptUserCertificate;
 use App\Role;
+use App\Http\Requests\V1\User\PasswordResetRequest;
 
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the user.
      *
      * @return \Illuminate\Http\Response
      */
@@ -21,6 +22,7 @@ class UserController extends Controller
     {
         return view('panel.user', [
             'users' => User::where('id', '!=', auth()->user()->id)->orderBy('created_at', 'DESC')->paginate(10),
+            'roles' => User::all()->load('roles'),
             'page_name' => 'user',
             'page_title' => 'کاربران',
             'options' => $this->options(['site_name', 'site_logo'])
@@ -28,7 +30,7 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new user.
      *
      * @return \Illuminate\Http\Response
      */
@@ -38,7 +40,7 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created user in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -49,7 +51,7 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified user.
      *
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
@@ -65,7 +67,7 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified user.
      *
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
@@ -74,14 +76,31 @@ class UserController extends Controller
     {
         return view('panel.add-user', [
             'user' => $user,
-            'page_name' => 'show-blog-comment',
-            'page_title' => 'مشاهده مقاله و کامنت ها',
+            'roles' => Role::where('name' , '!=', 'owner')->get(),
+            'page_name' => 'show-user',
+            'page_title' => 'مشاهده اطلاعات کاربر',
             'options' => $this->options(['site_name', 'site_logo'])
         ]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Show the form for editing the specified user.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function editPass(User $user)
+    {
+        return view('panel.password-reset', [
+            'user' => $user,
+            'page_name' => 'password-reset-user',
+            'page_title' => 'تغییر رمز کاربر',
+            'options' => $this->options(['site_name', 'site_logo'])
+        ]);
+    }
+
+    /**
+     * Update the specified user in storage.
      *
      * @param  \Illuminate\Http\Request\V1\User\UserRequest  $request
      * @param  \App\User  $user
@@ -101,19 +120,38 @@ class UserController extends Controller
             $avatar = $user->avatar;
         }
         
-        if ( $request )
-        {
-            unset($request['password_confirmation']);
-            $request['password'] = bcrypt($request['password']);
-        }
-
-        $user->update(array_merge($request->all(), [ 'avatar' => $avatar ]));
+        //sync role for each user
+        $user->syncRoles( $request->input('roles') );
+        
+        // return $user->roles;
+        $user->update(array_merge($request->all(), [
+            'avatar' => $avatar,
+            ]));
         
         return redirect(route('user.index'))->with('message', "کاربر {$user->last_name} با موفقیت بروز رسانی شد");
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Update the specified user in storage.
+     *
+     * @param  \Illuminate\Http\Request\V1\User\UserRequest  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePass(PasswordResetRequest $request, User $user)
+    {
+        if ( $request )
+        {
+            unset($request['password_confirmation']);
+            $request['password'] = bcrypt($request['password']);
+        }
+        $user->update($request->all());
+
+        return redirect(route('user.index'))->with('message', "رمز عبور کاربر  {$user->last_name} با موفقیت بروز رسانی شد");
+    }
+
+    /**
+     * Remove the specified user from storage.
      *
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
@@ -121,12 +159,17 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+        
+        $roles = $user->roles;
+        foreach ($roles as $key => $value) {
+            $user->detachRole($value);
+        }
 
         return redirect()->back()->with('message', "کاربر {$user->last_name} با موفقیت حذف شد");
     }
 
     /**
-     * Accept the specified resource from storage.
+     * Accept the specified user from storage.
      *
      * @param  \Illuminate\Http\Request\V1\User\UserRequest  $request
      * @param  \App\User  $user
@@ -163,116 +206,10 @@ class UserController extends Controller
     public function search($query = '')
     {
         return view('panel.user', [
-            'users' => User::latest()->where('first_name', 'like', "%$query%")->paginate(10),
+            'users' => User::latest()->where('last_name', 'like', "%$query%")->paginate(10),
             'page_name' => 'user',
             'page_title' => 'کاربران',
             'options' => $this->options(['site_name', 'site_logo'])
         ]);
-    }
-
-    // Create User Page
-    public function createLaratrust()
-    {
-        return view('panel.users.role-create', [
-            'roles' => Role::all(),
-            'page_name' => 'role_create',
-            'page_title' => 'ایجاد نقش',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
-    }
-    // Store New User
-    public function storeLaratrust(UserRequest $request)
-    {
-        $user = User::create([
-            'first_name' => $request->input('first_name'),
-            'last_name' => $request->input('last_name'),
-            'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
-        ]);
-        $role = Role::find($request->input('role_id'));
-        $user->attachRole($role);
-        return redirect()->route('users.index')->with('success', "The user <strong>$user->first_name. ' ' . $user->last_name</strong> has successfully been created.");
-    }
-    // Delete Confirmation Page
-    public function showLaratrust(User $user)
-    {
-        try {
-            return view('admin.users.users_delete', [
-                'user' => User::findOrFail($user),
-                'page_name' => 'user',
-                'page_title' => 'مشاهده کاربران ',
-                'options' => $this->options(['site_name', 'site_logo'])
-            ]);
-        } catch (ModelNotFoundException $ex) {
-            if ($ex instanceof ModelNotFoundException) {
-                return response()->view('errors.' . '404');
-            }
-        }
-    }
-    // Editing User Information Page
-    public function editLaratrust(User $user)
-    {
-        try {
-            $user = User::findOrFail($user);
-            //$roles = Role::all();
-            $roles = Role::with('permissions')->get();
-            $permissions = Permission::all();
-            $params = [
-                'title' => 'Edit User',
-                'user' => $user,
-                'roles' => $roles,
-                'permissions' => $permissions,
-            ];
-            return view('admin.users.users_edit')->with($params);
-        } catch (ModelNotFoundException $ex) {
-            if ($ex instanceof ModelNotFoundException) {
-                return response()->view('errors.' . '404');
-            }
-        }
-    }
-    // Update User Information to DB
-    public function updateLaratrust(UserRequest $request, User $user)
-    {
-        try {
-            $user = User::findOrFail($user);
-
-            $user->first_name = $request->input('first_name');
-            $user->last_name = $request->input('last_name');
-            $user->email = $request->input('email');
-            $user->save();
-            // Update role of the user
-            $roles = $user->roles;
-            foreach ($roles as $key => $value) {
-                $user->detachRole($value);
-            }
-            $role = Role::find($request->input('role_id'));
-            $user->attachRole($role);
-            // Update permission of the user
-            //$permission = Permission::find($request->input('permission_id'));
-            //$user->attachPermission($permission);
-            return redirect()->route('users.index')->with('success', "The user <strong>$user->last_name</strong> has successfully been updated.");
-        } catch (ModelNotFoundException $ex) {
-            if ($ex instanceof ModelNotFoundException) {
-                return response()->view('errors.' . '404');
-            }
-        }
-    }
-    // Remove User from DB with detaching Role
-    public function destroyLaratrust(User $user)
-    {
-        try {
-            $user = User::findOrFail($user);
-            // Detach from Role
-            $roles = $user->roles;
-            foreach ($roles as $key => $value) {
-                $user->detachRole($value);
-            }
-            $user->delete();
-            return redirect()->route('users.index')->with('success', "The user <strong>$user->name</strong> has successfully been archived.");
-        } catch (ModelNotFoundException $ex) {
-            if ($ex instanceof ModelNotFoundException) {
-                return response()->view('errors.' . '404');
-            }
-        }
     }
 }
