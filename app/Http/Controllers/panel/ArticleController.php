@@ -73,7 +73,6 @@ class ArticleController extends Controller
                 return $query->orderBy('created_at', 'DESC')->paginate(10);
             },
             'comments.user',
-
             'comments.replies',
             'comments.replies.user'
             ]);
@@ -147,12 +146,11 @@ class ArticleController extends Controller
      * @param  \App\Models\Article\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function deleteAll(ArticleRequest $request, Article $article)
-    {
-        return $request;
-        return $request->id;
-        $ids = $request->id;
-        Article::whereIn('id', explode(",", $ids))->delete();
+    public function deleteMultiple(ArticleRequest $request){
+
+        $ids = $request->ids;
+
+        Article::whereIn('id',explode(",",$ids))->delete();
 
         return redirect(route('article.index'))->with('message', "مقاله های مورد نظر با موفقیت حذف شدند");
     }
