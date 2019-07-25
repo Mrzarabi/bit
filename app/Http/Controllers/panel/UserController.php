@@ -20,9 +20,14 @@ class UserController extends Controller
      */
     public function index()
     {
+        // $users = User::all();
+        // foreach ($users as $user) {
+        //     return $user->roles;
+        // }
+
         return view('panel.user', [
             'users' => User::where('id', '!=', auth()->user()->id)->orderBy('created_at', 'DESC')->paginate(10),
-            'roles' => User::all()->load('roles'),
+            'roles' => Role::all()->pluck('display_name'),
             'page_name' => 'user',
             'page_title' => 'کاربران',
             'options' => $this->options(['site_name', 'site_logo'])
