@@ -112,7 +112,6 @@
 														<div class="input-group">
 															<select name="subject_id" class="form-control select2">
 																<option value="">دسته بندی نشده</option>
-
 																@foreach ($subjects as $subject)
 																	<option value="{{$subject['id']}}" 
 																		@if( isset($article) && $article->subject_id === $subject['id'] ) selected @endif>
