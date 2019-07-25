@@ -193,14 +193,19 @@
 														</td>
 														<td>{{ $user->first_name . ' ' . $user->last_name }}</td>
 														<td>
-															@if ($user->roles)
-																@foreach ($user->roles as $role)
-																
-																	{{ $user->roles[0]['display_name'] }}	
-																@endforeach
-															@else
-																<h5>کاربر معمولی</h5>
-															@endif
+															<div style="display: flex; flex-direction: column; align-items: center;  border: unset !important; border-bottom: 5px;">
+																@if ($user->roles->isNotEmpty() )
+																	@foreach ($user->roles as $role)
+																		<span class="badge badge-primary w-100" style="display: block; max-width: max-content; @if(!$loop->last) margin-bottom: 5px; @endif">
+																			<p style="font-size: 10px;">{{$role->display_name}}</p>
+																		</span>
+																	@endforeach
+																@else
+																	<span class="badge badge-warning w-100" style="display: block; max-width: max-content;">
+																		<p style="font-size: 10px;">بدون نقش</p>
+																	</span>
+																@endif
+															</div>
 														</td>
 														<td>{{ $user->phone_number }}</td>
 														<td>{{ $user->national_code }}</td>
@@ -212,11 +217,11 @@
 															<div class="font-icon custom-style">
 																<form action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
 																	<button title= "حذف کاربر" type="submit" itemid="{{ $user->id }}" class="delete-item btn-xs btn btn-danger custom-btn-danger"><i class="icon ti-trash custom-icon"> </i></button>
-																	<a title= "ویرایش کاربر" style="padding: 6px 5px !important; margin-right: 8px;" class="d-inline btn btn-xs btn-warning custom-btn-warning" href="{{ route('user.edit', ['user' => $user->id]) }}"><i class="icon ti-pencil custom-icon"> </i></a>
+																	<a title= "ویرایش کاربر" style="padding: 6px 5px !important; margin-right: 6px;" class="d-inline btn btn-xs btn-warning custom-btn-warning" href="{{ route('user.edit', ['user' => $user->id]) }}"><i class="icon ti-pencil custom-icon"> </i></a>
 																	@method('delete')
 																	@csrf
 																</form>
-																<a title= "دیدن اطلاعات کاربر" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('user.show', ['user' => $user->id]) }}"><i class="icon ti-plus custom-icon"></i></a>
+																<a title= "دیدن اطلاعات کاربر" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('user.show', ['user' => $user->id]) }}"><i class="icon ti-eye custom-icon"></i></a>
 																<a title= "تغییر پسورد کاربر" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-info btn-xs custom-btn-info" href="{{ route('editPass', ['user' => $user->id]) }}"><i class="ti-key custom-icon"></i></a>
 															</div>
 														</td>
