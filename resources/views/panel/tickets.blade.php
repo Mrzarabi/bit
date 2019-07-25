@@ -220,7 +220,7 @@
 																		@csrf
 																	</form>
 																	<a title= "ارسال تیکت" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('ticket.edit', ['ticket' => $ticket->id]) }}">
-																		<i class="icon ti-plus custom-icon"></i></a>
+																		<i class="icon ti-eye custom-icon"></i></a>
 																</div>
 															</td>
 														</tr>

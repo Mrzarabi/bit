@@ -209,7 +209,7 @@
 																			@csrf
 																		</div>
 																	</form>
-																	{{-- <a title= "دیدن اطلاعات محصول" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('currency.show', ['currency' => $currency->slug]) }}"><i class="icon ti-plus custom-icon"></i></a> --}}
+																	{{-- <a title= "دیدن اطلاعات محصول" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('currency.show', ['currency' => $currency->slug]) }}"><i class="icon ti-eye custom-icon"></i></a> --}}
 																</div>
 															</div>
 														</td>

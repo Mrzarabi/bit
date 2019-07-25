@@ -28,7 +28,7 @@
 							{{-- <div class="btn btn-xs btn-class"> --}}
 							<form action="{{route('comment.destroy', ['comment' =>$comment->id])}}" method="POST">
 								<a href="" class="font-18 txt-grey mr-10 pull-left"><i class="icon ti-pencil"></i></a>
-								<a href="" class="font-18 txt-grey mr-10 pull-left"><i class="icon ti-plus"></i></a>
+								<a href="" class="font-18 txt-grey mr-10 pull-left"><i class="icon ti-eye"></i></a>
 								<button type="submit" itemid="{{ $comment->id }}" class="font-18 txt-grey pull-left delete-item"><i class="icon ti-close"></i></button>
 								@method('delete')
 								@csrf

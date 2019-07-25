@@ -161,7 +161,7 @@
 																		@method('delete')
 																		@csrf
 																	</form>
-																	<a title= "دیدن اطلاعات مقاله" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('article.show', ['article' => $article->slug]) }}"><i class="icon ti-plus custom-icon"></i></a>
+																	<a title= "دیدن اطلاعات مقاله" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('article.show', ['article' => $article->slug]) }}"><i class="icon ti-eye custom-icon"></i></a>
 																</div>
 															</div>
 														</td> --}}
