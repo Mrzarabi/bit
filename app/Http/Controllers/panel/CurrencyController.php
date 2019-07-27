@@ -83,8 +83,9 @@ class CurrencyController extends Controller
      * @param  \App\Currency  $currency
      * @return \Illuminate\Http\Response
      */
-    public function edit(Currency $currency, Category $category)
+    public function edit(Currency $currency)
     {
+        return $currency;
         if ( is_null($currency->spec_id) )
         {
             if ($currency->category_id) 
