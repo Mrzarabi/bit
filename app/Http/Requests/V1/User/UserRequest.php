@@ -36,7 +36,7 @@ class UserRequest extends FormRequest
             ],
             'phone_number'               => [
                 'nullable', 'string', 'min:7',
-                Rule::unique('users')->ignore( request()->route()->user->id )
+                Rule::unique('users')->ignore( request()->route()->user->id ), 'regex:/^(\+98|0)?9\d{9}$/'
             ],
 
             'email'                      => [
