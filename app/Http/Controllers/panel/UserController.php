@@ -63,12 +63,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {        
-        return view('panel.user-show', [
-            'user' => $user,
-            'page_name' => 'show-blog-comment',
-            'page_title' => 'مشاهده مقاله و کامنت ها',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
+        //
     }
 
     /**
@@ -79,6 +74,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        // return $user->role_id;
         return view('panel.add-user', [
             'user' => $user,
             'roles' => Role::where('name' , '!=', 'owner')->get(),
@@ -124,9 +120,10 @@ class UserController extends Controller
         {
             $avatar = $user->avatar;
         }
-        
+     
         //sync role for each user
-        $user->syncRoles( $request->input('roles') );
+        // isset($request->input('roles')) ? $request->input('roles') : null;
+        $user->syncRoles( $request->input('roles', []) );
         
         // return $user->roles;
         $user->update(array_merge($request->all(), [
