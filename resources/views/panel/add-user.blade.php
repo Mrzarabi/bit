@@ -212,40 +212,17 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="col-md-12">
-                                                
-													{{-- <div class="form-group @if( $errors->has('subject_id') ) has-error @endif">
-                                                        <label class="control-label mb-10">گروه</label>
-                                                        <div class="input-group">
-                                                            <select name="subject_id" class="form-control select2">
-                                                                <option value="">دسته بندی نشده</option>
-                                                                @foreach ($subjects as $subject)
-                                                                    <option value="{{$subject['id']}}" 
-                                                                        @if( isset($article) && $article->subject_id === $subject['id'] ) selected @endif>
-                                                                        {{$subject['title']}}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                            <div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
-                                                        </div>
-                                                        @if( $errors->has('subject_id') )
-                                                            <span class="help-block">{{ $errors->first('subject_id') }}</span>
-                                                        @endif
-                                                    </div> --}}
-
                                                 <div class="form-group @if( $errors->has('role_id') ) has-error @endif">
                                                     <label class="control-label mb-10">نقش</label>
                                                     <div class="input-group">
-                                                        <select name="roles[]" class="form-control select2 categories" multiple>
+                                                        <select multiple name="roles[]" class="form-control select2">
                                                             @foreach ($roles as $role)
                                                                 <option value="{{$role['id']}}"
-                                                                    @if( isset($user) && $user->role_id === $role['id']) selected @endif>
+                                                                    @if( isset($user) && $user->hasRole( $role->name ) ) selected @endif>
                                                                     {{$role['display_name']}}
                                                                 </option>
                                                             @endforeach
                                                         </select>
-                                                            {{-- @php
-                                                                dd( $user->role);
-                                                            @endphp --}}
                                                         <div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
                                                     </div>
                                                 </div>
