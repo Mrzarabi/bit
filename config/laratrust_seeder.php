@@ -21,6 +21,41 @@ return [
 
             'setting' => 'c,u'
         ],
+
+        // 'smaat_supporter' => [
+        //     'user' => 'r,u,d,s,a',
+        //     'bank_card'  => 'c,r,u,d,a',
+        //     'ticket'  => 'c,r,d,a',
+        //     'ticket_messages'  => 'c,r,u,d',
+            
+        //     'spec' => 'r,c,u,d',
+            
+        //     'subject' => 'r,c,u,d',
+        //     'article' => 'r,c,u,d',
+        //     'comment' => 'r,c,a,d',
+            
+        //     'category' => 'r,c,u,d',
+        //     'currency' => 'c,r,u,d',
+            
+        //     'role' => 'r,c,u,d',
+
+        //     'setting' => 'c,u'
+        // ], 
+
+        // 'client'  => [
+        //     'bank_card'  => 'c,r,u,d',
+        //     'ticket'  => 'c,r,d,a',
+        //     'ticket_messages'  => 'c,r,u,d',
+            
+        //     'spec' => 'r',
+            
+        //     'subject' => 'r',
+        //     'article' => 'r',
+        //     'comment' => 'r,c,d',
+            
+        //     'category' => 'r',
+        //     'currency' => 'r',
+        // ]
     ],
 
     'permissions_map' => [
@@ -86,7 +121,12 @@ return [
             'name' => 'مدیر',
             'description' => 'مالک وبسایت بیت کوین'
         ],
-        'user' => [
+        'smaat_supporter' => [
+            'name'  => 'پشتیبان',
+            'description' => 'کسی که بحث پشتیبانی این پروژه رو بر عهده داره'
+        ],
+
+        'client' => [
             'name' => 'کاربر',
             'description' => 'کسی که از سایت دیدن میکند'
         ],
