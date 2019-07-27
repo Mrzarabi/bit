@@ -1,31 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="fa" itemscope="itemscope" itemtype="http://schema.org/WebPage">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="keywords" content="">
-    <title>Cointrade HTML Website Template </title>
-    <!-- Bootstrap -->
-    <link href="css/front/bootstrap.min.css" rel="stylesheet">
-    <!-- Style CSS -->
-    <link href="css/front/style.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">
-    <!-- FontAwesome CSS -->
-    <link href="css/front/font-awesome.min.css" rel="stylesheet">
-    <!-- Fontello CSS -->
-    <link rel="stylesheet" type="text/css" href="css/front/fontello.css">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
-<![endif]-->
+    {{-- <title>{{ $options['site_name'] }} @isset($page_title) | {{$page_title}} @endisset</title> --}}
+
+    @foreach ([
+        'css/front/bootstrap.min.css',
+        'assets/css/bootstrap-rtl.min.css',
+        'assets/css/font-awesome.min.css',
+        'assets/css/animate.min.css',
+        'assets/css/font-electro.css',
+        'assets/css/owl-carousel.css',
+        'css/front/style.css',
+        // 'assets/css/rtl.min.css',
+        'assets/css/colors/red.min.css',
+        'assets/css/font.css',
+        'css/front/fontello.css'
+    ] as $item)
+        <link rel="stylesheet" type="text/css" href="{{ asset($item) }}" media="all" />
+    @endforeach
+
+    @yield('style')
+
+    
+    <style>
+        .alert.alert-success {
+            background: linear-gradient(to bottom right, #5cb85c, #17ac17);
+            color: #f9fff7;
+        }
+        .alert.alert-danger {
+            background: linear-gradient(to bottom right, #ea1b25, #cb434a);
+            color: #ffefef;
+        }
+    </style>
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,700italic,800,800italic,600italic,400italic,300italic' rel='stylesheet' type='text/css'>
+
+    <link rel="shortcut icon" href="assets/images/fav-icon.png">
 </head>
 
 <body>
@@ -96,7 +109,7 @@
     </div>
     <!--  /.hero-section -->
     <!--  bitcoin-price-section -->
-    <div class="bg-light">
+    {{-- <div class="bg-light">
         <div class="container">
             <div class="row ">
                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 ">
@@ -113,7 +126,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!--  /.bitcoin-price-section -->
     <!--  about-section -->
     <div class="space-medium">
@@ -147,7 +160,7 @@
             </div>
             <!-- /.about description -->
             <hr>
-            <div class="row ">
+            {{-- <div class="row ">
                 <!-- counter -->
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
                     <div class="counter-block">
@@ -172,7 +185,7 @@
                     </div>
                 </div>
                 <!-- /.counter -->
-            </div>
+            </div> --}}
         </div>
     </div>
     <!-- /.about -->
@@ -202,7 +215,7 @@
     </div>
     <!--  buy/sell-section -->
     <!--  deposite options -->
-    <div class="bg-secondary pinside30">
+    {{-- <div class="bg-secondary pinside30">
         <div class="container">
             <div class="row ">
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
@@ -221,10 +234,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!--  /.deposite options -->
     <!-- Process Step -->
-    <div class="space-medium">
+    {{-- <div class="space-medium">
         <div class="container">
             <div class="row ">
                 <div class="offset-xl-3 col-xl-6 offset-lg-3 col-lg-6 col-md-12 col-sm-12 col-12 text-center">
@@ -279,7 +292,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!--/. Process Step -->
     <!-- feature-section -->
     <div class="space-medium bg-light">
@@ -290,7 +303,7 @@
                     <div class="feature-left">
                         <div class="feature-icon"><i class="icon-shield"></i></div>
                         <div class="feature-content">
-                            <h4>Safe & Secure</h4>
+                            <h4>امنیت</h4>
                             <p>Morbi egestas dictum sid volutpat est pharete hendrerit quis tortoret urabitur quis sceleest pharetu.</p>
                         </div>
                     </div>
@@ -301,19 +314,8 @@
                     <div class="feature-left">
                         <div class="feature-icon"><i class="icon-brainstorming"></i></div>
                         <div class="feature-content">
-                            <h4>Experts Support</h4>
+                            <h4>پشتیبانی</h4>
                             <p>Squis tortoret urabitur quis sceleritue tellus dictum magna elitmolestie sen ultricies ligula dignissime.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.feature-left -->
-                <!-- feature-left -->
-                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-                    <div class="feature-left">
-                        <div class="feature-icon"><i class="icon-smartphone"></i></div>
-                        <div class="feature-content">
-                            <h4>Mobile Apps</h4>
-                            <p>Morbi egestas dictum sid volutpat est pharete hendrerit quis tortoret urabitur quis sceleest pharetu.</p>
                         </div>
                     </div>
                 </div>
@@ -323,29 +325,7 @@
                     <div class="feature-left">
                         <div class="feature-icon"><i class="icon-wallet"></i></div>
                         <div class="feature-content">
-                            <h4>Wallet</h4>
-                            <p>Morbi egestas dictum sid volutpat est pharete hendrerit quis tortoret urabitur quis sceleest pharetu.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.feature-left -->
-                <!-- feature-left -->
-                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-                    <div class="feature-left">
-                        <div class="feature-icon"><i class="icon-loan"></i></div>
-                        <div class="feature-content">
-                            <h4>Instant Exchange</h4>
-                            <p>Squis tortoret urabitur quis sceleritue tellus dictum magna elitmolestie sen ultricies ligula dignissime.</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.feature-left -->
-                <!-- feature-left -->
-                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-                    <div class="feature-left">
-                        <div class="feature-icon"><i class="icon-exchange"></i></div>
-                        <div class="feature-content">
-                            <h4>Recuring Buys</h4>
+                            <h4>کیف پول</h4>
                             <p>Morbi egestas dictum sid volutpat est pharete hendrerit quis tortoret urabitur quis sceleest pharetu.</p>
                         </div>
                     </div>
@@ -371,7 +351,7 @@
     </div>
     <!-- /.cta-section -->
     <!-- app-section -->
-    <div class="space-medium">
+    {{-- <div class="space-medium">
         <div class="container">
             <div class="row ">
                 <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12 ">
@@ -385,7 +365,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- /.app-section -->
     <!-- footer -->
     <div class="footer">
