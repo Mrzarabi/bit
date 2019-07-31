@@ -12,7 +12,7 @@
       return this.each(function() {
         cssmenu.find('li ul').parent().addClass('has-sub');
         if (settings.format != 'select') {
-          cssmenu.prepend('<div id="menu-button">' + settings.title + '</div>');
+          cssmenu.prepend('<div id="menu-button">' + settings.title_fa + '</div>');
           $(this).find("#menu-button").on('click', function(){
             $(this).toggleClass('menu-opened');
             var mainmenu = $(this).next('ul');
@@ -95,6 +95,7 @@
 
  $("#navigation").menumaker({
    title: "Menu",
+   title_fa: "منو",
    format: "multitoggle"
 });
 
