@@ -83,8 +83,6 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     
     // Articles panel Route
     Route::resource('article', 'ArticleController');
-    Route::get('/article/search/{query?}', 'ArticleController@search');
-    Route::delete('/article/delete-multiple', 'ArticleController@deleteMultiple')->name('deleteMultiple');
     
     // Comments panel Route
     Route::resource('comment', 'CommentController')->except([ 'index', 'create', 'show', 'edit', 'update' ]);
@@ -130,4 +128,3 @@ Route::post('/checkout', 'CartController@checkout')->middleware('auth');
 Route::get('/blog', 'BlogController@index')->name('blog');
 Route::get('/blog/{article}', 'BlogController@show')->name('article.blog');
 Route::get('/subject/{subject}', 'BlogController@showSubject')->name('show.subject');
-Route::resource('/panel/article', 'Panel\ArticleController');

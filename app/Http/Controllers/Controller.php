@@ -14,12 +14,13 @@ use Intervention\Image\Facades\Image;
 use App\Models\Grouping\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Grouping\Subject;
+use App\Helpers\ImageTools;
 
 // use App\Models\ProductVariation;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, ImageTools;
 
     public static function options($items)
     {
@@ -34,72 +35,6 @@ class Controller extends BaseController
                 }
                 return $item['value'];
         });
-    }
-
-    // public static function move_cart_items()
-    // {
-    //     if ( Auth::check() && Cookie::get('cart') )
-    //     {
-    //         $order = Order::firstOrCreate([
-    //             'buyer'       => Auth::user()->id,
-    //             'status'      => 0,
-    //         ], [
-    //             'id'          => substr(md5( time().'_'.rand() ), 0, 8),
-    //             'destination' => Auth::user()->state.' ، '.Auth::user()->city.' ، '.Auth::user()->address,
-    //             'postal_code' => Auth::user()->postal_code
-    //         ]);
-
-    //         if ( $cart =  json_decode(Cookie::get('cart'), true) )
-    //         {   
-    //             foreach ($cart as $key => $count)
-    //             {
-    //                 $order->items()->updateOrCreate([
-    //                     'variation_id' => $key,
-    //                 ], [
-    //                     'count'        => $count
-    //                 ]);
-    //             }
-    //             Cookie::queue('cart', NULL, -1);
-    //         }
-    //     }
-    // }
-
-    /**
-     * Upload an image to public path
-     *
-     * @param File $image
-     * @return String file_name
-     */
-    public static function upload_image($image, $crop = 300, $watermark = null)
-    {
-        // Create file name & file path with /year/month/day/filename formats
-        $time = Carbon::now();   
-        $file_path = "uploads/{$time->year}/{$time->month}/{$time->day}";
-        $file_ext = $image->getClientOriginalExtension();
-        $file_name = rtrim($image->getClientOriginalName(), ".$file_ext");
-        $file_name = time() . '_' . substr($file_name, 0, 30);
-        
-        // Create directories if doesn't exists
-        if (!file_exists( public_path($file_path) )) {
-            mkdir(public_path($file_path), 0777, true);
-        }
-        
-        // Reszie and upload the image to storge
-        $image = Image::make( $image );
-        $image->resize($crop, null, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-
-        if ( $watermark && file_exists( $watermark ) )
-        {
-            $watermark = Image::make( $watermark );
-            $ratio = $watermark->width() / $watermark->height();
-            $watermark->resize(50 * $ratio, 50);
-            $image->insert($watermark, 'bottom-right', 10, 10);
-        }
-
-        $image->save( public_path("$file_path/$file_name.$file_ext") );
-        return "/$file_path/$file_name.$file_ext";
     }
 
     /**
@@ -120,56 +55,6 @@ class Controller extends BaseController
 
         return $groups;
     }
-    // public function Get_Cart_items( $options = [] )
-    // {
-        // If user has logged in , get cart items from order_items table in DB
-        // if ( Auth::check() )
-        // {
-            // $feilds = [ 'id' ];
-            // $relations = [
-                // 'items',
-                // 'items.variation',
-                // 'items.variation.product:id,name,photo',
-                // 'items.variation.color:id,name,value',
-                // 'items.variation.warranty:id,title,expire',
-            // ];
-
-            // if ( isset( $options['more'] ) )
-            // {
-            //     $feilds = array_merge( $feilds, [
-            //         'discount_code_id', 'buyer_description',
-            //         'offer', 'shipping_cost', 'shipping_type', 'total'
-            //     ]);
-            //     $relations[] = 'discount_code';
-            // }
-
-            // return Order::select($feilds)
-            //     ->with($relations)
-            //     ->where('buyer', Auth::user()->id)
-            //     ->where('status', 0)
-            //     ->first();
-        // }
-        // If user doesn't login , get cart items is from Cookies
-        // else
-        // {
-        //     if ( $cart =  json_decode(Cookie::get('cart'), true) )
-        //     {
-        //         return ProductVariation::select([
-        //             'id', 'product_id', 'color_id', 'warranty_id', 'price',
-        //             'offer', 'unit', 'offer_deadline', 'stock_inventory'
-        //         ])
-        //         ->with([
-        //             'product:id,name,photo',
-        //             'color:id,name,value',
-        //             'warranty:id,title,expire'
-        //         ])->whereIn('id', array_keys($cart) )
-        //         ->get()->each( function ( $item) use ( $cart ) {
-        //             $item->count = $cart[ $item->id ];
-        //         });
-        //     }
-        //     return [];
-        // }
-    // }
 
     public function Get_sub_groups()
     {
@@ -180,27 +65,80 @@ class Controller extends BaseController
         ])->get();
     }
 
-    // public function restore_cart ()
-    // {
-    //     if ( Auth::check() )
-    //     {
-    //         $order = Order::select('id')
-    //             ->with([
-    //                 'items:id,order_id,variation_id,count',
-    //                 'items.variation:id,stock_inventory',
-    //             ])
-    //             ->where('buyer', Auth::user()->id)
-    //             ->where('status', 1)->first();
-            
-    //         if ( $order )
-    //         {
-    //             $order->items->each( function ( $item ) {
-    //                 $item->variation->increment('stock_inventory', $item->count);
-    //             });
+    /**
+     * Get a request with a file and upload it's file,
+     * then return the same request with uploaded file names
+     *
+     * @param Request $request
+     * @param string $field_name
+     * @param Model $model
+     * @return Request
+     */
+    public function requestWithImage($request, $field_name = 'logo', $model = null)
+    {
+        if ( !$request->hasFile($field_name) )
+            return $request;
 
-    //             Order::find( $order->id )->update([ 'status' => 0 ]);
-    //         }
+        /** ! TODO */
+        // if ( $model && file_exists( public_path($model->$field_name) ) )
+        //         unlink( public_path($model->$field_name) );
 
-    //     }
-    // }
+        return collect( array_merge( $request->except($field_name), [
+            $field_name => $this->upload_image( $request->file( $field_name ) )
+        ]) );
+    }
+
+    /**
+     * Get a request with a file and upload it's file,
+     * then return the same request with uploaded file names
+     *
+     * @param Request $request
+     * @param string $field_name
+     * @param Model $model
+     * @return Request
+     */
+    public function requestWithGallery($request, $field_name = 'gallery', $model = null)
+    {
+        $gallery = [];
+                
+        if ( $model->$field_name ?? false )
+            $gallery = array_merge( $gallery, $model->$field_name );
+
+        if ($request->deleted_images)
+        {
+            foreach ($request->deleted_images as $item )
+            {
+                foreach ( $gallery[$item] ?? [] as $image )
+                {
+                    if( file_exists( public_path( $image ) ) )
+                        unlink( public_path( $image ) );
+                
+                    if ( isset( $gallery[$item] ) ) unset( $gallery[$item] );
+                }
+            }
+        }
+
+        if ( $request->has($field_name) )
+        {
+            foreach ( $request->$field_name as $file )
+                $gallery[] = $this->upload_image( $file );
+        }
+
+        return collect( array_merge( $request->except($field_name), [
+            $field_name => $gallery
+        ]) );
+    }
+
+    /**
+     * Check the user permision to access a request,
+     * abort 403 status code or access deny if hadn't
+     *
+     * @param string $permission
+     * @return void
+     */
+    public function checkPermission(string $permission)
+    {
+        if ( !auth()->check() || !auth()->user()->can($permission) )
+            return abort(403);
+    }
 }

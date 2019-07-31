@@ -25,12 +25,12 @@ class DatabaseSeeder extends Seeder
             $this->command->line("Database cleared.");
         }
 
+        $this->call(OptionTableSeeder::class);
         $this->call(UserTableSeeder::class);
         $this->call(LaratrustSeeder::class);
         $this->call(SubjectTableSeeder::class);
         $this->call(CategoryTableSeeder::class);
         $this->call(SpecTableSeeder::class);
-        $this->call(OptionTableSeeder::class);
 
         // $this->command->info("Database seeded.");
 

@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Blade;
+use App\Http\Controllers\Controller;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,8 +18,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         
-        Blade::component('store.components.product_card', 'productCard');
-        Blade::component('store.components.product_item', 'productItem');
+        \View::composer('panel.master.main', function ($view) {
+
+            $view->with('options', Controller::options(['site_name', 'site_logo']) );
+        });
     }
 
     /**

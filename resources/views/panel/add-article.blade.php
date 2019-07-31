@@ -112,7 +112,7 @@
 														<div class="input-group">
 															<select name="subject_id" class="form-control select2">
 																<option value="">دسته بندی نشده</option>
-																@foreach ($subjects as $subject)
+																@foreach (\App\Models\Grouping\Subject::all() as $subject)
 																	<option value="{{$subject['id']}}" 
 																		@if( isset($article) && $article->subject_id === $subject['id'] ) selected @endif>
 																		{{$subject['title']}}
@@ -143,7 +143,7 @@
 
 											<div class="col-md-3">
 												<div class="mt-30">
-													<input type="file" name="image" id="input-file-now" class="dropify" @isset($article) data-default-file="{{ $article->image }}" @endisset />
+													<input type="file" name="image" id="input-file-now" class="dropify" @isset($article) data-default-file="{{ $article->image->first()->getUrl('small') }}" @endisset />
 												</div>	
 											</div>
 										</div>

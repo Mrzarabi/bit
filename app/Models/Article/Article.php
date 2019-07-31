@@ -4,14 +4,19 @@ namespace App\Models\Article;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
-use App\models\Grouping\Subject;
+use App\Models\Grouping\Subject;
 use App\Models\Opinion\Comment;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use App\Helpers\MediaConversionsTrait;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
-class Article extends Model
+class Article extends Model implements HasMedia
 {
-    use Sluggable, SoftDeletes, CascadeSoftDeletes;
+    use Sluggable, SoftDeletes, CascadeSoftDeletes, SearchableTrait;
+    use HasMediaTrait, MediaConversionsTrait;
     
     /****************************************
      **             Attributes
@@ -28,16 +33,26 @@ class Article extends Model
         'slug',
         'description',
         'body',
-        'image'
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Searchable rules.
+     *
+     * Columns and their priority in search results.
+     * Columns with higher values are more important.
+     * Columns with equal values have equal importance.
      *
      * @var array
      */
-    protected $casts = [
-        'image' => 'array',
+    protected $searchable = [
+        'columns' => [
+            'articles.title' => 10,
+            'articles.description' => 8,
+            'subjects.title' => 3,
+        ],
+        'joins' => [
+            'subjects' => ['subjects.id','articles.subject_id'],
+        ],
     ];
 
     /**
@@ -62,6 +77,14 @@ class Article extends Model
      **              Relations
      ***************************************/
 
+    /**
+     * Get the media field of the model
+     */
+    public function image()
+    {
+        return $this->morphMany(config('medialibrary.media_model'), 'model');
+    }
+    
     /**
      * Get the user of the article.
      */

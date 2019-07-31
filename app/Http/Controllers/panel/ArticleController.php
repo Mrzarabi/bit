@@ -8,166 +8,86 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use App\Models\Grouping\Subject;
 use App\Models\Opinion\Comment;
+use App\Http\Controllers\MainController;
+use App\Helpers\SluggableController;
 
-class ArticleController extends Controller
+class ArticleController extends MainController
 {
+    use SluggableController;
+
     /**
-     * Display a listing of the Articles.
-     *
-     * @return \Illuminate\Http\Response
+     * Instantiate a new MainController instance.
      */
-    public function index()
+    public function __construct()
     {
-        return view('panel.articles', [
-            'articles' => Article::orderBy('created_at', 'DESC')->paginate(10),
-            'page_name' => 'blog',
-            'page_title' => 'مقالات',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
-    }
+        parent::__construct();
 
-    /**
-     * Show the form for creating a new Article.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        // return Article::all();
-        return view('panel.add-article', [
-            'subjects' => Subject::all(),
-            'page_name' => 'add_blog',
-            'page_title' => 'افزودن مقاله جدید',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
-    }
-
-    /**
-     * Store a newly created Article in storage.
-     *
-     * @param  \Illuminate\Http\Request\V1\Article\ArticleRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(ArticleRequest $request)
-    {
-        $article = auth()->user()->articles()->create(array_merge($request->all(), [
-            'subject_id' => $request->subject_id,
-            'image' => isset($request->image) ? $this->upload_image( Input::file('image') ) : null
-        ]));
-
-        return redirect()->action(
-            'Panel\ArticleController@edit', ['article' => $article->slug]
-        )->with('message', "مقاله {$request->title} با موفقیت ثبت شد");
-    }
-
-    /**
-     * Display the specified Article.
-     *
-     * @param  \App\Models\Article\Article  $article
-     * @return \Illuminate\Http\Response
-     */ 
-    public function show(Article $article)
-    {
-        $article->load([
+        $this->more_relations = [
             'comments' => function($query) {
                 return $query->orderBy('created_at', 'DESC')->paginate(10);
             },
             'comments.user',
             'comments.replies',
             'comments.replies.user'
-            ]);
-
-        return view('panel.show-comments', [
-            'article' => $article,
-            'page_name' => 'show-blog-comment',
-            'page_title' => 'مشاهده مقاله و کامنت ها',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
+        ];
     }
 
     /**
-     * Show the form for editing the specified Article.
+     * Type of this controller for use in messages
      *
-     * @param  \App\Models\Article\Article  $article
-     * @return \Illuminate\Http\Response
+     * @var string
      */
-    public function edit(Article $article)
-    {
-        return view('panel.add-article', [
-            'article' => $article,
-            'subjects' => Subject::all(),
-            'page_name' => 'add_blog',
-            'page_title' => 'ویرایش مقاله',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
-    }
+    protected $type = 'article';
 
     /**
-     * Update the specified Article in storage.
+     * The model of this controller
      *
-     * @param  \Illuminate\Http\Request\V1\Article\ArticleRequest  $request
-     * @param  \App\Models\Article\Article  $article
-     * @return \Illuminate\Http\Response
+     * @var Model
      */
-    public function update(ArticleRequest $request, Article $article)
-    {
-        if ($request->hasFile('image'))
-        {
-            $image = $this->upload_image( Input::file('image') );
-            
-            if ( file_exists( public_path($article->image) ) )
-                unlink( public_path($article->image) );
-        }
-        else
-        {
-            $image = $article->image;
-        }
-
-        $article->update(array_merge($request->all(), [ 'image' => $image ]));
-        
-        return redirect(route('article.index'))->with('message', "مقاله {$article->title} با موفقیت بروز رسانی شد");
-    }
+    protected $model = Article::class;
 
     /**
-     * Remove the specified Article from storage.
+     * The request class for this controller
      *
-     * @param  \App\Models\Article\Article  $article
-     * @return \Illuminate\Http\Response
+     * @var Model
      */
-    public function destroy(Article $article)
-    {
-        $article->delete();
-        return redirect(route('article.index'))->with('message', "مقاله {$article->title} با موفقیت حذف شد");
-    }
+    protected $request = ArticleRequest::class;
 
     /**
-     * Remove the specified Article from storage.
+     * The relation of the controller to get when accesing data from DB
      *
-     * @param  \App\Models\Article\Article  $article
-     * @return \Illuminate\Http\Response
+     * @var array
      */
-    public function deleteMultiple(ArticleRequest $request){
+    protected $relations = [
+        'subject',
+        'image',
+        'user:id:first_name,last_name'
+    ];
 
-        $ids = $request->ids;
+    protected $more_relations;
 
-        Article::whereIn('id',explode(",",$ids))->delete();
-
-        return redirect(route('article.index'))->with('message', "مقاله های مورد نظر با موفقیت حذف شدند");
-    }
-    
     /**
-     * Show the filtered articles from storage.
+     * Name of the views that need by this controller
      *
-     * @param  String  $query
-     * @return \Illuminate\Http\Response
+     * @var string
      */
-    public function search($query = '')
-    {
-        return view('panel.articles', [
-            'articles' => Article::latest()->where('title', 'like', "%$query%")->paginate(10),
-            'page_name' => 'blog',
-            'page_title' => 'مقالات',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
-    }
+    protected $views = [
+        'index' => 'panel.articles',
+        'show' => 'panel.show-comments',
+        'form' => 'panel.add-article',
+    ];
+
+    /**
+     * Name of the field that should upload an image from that
+     *
+     * @var string
+     */
+    protected $image_field = 'image';
+
+    /**
+     * Name of the relation method of the User model to this model
+     *
+     * @var string
+     */
+    protected $rel_from_user = 'articles';
 }
