@@ -29,8 +29,9 @@ class CreateOpinionsTable extends Migration
             $table->foreign_key('article_id', true);
             $table->foreign_key('parent_id', true, 'comments');
 
+            $table->string('title');
             $table->mediumText('message');
-            $table->boolean('is_accept')->defult(false);
+            $table->boolean('is_accept')->default(false);
 
             $table->full_timestamps();
         });
@@ -45,7 +46,7 @@ class CreateOpinionsTable extends Migration
             $table->array('advantages')->nullable();
             $table->array('disadvantages')->nullable();
             $table->mediumText('message');
-            $table->boolean('is_accept')->defult(false);
+            $table->boolean('is_accept')->default(false);
 
             $table->full_timestamps();
         });

@@ -36,6 +36,7 @@ $factory->define(App\Models\Opinion\Comment::class, function (Faker $faker) {
     
     $faker = \Faker\Factory::create('fa_IR');
     return [
+        'title'      => $faker->name(),
         'message'    => $faker->sentence(),
         'is_accept'  => $faker->numberBetween(0, 1),
     ];

@@ -24,7 +24,8 @@ class CommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'message'       => 'required|string|min:5',
+            'title'         => 'required|string|min:5',
+            'message'       => 'required|string|min:5|max:2000',
             
             /*Relation*/
             'parent_id'     => 'nullable|integer|exists:comments,id',
