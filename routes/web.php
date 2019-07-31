@@ -87,7 +87,7 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     Route::delete('/article/delete-multiple', 'ArticleController@deleteMultiple')->name('deleteMultiple');
     
     // Comments panel Route
-    Route::resource('comment', 'CommentController')->except([ 'index', 'create', 'store', 'show', 'edit', 'update' ]);
+    Route::resource('comment', 'CommentController')->except([ 'index', 'create', 'show', 'edit', 'update' ]);
     Route::put('comment/{comment}/is_accept', 'CommentController@is_accept')->name('is_accept');
     Route::put('comment/{comment}/replie_comment/{reply?}', 'CommentController@replie_comment')->name('replie_comment');
     
@@ -100,7 +100,8 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
 });
 
 // Store Products Routes
-Route::get('/', 'StoreController@index');
+Route::get('/', 'StoreController@index')->name('index');
+Route::get('/about', 'StoreController@about');
 Route::get('/currency', 'StoreController@store');
 Route::get('/currency/search/{query?}', 'StoreController@store');
 Route::post('/currency/{currency}/review', 'StoreController@add_review')->middleware('auth');
@@ -128,8 +129,5 @@ Route::post('/checkout', 'CartController@checkout')->middleware('auth');
 // Blog Routes
 Route::get('/blog', 'BlogController@index')->name('blog');
 Route::get('/blog/{article}', 'BlogController@show')->name('article.blog');
+Route::get('/subject/{subject}', 'BlogController@showSubject')->name('show.subject');
 Route::resource('/panel/article', 'Panel\ArticleController');
-
-Route::get('index', function() {
-    return view('front.index');
-});
