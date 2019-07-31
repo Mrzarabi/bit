@@ -36,9 +36,13 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(CommentRequest $request)
     {
-        //
+        auth()->user()->comments()->create(array_merge($request->all(), [
+            'comment_id' => $request->comment_id,
+        ]));
+
+        return redirect()->back()->with('message', "تیکت  {$request->title} با موفقیت ارسال شد");
     }
 
     /**
