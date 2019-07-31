@@ -1,115 +1,80 @@
+
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
+
 <head>
-	<title>ورود به @isset($options['site_name']) {{$options['site_name']}} @else سایت @endisset</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/form_asset/vendor/bootstrap/css/bootstrap.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/form_asset/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/form_asset/vendor/animate/animate.css">
-<!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="/form_asset/vendor/css-hamburgers/hamburgers.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/form_asset/vendor/select2/select2.min.css">
-<!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="/form_asset/css/util.css">
-	<link rel="stylesheet" type="text/css" href="/form_asset/css/main.css">
-	<link rel="stylesheet" type="text/css" href="/css/font.css">
-<!--===============================================================================================-->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <title>Cointrade HTML Website Template - Sign in Page </title>
+    <!-- Bootstrap -->
+    <link href="css/front/bootstrap.min.css" rel="stylesheet">
+    <!-- Style CSS -->
+    <link href="css/front/style.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">
+    <!-- FontAwesome CSS -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- Fontello CSS -->
+    <link rel="stylesheet" type="text/css" href="css/front/fontello.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+<![endif]-->
 </head>
-<body>
-	
-	<div class="limiter">
-		<div class="container-login100">
-			<div class="wrap-login100">
-				<div class="login100-pic js-tilt" data-tilt>
-					<img src="/logo/{{ $options['site_logo'] }}" alt="IMG">
-				</div>
 
-				<form method="POST" action="{{ route('login') }}" class="login100-form validate-form">
-					@csrf
-
-					<span class="login100-form-title">
-						ورود به @isset($options['site_name']) {{$options['site_name']}} @else سایت @endisset
-					</span>
-
-					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
-						<input type="email" placeholder="آدرس ایمیل" class="input100 form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-envelope" aria-hidden="true"></i>
+<body class="bg-primary pdt100">
+	<div class="content">
+		<div class="container">
+			<div class="row text-right">
+				<!-- login-form -->
+				<div class="offset-xl-3 col-xl-6 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12 ">
+					<div class="login-form rounded">
+						<h2 class="text-center mb30">ورود به حساب کاربری</h2>
+						<form method="POST" action="{{ route('login') }}" class="login100-form validate-form">
+							@csrf
+                            <div class="form-group" data-validate = "Valid email is required: ex@abc.xyz">
+                                <label class="control-label sr-only" for="email"></label>
+								<input id="email" type="email" name="email" placeholder=" ایمیل"class="rounded text-right form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" required>
+								@if ($errors->has('email'))
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $errors->first('email') }}</strong>
+									</span>
+								@endif
+							</div>
+                            <div class="form-group">
+                                <label class="control-label sr-only" for="password"></label>
+                                <input id="password" type="password" name="password" placeholder="رمز عبور" class="rounded text-right form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" required>
+								@if ($errors->has('password'))
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $errors->first('password') }}</strong>
+									</span>
+								@endif
+							</div>
+                            <button type="submit" name="singlebutton" class="btn btn-default btn-lg rounded custom-btn-warning btn-block mt20">ورود به حساب</button>
+                        </form>
+					</div>
+					<p class="text-white"> <a class="txt2 pull-left" href="{{ route('password.request') }}">رمز عبور خود را فراموش کرده اید ؟</a>
+						<a href="{{ route('register') }}" class="text-yellow pull-left pl-3">هنوز ثبت نام نکرده اید ؟</a>
+						<span class="pull-right">
+							<a href="{{route('index')}}" class="text-white">برگشتن به صفحه اصلی</a>
 						</span>
-						@if ($errors->has('email'))
-							<span class="invalid-feedback" role="alert">
-								<strong>{{ $errors->first('email') }}</strong>
-							</span>
-						@endif
-					</div>
-
-					<div class="wrap-input100 validate-input" data-validate = "Password is required">
-						<input type="password" placeholder="رمز عبور" class="input100 form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-lock" aria-hidden="true"></i>
-						</span>
-
-						@if ($errors->has('password'))
-							<span class="invalid-feedback" role="alert">
-								<strong>{{ $errors->first('password') }}</strong>
-							</span>
-						@endif
-					</div>
-					
-					<div class="container-login100-form-btn">
-						<button type="submit" class="login100-form-btn">
-							ورود به حساب
-						</button>
-					</div>
-
-					<div class="text-center p-t-12">
-						{{-- <span class="txt1">
-							
-						</span> --}}
-						<a class="txt2" href="{{ route('password.request') }}">
-							رمز عبور خود را فراموش کرده اید ؟
-						</a>
-					</div>
-
-					<div class="text-center p-t-136">
-						<a class="txt2" href="{{ route('register') }}">
-							<i class="fa fa-long-arrow-left m-l-5" aria-hidden="true"></i>
-							هنوز ثبت نام نکرده اید ؟
-						</a>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-	
-	
-
-	
-<!--===============================================================================================-->	
-	<script src="/form_asset/vendor/jquery/jquery-3.2.1.min.js"></script>
-<!--===============================================================================================-->
-	{{-- <script src="/form_asset/vendor/bootstrap/js/popper.js"></script> --}}
-	{{-- <script src="/form_asset/vendor/bootstrap/js/bootstrap.min.js"></script> --}}
-<!--===============================================================================================-->
-	{{-- <script src="/form_asset/vendor/select2/select2.min.js"></script> --}}
-<!--===============================================================================================-->
-	<script src="/form_asset/vendor/tilt/tilt.jquery.min.js"></script>
-	<script >
-		$('.js-tilt').tilt({
-			scale: 1.1
-		})
-	</script>
-<!--===============================================================================================-->
-	{{-- <script src="/form_asset/js/main.js"></script> --}}
-
+					</p>
+                </div>
+                <!-- /.login-form -->
+            </div>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/front/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/front/bootstrap.min.js"></script>
 </body>
+
 </html>
