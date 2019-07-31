@@ -1,106 +1,21 @@
-<!DOCTYPE html>
-<html lang="fa" itemscope="itemscope" itemtype="http://schema.org/WebPage">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('front.layout.master')
 
-    {{-- <title>{{ $options['site_name'] }} @isset($page_title) | {{$page_title}} @endisset</title> --}}
+@section('body-class', 'page home page-template-default')
 
-    @foreach ([
-        'css/front/bootstrap.min.css',
-        'assets/css/bootstrap-rtl.min.css',
-        'assets/css/font-awesome.min.css',
-        'assets/css/animate.min.css',
-        'assets/css/font-electro.css',
-        'assets/css/owl-carousel.css',
-        'css/front/style.css',
-        // 'assets/css/rtl.min.css',
-        'assets/css/colors/red.min.css',
-        'assets/css/font.css',
-        'css/front/fontello.css'
-    ] as $item)
-        <link rel="stylesheet" type="text/css" href="{{ asset($item) }}" media="all" />
-    @endforeach
+@section('content')
 
-    @yield('style')
-
-    
-    <style>
-        .alert.alert-success {
-            background: linear-gradient(to bottom right, #5cb85c, #17ac17);
-            color: #f9fff7;
-        }
-        .alert.alert-danger {
-            background: linear-gradient(to bottom right, #ea1b25, #cb434a);
-            color: #ffefef;
-        }
-    </style>
-
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,700italic,800,800italic,600italic,400italic,300italic' rel='stylesheet' type='text/css'>
-
-    <link rel="shortcut icon" href="assets/images/fav-icon.png">
-</head>
-
-<body>
-    <!-- header-section-->
-    <div class="header-wrapper fixed-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-2 col-lg-3 col-md-12 col-sm-12 col-12">
-                    <div class="logo"> <a href="index.html"><img src="./images/logo.png" alt=""> </a> </div>
-                </div>
-                <div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12">
-                    <!-- navigations-->
-                    <div class="navigation">
-                        <div id="navigation">
-                            <ul>
-                                <li class="active"><a href="index.html">صفحه اصلی</a></li>
-                                   <li class="active"><a href="bitcoin-widget.html">Bitcoin Widget</a></li>
-                              
-                                <li class="has-sub"><a href="#">مقالات</a>
-                                    <ul>
-                                        <li><a href="blog-default.html"></a>صفحه اصلی وبلاگ</a></li>
-                                        <li><a href="blog-single.html">وبلاگ</a></li>
-                                    </ul>
-                                </li>
-                                {{-- <li class="has-sub"><a href="#">Pages</a>
-                                    <ul>
-                                        <li><a href="about.html">about</a></li>
-                                        <li><a href="faq.html">FAQ</a></li>
-                                        <li><a href="login.html">Login</a></li>
-                                        <li><a href="register.html">Sign up</a></li>
-                                        <li><a href="error-page.html">404 page</a> </li>
-                                        <li><a href="styleguide.html">styleguide</a> </li>
-                                    </ul>
-                                </li> --}}
-                                {{-- <li><a href="contact-us.html">Contact</a></li> --}}
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- /.navigations-->
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-none d-xl-block d-lg-block">
-                    <div class="header-quick-info">
-                        <a href="login.html" class="btn btn-white btn-xs mr-1">ورود</a>
-                        <a href="register.html" class="btn btn-default btn-xs">ثبت نام</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /. header-section-->
     <!--  hero-section -->
     <div id="particles-js" class="hero-section">
     </div>
     <div class="hero-container">
         <div class="container">
             <div class="row ">
-                <div class="offset-xl-2 col-xl-8 offset-lg-2 col-lg-8 col-md-12 col-sm-12 col-12 text-center ">
+                <div class="offset-xl-7 col-xl-5 offset-lg-7 col-lg-5 col-md-12 col-sm-12 col-12 text-center ">
                     <!--  hero-block-->
                     <div class="hero-block">
-                        <h1 class="hero-title mb30">Buy And Sell Digital Currency</h1>
-                        <p class="text-white">Praesent sodales ultricies dolorut feugiatnisi tincidunt utestib Aliquam enim nisl, efficitupendisse convallis nisl eu leo commodo tempus. ulumest urnatristi risus sitame.</p>
-                        <a href="#" class="btn btn-default btn-lg">Get Started</a>
+                        <h1 class="hero-title mb30">خرید و فروش ارز دیجیتال</h1>
+                        <p class="text-white">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
+                        {{-- <a href="#" class="btn btn-default btn-lg custom-btn-warning">شروع کنید</a> --}}
                     </div>
                     <!--  /.hero-block-->
                 </div>
@@ -130,31 +45,31 @@
     <!--  /.bitcoin-price-section -->
     <!--  about-section -->
     <div class="space-medium">
-        <div class="container">
-            <div class="row ">
+        <div class="container mt">
+            <div class="row">
                 <!--  section-title -->
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
                     <div class="section-title">
-                        <h2>Who is CoinTrade?</h2>
+                        <h2 class="text-right mt-100">لورم ایپسوم</h2>
                     </div>
                 </div>
                 <!--  /.section-title -->
             </div>
             <!-- about -->
-            <div class="row ">
+            <div class="row text-right">
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
                     <div class="mb20">
-                        <p class="lead">Quisque interdum arcutlacs sollicitudin cursus at vel ligellentesque eget fs none metus aliquet tepor veid arcpretiumute impdiet dolor ultriceras dapibus.</p>
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. </p>
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
                     <div class="mb20">
-                        <p>Nam non convallis mielaoreet enimuspendis facibus magna elitmolestie ultricies ligula dign issllus rutrume egestas gravida. Etiam sodales volutpat enut ultricese sem varius vitaeis vel dui commod convstie ultricies ligula dignissllus. </p>
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. </p>
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
                     <div class="mb20">
-                        <p>Seronse convallis mielaoreet enimuspendis facibuses magna elitmolestie ultricies ligula dignissllus rutrume egestas gravida. Etiam semonvallis diammag naestie ultricies ligulaser sodales volutpat enut ultricese. </p>
+                        <p class="lead">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
                     </div>
                 </div>
             </div>
@@ -193,23 +108,32 @@
     <div class="space-medium bg-light">
         <div class="container">
             <div class="row ">
-                <!--  buy/sell-image -->
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                    <div class="">
-                        <img src="./images/small_dashboard.png" alt="">
-                    </div>
-                </div>
-                <!--  /.buy/sell-image -->
                 <!--  buy/sell-details -->
                 <div class="offset-xl-1 col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12">
-                    <div class="pdt40">
-                        <h2>Buy and Sell Digital Currency</h2>
-                        <p class="lead">Nam non convallis mielaoreet enimuspendis facibuse magna elit, molestie ultricies ligula dignissllus rutrumi egestas gravida. </p>
-                        <p>Nam non convallis mielaoreet enimuspendis facibuse magna eliltricies ligula dignissllus rutrumi egestas gravida. </p>
-                        <a href="#" class="btn btn-default">Sign up</a>
+                    <div class="pdt40 text-right">
+                        <h2>خرید و فروش ارز دیجیتال</h2>
+                        <p class="lead">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
+                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
+                        @guest
+                            @if (Route::has('register'))
+                            <div class="row">
+                                
+                                <div class="col-12">
+                                        <a class="btn btn-default custom-btn-warning mb" href="{{ route('register') }}">{{ __('ثبت نام') }}</a>
+                                </div>
+                            </div>
+                            @endif
+                        @endguest
                     </div>
                 </div>
                 <!--  /.buy/sell-details -->
+                <!--  buy/sell-image -->
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                    <div class="">
+                        <img class="custom-border-radius custom-drop-shadow" src="./images/bitcoin/bitcoin_PNG1.png" alt="تصویر">
+                    </div>
+                </div>
+                <!--  /.buy/sell-image -->
             </div>
         </div>
     </div>
@@ -297,14 +221,16 @@
     <!-- feature-section -->
     <div class="space-medium bg-light">
         <div class="container">
-            <div class="row ">
+            <div class="row text-right">
                 <!-- feature-left -->
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                     <div class="feature-left">
-                        <div class="feature-icon"><i class="icon-shield"></i></div>
+                        <div class="feature-icon float-right">
+                            <img src="/images/bitcoin/icons/padlock.png" class="custom-icons" alt="تصویر">
+                        </div>
                         <div class="feature-content">
                             <h4>امنیت</h4>
-                            <p>Morbi egestas dictum sid volutpat est pharete hendrerit quis tortoret urabitur quis sceleest pharetu.</p>
+                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
                         </div>
                     </div>
                 </div>
@@ -312,21 +238,25 @@
                 <!-- feature-left -->
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                     <div class="feature-left">
-                        <div class="feature-icon"><i class="icon-brainstorming"></i></div>
+                        <div class="feature-icon float-right">
+                            <img src="/images/bitcoin/icons/call-center.png" class="custom-icons" alt="تصویر">    
+                        </div>
                         <div class="feature-content">
                             <h4>پشتیبانی</h4>
-                            <p>Squis tortoret urabitur quis sceleritue tellus dictum magna elitmolestie sen ultricies ligula dignissime.</p>
+                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
                         </div>
                     </div>
                 </div>
                 <!-- /.feature-left -->
                 <!-- feature-left -->
                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-                    <div class="feature-left">
-                        <div class="feature-icon"><i class="icon-wallet"></i></div>
+                    <div class="feature-left float-right">
+                        <div class="feature-icon">
+                            <img src="/images/bitcoin/icons/wallet.png" class="custom-icons" alt="تصویر">    
+                        </div>
                         <div class="feature-content">
                             <h4>کیف پول</h4>
-                            <p>Morbi egestas dictum sid volutpat est pharete hendrerit quis tortoret urabitur quis sceleest pharetu.</p>
+                            <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
                         </div>
                     </div>
                 </div>
@@ -339,15 +269,18 @@
     <div class="cta-section">
         <div class="container">
             <div class="row ">
-                <div class="offset-xl-3 col-xl-6 offset-lg-3 col-lg-6 col-md-12 col-sm-12 col-12">
-                    <div class="cta-block">
-                        <h1 class="text-white">Purchasing Crypto Now is Easier Than Ever</h1>
-                        <p>Buy and sell top cryptos on cointrade</p>
-                        <a href="#" class="btn btn-default">Sign Up Now</a>
-                    </div>
+                <div class="col-xl-6col-lg-6 col-md-12 col-sm-12 col-12">
+                    {{-- <div style="width: 100%; height: 100%; position: relative; top: 0px; bottom: 0px;">  --}}
+                        <div class="cta-block">
+                            <h1 class="text-white">لورم ایپسوم متن ساختگی با تولید سادگی.</h1>
+                            <p>لورم ایپسوم متن ساختگی با تولید سادگی.</p>
+                            {{-- <a href="#" class="btn btn-default custom-btn-warning">همین حالا ثبت نام کنید</a> --}}
+                        </div>
+                    {{-- </div> --}}
                 </div>
             </div>
         </div>
+        <div class="shadow-effect"></div>
     </div>
     <!-- /.cta-section -->
     <!-- app-section -->
@@ -368,88 +301,10 @@
     </div> --}}
     <!-- /.app-section -->
     <!-- footer -->
-    <div class="footer">
-        <div class="container">
-            <div class="row ">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
-                    <div class="ft-logo"><img src="./images/logo.png" alt=""></div>
-                </div>
-            </div>
-            <hr class="footer-line">
-            <div class="row ">
-                <!-- footer-about -->
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 ">
-                    <div class="footer-widget ">
-                        <div class="footer-title">Company</div>
-                        <ul class="list-unstyled">
-                            <li><a href="#">About</a></li>
-                            <li><a href="#">Support</a></li>
-                            <li><a href="#">Press</a></li>
-                            <li><a href="#">Legal & Privacy</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /.footer-about -->
-                <!-- footer-links -->
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 ">
-                    <div class="footer-widget ">
-                        <div class="footer-title">Quick Links</div>
-                        <ul class="list-unstyled">
-                            <li><a href="#">News</a></li>
-                            <li><a href="#">Contact us</a></li>
-                            <li><a href="#">FAQ</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /.footer-links -->
-                <!-- footer-links -->
-                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 ">
-                    <div class="footer-widget ">
-                        <div class="footer-title">Social</div>
-                        <ul class="list-unstyled">
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">Google +</a></li>
-                            <li><a href="#">Linked In</a></li>
-                            <li><a href="#">Facebook</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /.footer-links -->
-                <!-- footer-links -->
-                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-6 col-6 ">
-                    <div class="footer-widget ">
-                        <h3 class="footer-title">Subscribe Newsletter</h3>
-                        <form>
-                            <div class="newsletter-form">
-                                <input class="form-control" placeholder="Enter Your Email address" type="text">
-                                <button class="btn btn-default btn-sm" type="submit">Go</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <!-- /.footer-links -->
-                <!-- tiny-footer -->
-            </div>
-            <div class="row ">
-                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center ">
-                    <div class="tiny-footer">
-                        <p>Copyright © All Rights Reserved 2020 | Template Design & Development by <a href="https://easetemplate.com/ " target="_blank" class="copyrightlink">EaseTemplate</a></p>
-                    </div>
-                </div>
-                <!-- /. tiny-footer -->
-            </div>
-        </div>
-    </div>
-    <!-- /.footer -->
+
+@section('script')
+    
     <a href="javascript:" id="return-to-top"><i class="fa fa-angle-up"></i></a>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/front/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/front/bootstrap.min.js"></script>
-    <script src="js/front/menumaker.js"></script>
-    <script src="js/front/return-to-top.js"></script>
-    <script src="js/front/navigation.js"></script>
-    <script src="js/front/particles.min.js"></script>
     <script>
     /* ---- particles.js config ---- */
     /* -----------------------------------------------
@@ -586,6 +441,4 @@
 
     );
     </script>
-</body>
-
-</html>
+@endsection
