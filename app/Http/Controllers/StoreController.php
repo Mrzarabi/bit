@@ -29,14 +29,12 @@ use App\Models\Grouping\Subject;
 
 class StoreController extends Controller
 {
-    public function index ()
+    public function index()
     {
         // $this -> restore_cart();
         // $this->move_cart_items();
 
-        return view('store.index', [
-            'currencies'      => Currency::productCard(),
-            'groups'        => $this -> Get_sub_groups(),
+        return view('front.index', [
             // 'top_products'  => ProductVariation::getTops(18, true),
             // 'cart_products' => $this -> Get_Cart_items(),
             // 'brands'        => Brand::all(),
@@ -122,12 +120,12 @@ class StoreController extends Controller
         ]);
     }
 
-    public function add_review(AddReview $request, Currency $currency)
-    {
-        auth()->user()->reviews()->create(
-            array_merge( $request->all(), [ 'currency_id' => $currency->id ])
-        );
+    // public function add_review(AddReview $request, Currency $currency)
+    // {
+    //     auth()->user()->reviews()->create(
+    //         array_merge( $request->all(), [ 'currency_id' => $currency->id ])
+    //     );
 
-        return redirect()->back()->with('message', 'نظر شما با موفقیت ثبت شد .');
-    }
+    //     return redirect()->back()->with('message', 'نظر شما با موفقیت ثبت شد .');
+    // }
 }
