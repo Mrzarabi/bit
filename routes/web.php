@@ -1,4 +1,6 @@
 <?php
+use App\Mail\CloseTicketMail;
+use App\Models\Ticket\Ticket;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +16,7 @@
 Auth::routes();
 
 // Admin panel Routes
-Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace' => 'panel'], function () {
+Route::group(['middleware' => ['web', 'role:owner'], 'prefix' => 'panel', 'namespace' => 'panel'], function () {
     // Dashboard Route
     Route::get('/{total_type?}', 'PanelController@index')
         ->where('total_type', 'daily|weekly|monthly|yearly');
@@ -46,28 +48,27 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     // Users panel Route
     Route::resource('user', 'UserController')->except([ 'create', 'store' ]);
     Route::put('user/{user}/accept', 'UserController@accept_certificate')->name('accept_certificate');
+    Route::put('user/{bank_card}/acceptbank', 'UserController@accept_certificate_bank')->name('accept_certificate_bank');
     Route::get('user/{user}/editPass', 'UserController@editPass')->name('editPass');
+    Route::get('user/{user}/show_purchases', 'UserController@show_purchases')->name('show_purchases');
     Route::put('user/{user}/updatePass', 'UserController@updatePass')->name('updatePass');
-    Route::get('/user/search/{query?}', 'UserController@search');
+    Route::put('user/{user}/canbuy', 'UserController@canBuy')->name('canBuy');
     
-    Route::resource('role', 'RoleController');
+    Route::resource('role', 'RoleController')->except(['show']);
     Route::put('role/{$role}/updatePermissions', 'RoleController@updatePermissions')->name('updatePermissions');
     
     // Tickets & TicketMessages panel Route
     Route::resource('ticket', 'TicketController')->except([ 'create', 'show', 'update' ]);
     Route::put('ticket/{ticket}/is_close', 'TicketController@is_close')->name('ticket.is_close');
-    Route::get('/ticket/search/{query?}', 'TicketController@search');
 
     Route::resource('ticket_message', 'TicketMessageController');
     
     // Category Route
     Route::resource('category', 'CategoryController')->except(['create']);
     Route::get('group/sub/{id}', 'CategoryController@sub');
-    Route::get('/category/search/{query?}', 'CategoryController@search');
 
     // Currencies panel Route
-    Route::resource('currency', 'CurrencyController');
-    Route::get('/currency/search/{query?}', 'CurrencyController@search');
+    Route::resource('currency', 'CurrencyController')->except(['show']);
     
     // Specification tables handler panel Route
     Route::resource('specification', 'Spec\SpecificationController')->except([ 'create', 'show' ]);
@@ -95,6 +96,19 @@ Route::group(['middleware' => ['web', 'admin'], 'prefix' => 'panel', 'namespace'
     // Route::resource('warranty', 'WarrantyController')->except([ 'create', 'show' ]);
     // Brand panel routes
     // Route::resource('brand', 'BrandController')->except([ 'create', 'show' ]);
+});
+
+Route::group(['middleware' => ['web'], 'prefix' => 'panel', 'namespace' => 'Client'], function () {
+    
+    Route::resource('client', 'ShowClient');
+    Route::get('profile-setting/{user}', 'ShowClient@profile_setting')->name('profile_setting');
+    Route::post('client/store/', 'ShowClient@storeTicket')->name('storeTicket');
+    Route::post('client/store/bankCard', 'ShowClient@storeBankCard')->name('storeBankCard');
+    Route::get('editTicket/{ticket}', 'ShowClient@editTicket')->name('editTicket');
+    Route::post('client/storeTicketMessage/', 'ShowClient@storeTicketMessage')->name('storeTicketMessage');
+    Route::put('client/update/imageBankCard/{bank_card}', 'ShowClient@updateImageBankCard')->name('updateImageBankCard');
+    Route::put('prfile/update/{user}', 'ShowClient@updateProfile')->name('updateProfile');
+    Route::put('prfile/update/{user}/image', 'ShowClient@updateImageProfile')->name('updateImageProfile');
 });
 
 // Store Products Routes
@@ -128,3 +142,5 @@ Route::post('/checkout', 'CartController@checkout')->middleware('auth');
 Route::get('/blog', 'BlogController@index')->name('blog');
 Route::get('/blog/{article}', 'BlogController@show')->name('article.blog');
 Route::get('/subject/{subject}', 'BlogController@showSubject')->name('show.subject');
+
+// Route::get('/send/email', 'HomeController@mail');
