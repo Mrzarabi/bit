@@ -5,11 +5,14 @@ return [
         'owner' => [
             'user' => 'r,u,d,s,a',
             'bank_card'  => 'c,r,u,d,a',
-            'ticket'  => 'c,r,d,a',
-            'ticket_messages'  => 'c,r,u,d',
+            'ticket'  => 'c,r,d,a,cl',
+            'ticket_messages'  => 'c,r,u,d,ans',
             
             'spec' => 'r,c,u,d',
+            'purchase' => 'r',
             
+            'password'  => 'u',
+
             'subject' => 'r,c,u,d',
             'article' => 'r,c,u,d',
             'comment' => 'r,c,a,d',
@@ -19,7 +22,7 @@ return [
             
             'role' => 'r,c,u,d',
 
-            'setting' => 'c,u'
+            'setting' => 'r,u'
         ],
 
         // 'smaat_supporter' => [
@@ -67,6 +70,8 @@ return [
         'at'    => 'active',
         's'     => 'see-details',
         'sc'    => 'see-creator',
+        'cl'    => 'close',
+        'ans'   => 'answer',
         // 'ad'    => 'add-item',
         // 'rm'    => 'remove-item',
         // 'sl'    => 'see-log',
@@ -86,6 +91,8 @@ return [
         'active'            => 'فعال/غیرفعال کزدن',
         'see-details'       => 'مشاهده جزییات',
         'see-creator'       => 'مشاهده ثبت کننده',
+        'close'             => 'بستن',
+        'answer'            => 'پاسخ دادن'
         // 'add-item'          => 'افزودن به',
         // 'remove-item'       => 'حذف از',
         // 'see-log'           => 'مشاهده لاگ تغییرات',
@@ -103,7 +110,10 @@ return [
         'ticket_messages'  => 'پیام های تیکت',
         
         'spec' => 'جدول مشخصات فنی',
+        'purchase' => 'سوابق خرید',
         
+        'password'  => 'رمز عبور',
+
         'subject' => 'دسته بندی مقالات',
         'article' => 'مقالات',
         'comment' => 'نظرات',
@@ -124,11 +134,6 @@ return [
         'smaat_supporter' => [
             'name'  => 'پشتیبان',
             'description' => 'کسی که بحث پشتیبانی این پروژه رو بر عهده داره'
-        ],
-
-        'client' => [
-            'name' => 'کاربر',
-            'description' => 'کسی که از سایت دیدن میکند'
         ],
     ]
 ];
