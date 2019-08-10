@@ -1,3 +1,8 @@
+@php
+	if ( !isset($roles) )
+        $roles = \App\Role::all();
+@endphp
+
 @extends('panel.master.main')
 
 @section('styles')
@@ -94,7 +99,10 @@
                                         <div class="col-md-12">
                                             <div class="col-md-4">
                                                 <div class="mt-30">
-                                                    <input type="file" name="avatar" id="input-file-now" class="dropify" @isset($user) data-default-file="{{ $user->avatar }}" @endisset/>
+                                                    @php
+                                                        // dd($user->avatar->isEmpty());
+                                                    @endphp
+                                                    <input type="file" name="avatar" id="input-file-now" class="dropify" @if ( isset($user) && $user->avatar) data-default-file="{{ $user->avatar }}" @endif/>
                                                 </div>	
                                             </div>
                                             <div class="col-md-8">
@@ -177,7 +185,7 @@
                                                             @endif
                                                         </div>
                                                     </div>
-                                                </div>>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

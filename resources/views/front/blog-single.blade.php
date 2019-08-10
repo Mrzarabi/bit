@@ -111,9 +111,9 @@
                                     <h2 class="mb20"> {{$article->title}} </h2>
                                     <div class="mb30 mt30">
                                         @if ($article->image)
-                                            <img src="{{$article->image}}" class="pb-5 rounded" alt="تصویر">
+                                            <img src="{{$article->image}}" class="pb-5 rounded custom-width-article" alt="تصویر">
                                         @else
-                                            <img src="/images/placeholder/placeholder.png" class="pb-5 rounded" alt="تصویر">
+                                            <img src="/images/placeholder/placeholder.png" class="pb-5 rounded custom-width-article" alt="تصویر">
                                         @endif
                                         <p class="mb20">{{$article->body}}
                                         </p>
@@ -189,9 +189,9 @@
                                                 <div class="author-header row">
                                                     <div class="col-md-2">
                                                         @if ($article->user->avatar)
-                                                            <img src="{{$article->user->avatar}}" class="custom-style-img float-right pt-1 pl-0" alt="تصویر">
+                                                            <img src="{{$article->user->avatar}}" class="custom-style-img float-right pt-1 pl-0 pb-18" alt="تصویر">
                                                         @else
-                                                            <img src="/images/placeholder/download.png" class="img-fluid pt-1 pl-0" alt="تصویر">
+                                                            <img src="/images/placeholder/download.png" class="img-fluid pt-1 pl-0 pb-18" alt="تصویر">
                                                         @endif
                                                     </div>
                                                     <div class="col-md-10 pr-0">
@@ -251,9 +251,9 @@
                                                             <li class="row pr-5">
                                                                 <div class="col-md-2">
                                                                     @if ($reply->user->avatar)
-                                                                        <img src="{{$reply->user->avatar}}" class="custom-style-img float-right pt-1 pl-0" alt="تصویر">
+                                                                        <img src="{{$reply->user->avatar}}" class="custom-style-img float-right pt-1 pl-0 " alt="تصویر">
                                                                     @else
-                                                                        <img src="/images/placeholder/download.png" class="img-fluid pt-1 pl-0" alt="تصویر">
+                                                                        <img src="/images/placeholder/download.png" class="img-fluid pt-1 pl-0"  alt="تصویر">
                                                                     @endif
                                                                 </div>
                                                                 <div class=" col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12 comment-info">
@@ -276,58 +276,42 @@
                                     </div>
                                 </div>
                                 <!--comments close-->
-                                <div class="leave-comments">
-                                    <h3 class="leave-comments-title">نظر خود را بنویسید</h3>
-                                    <form action=" {{route('comment.store')}} " enctype="multipart/form-data" method="post">
-                                        <div class="row">
-                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                                <div class="form-group @if( $errors->has('title') ) has-error @endif">
-                                                    <div class="form-group pt-5">
-                                                        <label class="control-label sr-only"></label>عنوان پیام <span class="require">*</span>
-                                                        <input type="text" name="title" class="form-control" placeholder="عنوان پیام " required>
+                                @if (\auth::check())
+                                    <div class="leave-comments">
+                                        <h3 class="leave-comments-title">نظر خود را بنویسید</h3>
+                                        <form action=" {{route('comment.store')}} " enctype="multipart/form-data" method="post">
+                                            <div class="row">
+                                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                    <div class="form-group @if( $errors->has('title') ) has-error @endif">
+                                                        <div class="form-group pt-5">
+                                                            <label class="control-label sr-only"></label>عنوان پیام <span class="require">*</span>
+                                                            <input type="text" name="title" class="form-control" placeholder="عنوان پیام " required>
+                                                        </div>
                                                     </div>
+                                                    @if( $errors->has('title') )
+                                                        <span class="help-block">{{ $errors->first('title') }}</span>
+                                                    @endif
                                                 </div>
-                                                @if( $errors->has('title') )
-                                                    <span class="help-block">{{ $errors->first('title') }}</span>
-                                                @endif
-                                            </div>
-                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                                <div class="form-group @if( $errors->has('message') ) has-error @endif">
-                                                    <div class="form-group">
-                                                        <label class="control-label sr-only"></label> پیام <span class="require">*</span>
-                                                        <textarea class="form-control" name="message" rows="5" placeholder="متن پیام "></textarea>
+                                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                    <div class="form-group @if( $errors->has('message') ) has-error @endif">
+                                                        <div class="form-group">
+                                                            <label class="control-label sr-only"></label> پیام <span class="require">*</span>
+                                                            <textarea class="form-control" name="message" rows="5" placeholder="متن پیام "></textarea>
+                                                        </div>
                                                     </div>
+                                                    @if( $errors->has('message') )
+                                                        <span class="help-block">{{ $errors->first('message') }}</span>
+                                                    @endif
                                                 </div>
-                                                @if( $errors->has('message') )
-                                                    <span class="help-block">{{ $errors->first('message') }}</span>
-                                                @endif
-                                            </div>
-                                            {{-- <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
-                                                <div class="form-group">
-                                                    <label class="control-label required sr-only "></label>نام  <span class="require">*</span>
-                                                    <input type="text" name="first_name" class="form-control" placeholder="نام " required>
+                                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                                    <button type="submit" class="btn btn-warning custom-btn-warning btn-icon right-icon mr-10 pull-left"><span>ارسال</span></button>
+                                                    <input type="hidden" name="comment_id" value="{{ $comment->id }}" />
                                                 </div>
                                             </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
-                                                <div class="form-group">
-                                                    <label class="control-label required sr-only "> </label>نام خانوادگی <span class="require">*</span>
-                                                    <input type="text" name="last_name" class="form-control" placeholder="نام خانوادگی" required>
-                                                </div>
-                                            </div> --}}
-                                            {{-- <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
-                                                <div class="form-group">
-                                                    <label class="control-label  sr-only required  "></label>ایمیل <span class="require">*</span>
-                                                    <input type="email" class="form-control" placeholder="Email" required>
-                                                </div>
-                                            </div> --}}
-                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                                <button type="submit" class="btn btn-warning custom-btn-warning btn-icon right-icon mr-10 pull-left"><span>ارسال</span></button>
-                                                <input type="hidden" name="comment_id" value="{{ $comment->id }}" />
-                                            </div>
-                                        </div>
-                                        @csrf
-                                    </form>
-                                </div>
+                                            @csrf
+                                        </form>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

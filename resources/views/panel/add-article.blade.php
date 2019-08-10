@@ -143,7 +143,10 @@
 
 											<div class="col-md-3">
 												<div class="mt-30">
-													<input type="file" name="image" id="input-file-now" class="dropify" @isset($article) data-default-file="{{ $article->image->first()->getUrl('small') }}" @endisset />
+													{{-- @php
+														$article
+													@endphp --}}
+													<input type="file" name="image" id="input-file-now" class="dropify" @if ( isset($article) && $article->image) data-default-file="{{ $article->image }}" @endif />
 												</div>	
 											</div>
 										</div>

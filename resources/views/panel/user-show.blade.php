@@ -137,6 +137,8 @@
                                                     <th>کد ملی</th>
                                                     <th>شماره تماس</th>
                                                     <th>تاریخ تولد</th>
+                                                    <th> اجازه دسترسی به درگاه پرداخت</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -149,6 +151,20 @@
                                                         <p title="میلادی : {{$user->birthday}}">
                                                             {{ \Morilog\Jalali\Jalalian::forge($user->birthday)->format('%d %B %Y') }}
                                                         </p>
+                                                    </td>
+                                                    <td> 
+                                                        <div style="display: inline-flex; justify-content: center;">
+                                                            <form action="{{route('canBuy', ['user' => $user->id])}}" method="post">
+                                                                <button title="دسترسی به درگاه پرداخت" aria-id="{{ $user->id }}" @if( !auth()->user()->can("update-user") ) disabled @endif  type="submit" class="font-icon custom-style btn btn-primary custom-btn-primary"><i class="fa fa-shopping-basket custom-icon" style="color: white !important;"> </i></button>
+                                                                @csrf
+                                                                @method("put")
+                                                            </form>
+                                                            @if ($user->can_buy)
+                                                                <i style="color:green; padding-right:10px;" class="fa fa-check"></i>
+                                                            @else
+                                                                <i style="color:red; padding-right:20px;" class="ti-close"></i>
+                                                            @endif
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -364,23 +380,36 @@
                                                                 </p>
                                                             </td>
                                                             <td>
-                                                                <button type="button" class="custom-btn-primary btn btn-primary" data-toggle="modal" data-target="#image_benk_card" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
-
-                                                                <div class="modal fade" id="image_benk_card" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <button type="button" class="custom-btn-primary btn btn-primary" data-toggle="modal" data-target="#{{$item->id}}" data-whatever="@getbootstrap" style="border-radius: 7px;">باز کردن تصویر</button>
+                                                                @if ($item->accept_image_bank_card)
+                                                                    <i style="color:green; padding-right:10px;" class="fa fa-check"></i>
+                                                                @else
+                                                                    <i style="color:red; padding-right:20px;" class="ti-close"></i>
+                                                                @endif
+                                                                <div class="modal fade" id="{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                     <div class="modal-dialog" role="document">
                                                                         <div class="modal-content">
                                                                             <div class="modal-body">
-                                                                                @if ($item->image_benk_card)
-                                                                                    <div class="product-pic img-responsive "
-                                                                                        style="background: url('{{ $item->image_benk_card }}') center center;
-                                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
-                                                                                    </div>    
-                                                                                @else
-                                                                                    <div class="product-pic img-responsive "
-                                                                                        style="background: url('/images/placeholder/placeholder.png') center center;
-                                                                                            background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
-                                                                                    </div>
-                                                                                @endif
+                                                                                @if ($item->image_bank_card)
+                                                                                <div class="product-pic img-responsive "
+                                                                                    style="background: url('{{ $item->image_bank_card }}') center center;
+                                                                                        background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                                </div>    
+                                                                            </div>    
+                                                                            <div class="modal-footer">
+                                                                                <form action="{{route('accept_certificate_bank', ['bank_card' => $item->id])}}" method="post">
+                                                                                    <input type="hidden" name="type" value="image_bank_card" />
+                                                                                    <button type="submit" name="status" value="1" class="btn btn-orange custom-btn-warning btn-icon pull-left">تایید </button>
+                                                                                    <button type="submit" name="status" value="0" class="btn btn-secondary custom-btn-gainsboro btn-icon pull-left">رد</button>
+                                                                                    @else
+                                                                                        <div class="product-pic img-responsive "
+                                                                                            style="background: url('/images/placeholder/placeholder.png') center center;
+                                                                                                background-size: cover; margin: 50px; max-width: 500px; border-radius: 7px;">
+                                                                                        </div>
+                                                                                    @endif
+                                                                                    @method('put')
+                                                                                    @csrf
+                                                                                </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>

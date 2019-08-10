@@ -86,7 +86,7 @@
 				<div class="panel panel-default card-view">
 					<div class="panel-wrapper collapse in">
 						<div class="panel-body pt-0">
-							<div class="form-wrap">
+							{{-- <div class="form-wrap">
 								<form action="/panel/setting/slider" enctype="multipart/form-data" method="POST">
 									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="fa fa-desktop font-20 txt-grey ml-10" aria-hidden="true"></i>ویرایش اسلایدر</h6>
 									<hr class="light-grey-hr"/>
@@ -171,9 +171,9 @@
 									</div>
 									@csrf
 								</form>
-							</div>
+							</div> --}}
 
-							<div class="form-wrap">
+							{{-- <div class="form-wrap">
 								<form action="/panel/setting/posters" enctype="multipart/form-data" method="POST">
 									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="fa fa-picture-o font-20 txt-grey ml-10" aria-hidden="true"></i>ویرایش پوستر ها</h6>
 									<hr class="light-grey-hr"/>
@@ -244,7 +244,7 @@
 									</div>
 									@csrf
 								</form>
-							</div>
+							</div> --}}
 
 							<div class="form-wrap">
 								<form action="/panel/setting/info" enctype="multipart/form-data" method="POST">
@@ -291,7 +291,7 @@
 															</div>
 														</div>
 
-														<div class="col-md-4">
+														{{-- <div class="col-md-4">
 															<div class="form-group">
 																<label class="control-label mb-10" for="exampleInputEmail_2">حداقل مبلغ</label>
 																<div class="input-group">
@@ -299,7 +299,7 @@
 																	<div class="input-group-addon"><i class="fa fa-arrow-down" aria-hidden="true"></i></div>
 																</div>
 															</div>
-														</div>
+														</div> --}}
 													</div>
 												</div>
 											</div>
@@ -380,7 +380,7 @@
 								</form>
 							</div>
 
-							<div class="form-wrap">
+							{{-- <div class="form-wrap">
 								<form action="/panel/setting/shipping_cost" method="POST">
 									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="fa fa-truck font-20 txt-grey ml-10" aria-hidden="true"></i>هزینه های ارسال</h6>
 									<hr class="light-grey-hr"/>
@@ -460,7 +460,7 @@
 									</div>
 									@csrf
 								</form>
-							</div>
+							</div> --}}
 						</div>
 					</div>
 				</div>

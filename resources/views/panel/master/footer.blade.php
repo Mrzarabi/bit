@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <p>2019 &copy; طراح و برنامه نویس : محمد هادی ضرابی</p>
+                <p>2019 &copy; طراح و برنامه نویس : توسط SmaaT.CO</p>
             </div>
 
             <div class="col-sm-6 text-left">

@@ -89,28 +89,26 @@
 	
 @section('content')
 	<div class="container">
-
 		@component('panel.components.table', [
-			'data' => $roles,
-			'label' => 'نقش',
+			'data' => $purchases,
+			'label' => 'سوابق خرید',
 			'header_label'	=> 'کاربران',
-			'type' => 'role',
+			'type' => 'purchase',
 				'fields' => [
 					[
-						'field' => 'name',
-						'label' => 'عنوان مقاله',
+						'field' => 'id',
+						'label' => 'کد',
 					],
 					[
-						'field' => 'display_name',
-						'label' => 'عنوان مقاله',
+						'field' => 'purchase',
+						'label' => 'مبلغ دریافتی',
 					],
 					[
-						'field' => 'description',
-						'label' => 'عنوان مقاله',
+						'field' => 'inventory',
+						'label' => 'مقدار خریداری شده',
 					],
 				],		
 			])		
-			<a @if( auth()->user()->can("create-{$type}") ) href="{{route('role.create')}}" @endif @if( !auth()->user()->can("create-{$type}") ) disabled @endif class="btn btn-primary custom-btn-primary pull-left" style="margin-bottom: 10px !important; margin-left: 10px !important;" >ایجاد نقش</a>
 		@endcomponent
 	</div>
 @endsection
@@ -138,7 +136,7 @@
 
 	@foreach ($scripts as $script)
 		<script src="{{ asset($script) }}"></script>
-	@endforeach
-	
+	@endforeach	
+
 	@include('panel.components.delete')
-@endsection 
+@endsection

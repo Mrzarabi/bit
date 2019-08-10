@@ -5,7 +5,7 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
                 <div class="header-logo">
                     <a href="/" class="header-logo-link">
-                        <img src="{{ asset('logo/'.$options['site_logo']) }}" style="max-height: 60px;display: block;" alt="لوگوی فروشگاه">
+                        <img src="{{ asset('logo/'.$options['site_logo']) }}" class="rounded" style="max-height: 60px;display: block;" alt="لوگوی فروشگاه">
                     </a>
                 </div>
             </div>
@@ -30,9 +30,11 @@
                 <div class="footer-widget text-right">
                     <div class="footer-title">لینک های سریع</div>
                     <ul class="list-unstyled">
-                        <li><a href="#">مقالات</a></li>
-                        <li><a href="#">ثبت نام</a></li>
-                        <li><a href="#">ورود</a></li>
+                        <li><a href="{{route('blog')}}">مقالات</a></li>
+                        @if (!\auth::check())
+                            <li><a href="{{ route('register') }}">ثبت نام</a></li>
+                            <li><a href="{{ route('login') }}">ورود</a></li>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -42,9 +44,10 @@
                 <div class="footer-widget text-right">
                     <div class="footer-title">شبکه های اجتماعی</div>
                     <ul class="list-unstyled">
-                        <li><a href="#">Twitter</a></li>
-                        <li><a href="#">Telegram</a></li>
-                        <li><a href="#">Whatsapp</a></li>
+                        <li><a href="{{ asset('social_link/'.$options['social_link']->twitter) }}">Twitter</a></li>
+                        <li><a href="{{ asset('social_link/'.$options['social_link']->instagram) }}">Telegram</a></li>
+                        <li><a href="{{ asset('social_link/'.$options['social_link']->facebook) }}">facebook</a></li>
+                        <li><a href="{{ asset('social_link/'.$options['social_link']->telegram) }}">telegram</a></li>
                     </ul>
                 </div>
             </div>
@@ -78,7 +81,11 @@
         <div class="row ">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center ">
                 <div class="tiny-footer">
-                    <p> تمام حقوق وبسایت © تا سال 2020 محفوظ است  | طراحی سایت توسط SmaaT.co <a href="https://easetemplate.com/ " target="_blank" class="copyrightlink"></a></p>
+                    <p class="pull-right"> تمام حقوق وبسایت © تا سال 2020 محفوظ است  | طراحی سایت توسط  <a href="https://www.smaat.ir " target="_blank" class="copyrightlink custom-color">SmaaT.CO</a></p>
+                    <div class="pull-left" style="width: 400px;">
+                        <p><a class="custom-color pull-left " href="tel:09105009868"> تماس با تیم توسعه دهنده</a></p>
+                        <p><a class="custom-color pull-right mt-22 " href="tel:09153388688"> تماس با پشتیبانی</a></p>
+                    </div>
                 </div>
             </div>
             <!-- /. tiny-footer -->

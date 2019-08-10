@@ -89,154 +89,73 @@
 	
 @section('content')
 	<div class="container">
+		@component('panel.components.table', [
+			'data' => $users,
+			'header_label' => 'کاربران',
+			'label' => 'کاربر',
+			'type' => 'user',
+			'more_action' => true,
+			'reset_pass' => true,
+			'show_purchases'	=> true,
+			'work'	=> ' تغییر پسورد',
+			'class'	=> 'btn btn-info btn-xs custom-btn-info',
+			'class_i' => 'ti-key custom-icon',
+			'fields' => [
+				[
+					'field' => 'avatar',
+					'label' => 'تصویر کاربر',
+					'resolver' => function($data) {
+						$result = '<div class="row" style="display: flex; justify-content: center;"><div class="col-md-8">';
 
-		<!-- Title -->
-		<div class="row heading-bg">
-			<!-- Breadcrumb -->
-			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h5 class="txt-dark">کاربران</h5>
-			</div>
-			
-			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-				<ol class="breadcrumb">
-					<li class="active"><span>کاربران</span></li>
-					<li><a href="#"><span>کاربران</span></a></li>
-					<li><a href="index.html">داشبورد</a></li>
-				</ol>
-			</div>
-			<!-- /Breadcrumb -->
-		</div>
-		<!-- /Title -->
-		
-		<!-- Group Row -->
-		<div class="row">
-			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				<div class="panel panel-default card-view">
-					<div class="panel-heading">
-						<div class="pull-right">
-							<h6 class="panel-title txt-dark">جستجو در کاربران</h6>
-						</div>
-						<div class="clearfix"></div>
-					</div>
-					<div  class="panel-wrapper collapse in">
-						<div  class="panel-body">
-							<div class="form-group">
-								<div class="input-group">
-									<input type="text" name="first_name" onkeyup="this.nextElementSibling.href = '/panel/user/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : نام کاربر">
-									<a href="/panel/article/search/" class="input-group-addon"><i class="ti-search"></i></a>
-								</div>
-							</div>
-						</div>
-					</div>
+						$result .= '<img src="' . ( $data ? $data : '/images/placeholder/download.png' );
 
-					<div class="panel-body">
-						@include('errors.errors-show')
-					</div>
-				</div>
-			</div>
-		</div>
+						return $result .= '" style="background-size: cover; max-width: 80px; max-height: 60px; border-radius: 50%; width: 100%; height: 100%;" alt="تصویر"></div></div>';
+					}
+				],
+				[
+					'field' => 'first_name',
+					'label' => 'نام',
+				],
+				[
+					'field' => 'last_name',
+					'label' => 'نام خانوادگی',
+				],
+				[
+					'field' => 'roles',
+					'label' => 'نقش ها',
+					'resolver'	=> function($data) {
+						$result = ''; 
+						if ($data->isNotEmpty()) {
+							// $data = $user->$data->where('name' , '!=', 'owner');
+							foreach ($data as $role) {
+								$result .= '<span class="badge badge-primary w-100" style=" display: block; max-width: max-content; margin-bottom: 5px; >
+									<p style="font-size: 10px;">' . $role->display_name .'</p>
+								</span>';
+							}
+						} else {
+							$result .= '<span class="badge badge-warning w-100" style="display: block; max-width: max-content;">
+								<p style="font-size: 10px;">بدون نقش</p>
+							</span>';
+						}
 
-		<div class="seprator-block"></div>
-	
-		<!-- Product Row One -->
-		<div class="row">
-			@empty($users[0])
-			<div class="alert alert-warning alert-dismissable">
-				<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
-				<p class="pull-right">هیچ کاربری یافت نشد !</p>
-				<div class="clearfix"></div>
-			</div>
-			@endempty
-			<div class="col-md-12">
-				<div class="panel panel-default card-view">
-					<div class="panel-wrapper collapse in">
-						<div class="panel-body">
-							<div class="table-wrap">
-								<div class="table-responsive over" style="overflow-x: hidden !important;">
-									<table id="datable_2" class="table table-hover table-bordered display mb-30">
-										<h2 style="margin:15px;">کاربران</h2>
-										<thead>
-											<tr>
-											<th style="font-weight:bold; font-size:20px;">#</th>
-												<th style="font-weight:bold; font-size:20px;">تصویر کاربر</th>
-												<th style="font-weight:bold; font-size:20px;">نام و نام خانوادگی</th>
-												<th style="font-weight:bold; font-size:20px;">نقش</th>
-												<th style="font-weight:bold; font-size:20px;">تلفن</th>
-												<th style="font-weight:bold; font-size:20px;">کد ملی</th>
-												<th style="font-weight:bold; font-size:20px;">تولد</th>
-												<th style="font-weight:bold; font-size:20px;">تاریخ وررود</th>
-												<th style="font-weight:bold; font-size:20px;">عملیات</th>
-											</tr>
-										</thead>
-										<tbody>
-											@php $i = 0 @endphp
-											@foreach ($users as $user)
-													<tr style="text-align:center;">
-														<td>{{ ++$i }}</td>
-														<td>
-															<div class="row" style="display: flex; justify-content: center;">
-																<div class="col-md-3"></div>
-																<div class="col-md-8">
-																	@if ($user->avatar)
-																	<div class="product-pic img-responsive"
-																		style="background: url('{{ $user->avatar }}') center center;
-																			background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%;">
-																	@else
-																		<div class="product-pic img-responsive "
-																			style="background: url('/images/placeholder/download.png') center center;
-																				background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%;">
-																		</div>
-																	@endif
-																	</div>
-																</div>
-															</div>
-														</td>
-														<td>{{ $user->first_name . ' ' . $user->last_name }}</td>
-														<td>
-															<div style="display: flex; flex-direction: column; align-items: center;  border: unset !important; border-bottom: 5px;">
-																@if ($user->roles->isNotEmpty() )
-																	@foreach ($user->roles as $role)
-																		<span class="badge badge-primary w-100" style="display: block; max-width: max-content; @if(!$loop->last) margin-bottom: 5px; @endif">
-																			<p style="font-size: 10px;">{{$role->display_name}}</p>
-																		</span>
-																	@endforeach
-																@else
-																	<span class="badge badge-warning w-100" style="display: block; max-width: max-content;">
-																		<p style="font-size: 10px;">بدون نقش</p>
-																	</span>
-																@endif
-															</div>
-														</td>
-														<td>{{ $user->phone_number }}</td>
-														<td>{{ $user->national_code }}</td>
-														<td>{{ \Morilog\Jalali\Jalalian::forge($user->birthday)->format('%d %B %Y') }}</td>
-														<td title="{{ \Morilog\Jalali\Jalalian::forge($user->created_at)->format('%H:i:s - %d %B %Y')  }}">
-															{{ \Morilog\Jalali\Jalalian::forge($user->created_at)->ago() }}
-														</td>
-														<td>
-															<div class="font-icon custom-style">
-																<form action="{{ route('user.destroy', ['user' => $user->id]) }}" method="POST">
-																	<button title= "حذف کاربر" type="submit" itemid="{{ $user->id }}" class="delete-item btn-xs btn btn-danger custom-btn-danger"><i class="icon ti-trash custom-icon"> </i></button>
-																	<a title= "ویرایش کاربر" style="padding: 6px 5px !important; margin-right: 6px;" class="d-inline btn btn-xs btn-warning custom-btn-warning" href="{{ route('user.edit', ['user' => $user->id]) }}"><i class="icon ti-pencil custom-icon"> </i></a>
-																	@method('delete')
-																	@csrf
-																</form>
-																<a title= "دیدن اطلاعات کاربر" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('user.show', ['user' => $user->id]) }}"><i class="icon ti-eye custom-icon"></i></a>
-																<a title= "تغییر پسورد کاربر" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-info btn-xs custom-btn-info" href="{{ route('editPass', ['user' => $user->id]) }}"><i class="ti-key custom-icon"></i></a>
-															</div>
-														</td>
-													</tr>
-											@endforeach
-										</tbody>
-									</table>
-								</div>
-							</div>
-							{{$users->links()}}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>	
+						return $result;
+					}
+				],
+				[
+					'field' => 'phone_number',
+					'label' => 'شماره تماس',
+				],
+				[
+					'field' => 'national_code',
+					'label' => 'کد ملی',
+				],
+				[
+					'field' => 'birthday',
+					'label' => 'تاریخ تولد',
+				],
+			],
+		])
+		@endcomponent
 	</div>
 @endsection
 
@@ -265,30 +184,6 @@
 		<script src="{{ asset($script) }}"></script>
 	@endforeach
 
-	<script>
-		$('.delete-item').on('click',function(){
-			var title = $(this).parent().parent().next().find('h5').text();
-			var id = $(this).attr('product');
-			var form = $(this).parent();
-
-			swal({   
-				title: "مطمین هستید ؟",   
-				text: "برای پاک کردن کاربر " + title + " مطمین هستید ؟",   
-				type: "warning",   
-				showCancelButton: true,   
-				confirmButtonColor: "#f83f37",   
-				confirmButtonText: "بله",   
-				cancelButtonText: "خیر",   
-				closeOnConfirm: false,   
-				closeOnCancel: false 
-			}, function(isConfirm){   
-				if (isConfirm) {
-					form.submit();
-				} else {     
-					swal("لغو شد", "هیچ کاربری حذف نشد :)", "error");   
-				} 
-			});
-			return false;
-		});
-	</script>
+	
+	@include('panel.components.delete')
 @endsection

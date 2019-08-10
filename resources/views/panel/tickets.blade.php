@@ -1,3 +1,6 @@
+@php
+	$user = \App\User::findOrFail($user);
+@endphp
 @extends('panel.master.main')
 
 @section('styles')
@@ -99,7 +102,7 @@
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
 					<li class="active"><span>تیکت ها</span></li>
-					<li><a href="#"><span>تیکت</span></a></li>
+					<li><a href="#"><span>کاربران</span></a></li>
 					<li><a href="index.html">داشبورد</a></li>
 				</ol>
 			</div>
@@ -113,7 +116,7 @@
 				<div class="panel panel-default card-view">
 					<div class="panel-heading">
 						<div class="pull-right">
-							<h6 class="panel-title txt-dark">جستجو در کاربران</h6>
+							<h6 class="panel-title txt-dark">جستجو در تیکت ها</h6>
 						</div>
 						<div class="clearfix"></div>
 					</div>
@@ -121,23 +124,24 @@
 						<div  class="panel-body">
 							<div class="form-group">
 								<div class="input-group">
-									<input type="text" name="id" onkeyup="this.nextElementSibling.href = '/panel/ticket/search/'+this.value" @isset($query) value="{{$query}}" @endisset id="firstName" class="form-control" placeholder="مثلا : کد تیکت">
-									<a href="/panel/article/search/" class="input-group-addon"><i class="ti-search"></i></a>
+									<input type="text" onkeyup="this.nextElementSibling.href = '/panel/ticket?query='+this.value" value="{{ request('query') }}" id="firstName" class="form-control" placeholder="مثلا : عنوان تیکت">
+									<a href="/panel/ticket" class="input-group-addon"><i class="ti-search"></i></a>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
 		
+		</div>
+
 		<div class="seprator-block"></div>
 		<!-- Product Row One -->
 		<div class="row">
-			@empty($tickets[0])
+			@if( $tickets->isEmpty() )
 			<div class="alert alert-warning alert-dismissable">
 				<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
-				<p class="pull-right">هیچ تیکتی یافت نشد !</p>
+				<p class="pull-right">هیچ داده ای یافت نشد !</p>
 				<div class="clearfix"></div>
 			</div>
 			@else
@@ -167,24 +171,16 @@
 											<tbody>
 												@php $i = 0 @endphp
 												@foreach ($tickets as $ticket)
-												{{-- @php dd($ticket) @endphp --}}
 													@if (!$ticket->is_close)
 														<tr style="text-align:center;">
 															<td>{{ ++$i }}</td>
 															<td>
 																<div class="row" style="display: flex; justify-content: center;">
-																	<div class="col-md-3"></div>
 																	<div class="col-md-8">
-																		@if ($ticket->user->avatar)
-																		<div class="product-pic img-responsive"
-																			style="background: url('{{ $ticket->user->avatar }}') center center;
-																				background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%;">
-																		@else
-																			<div class="product-pic img-responsive "
-																				style="background: url('/images/placeholder/download.png') center center;
-																					background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%;">
+																		<div class="row" style="display: flex; justify-content: center;">
+																			<div class="col-md-8">
+																				<img src=" {{$ticket->user->avatar ? $ticket->user->avatar : '/images/placeholder/placeholder.png'}}" style="background-size: cover; max-width: 80px; max-height: 60px; border-radius: 5px; width: 100%; height: 100%;" alt="تصویر">
 																			</div>
-																		@endif
 																		</div>
 																	</div>
 																</div>
@@ -200,7 +196,6 @@
 																		case 3: $status = ['کم اهمیت', 'primary']; break;
 																	}
 																@endphp
-
 																<span class="label bg-{{$status[1]}}">{{$status[0]}}</span>
 															</td>
 															<td>{{ $ticket->user->first_name }} {{ $ticket->user->last_name }}</td>
@@ -210,16 +205,16 @@
 															<td>
 																<div class="font-icon custom-style">
 																	<form action="{{ route('ticket.destroy', ['ticket' => $ticket->id]) }}" method="POST">
-																		<button title="حذف تیکت" type="submit" itemid="{{ $ticket->id }}" id="hadiii" class="delete-item btn-xs btn btn-danger custom-btn-danger" onclick="hadi()"><i class="icon ti-trash custom-icon"></i></button>
+																		<button aria-id="{{ $ticket->id }}" @if( !auth()->user()->can("delete-ticket") ) disabled @endif title="حذف تیکت" type="submit" itemid="{{ $ticket->id }}" id="hadiii" class="delete-item btn-xs btn btn-danger custom-btn-danger" onclick="hadi()"><i class="icon ti-trash custom-icon"></i></button>
 																		@method('delete')
 																		@csrf
 																	</form>
 																	<form action="{{ route('ticket.is_close', ['ticket' => $ticket->id]) }}" method="post">
-																		<button title= "بستن تیکت" type="submit" class="btn btn-xs btn-warning custom-btn-warning"><i class="icon ti-close custom-icon"></i></button>
+																		<button aria-id="{{ $ticket->id }}" @if( !auth()->user()->can("close-ticket") ) disabled @endif title= "بستن تیکت" type="submit" class="btn btn-xs btn-warning custom-btn-warning"><i class="icon ti-close custom-icon"></i></button>
 																		@method('put')
 																		@csrf
 																	</form>
-																	<a title= "ارسال تیکت" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('ticket.edit', ['ticket' => $ticket->id]) }}">
+																	<a aria-id="{{ $ticket->id }}" @if( !auth()->user()->can("read-ticket") ) disabled @endif title= "ارسال تیکت" style="padding: 6px 5px !important;" class="font-icon custom-style btn btn-success btn-xs custom-btn-success" href="{{ route('ticket.edit', ['ticket' => $ticket->id]) }}">
 																		<i class="icon ti-eye custom-icon"></i></a>
 																</div>
 															</td>
@@ -245,24 +240,17 @@
 											</thead>
 											<tbody>
 												@php $i = 0 @endphp
-												@foreach ($tickets as $ticket)
+												@foreach ($tickets_u as $ticket)
 													@if ($ticket->is_close)
 														<tr style="text-align:center;">
 															<td>{{ ++$i }}</td>
 															<td>
 																<div class="row" style="display: flex; justify-content: center;">
-																	<div class="col-md-3"></div>
 																	<div class="col-md-8">
-																		@if ($ticket->user->avatar)
-																		<div class="product-pic img-responsive"
-																			style="background: url('{{ $ticket->user->avatar }}') center center;
-																				background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%;">
-																		@else
-																			<div class="product-pic img-responsive "
-																				style="background: url('/images/placeholder/download.png') center center;
-																					background-size: cover; max-width: 50px; max-height: 50px; border-radius: 50%;">
+																		<div class="row" style="display: flex; justify-content: center;">
+																			<div class="col-md-8">
+																				<img src=" {{$ticket->user->avatar ? $ticket->user->avatar : '/images/placeholder/placeholder.png' }}" style="background-size: cover; max-width: 80px; max-height: 60px; border-radius: 5px; width: 100%; height: 100%;" alt="تصویر">
 																			</div>
-																		@endif
 																		</div>
 																	</div>
 																</div>
@@ -279,7 +267,7 @@
 															<td>
 																<div class="font-icon">
 																	<form action="{{ route('ticket.destroy', ['ticket' => $ticket->id]) }}" method="POST">
-																		<button title="حذف تیکت" type="submit" class="btn btn-xs btn-danger delete-item custom-btn-danger"><i class="icon ti-trash custom-icon"></i></button>
+																		<button aria-id="{{ $ticket->id }}" @if( !auth()->user()->can("delete-ticket") ) disabled @endif title="حذف تیکت" type="submit" class="btn btn-xs btn-danger delete-item custom-btn-danger"><i class="icon ti-trash custom-icon"></i></button>
 																		@method('delete')
 																		@csrf
 																	</form>
@@ -297,7 +285,7 @@
 						</div>	
 					</div>	
 				</div>
-			@endempty
+			@endif
 		</div>	
 		<!-- /Product Row Four -->
 		
@@ -330,29 +318,45 @@
 	@endforeach
 
 	<script>
-			$('.delete-item').on('click',function(){
-			var title = $(this).parent().parent().next().find('h5').text();
-			var id = $(this).attr('product');
-			var form = $(this).parent();
+		$('.delete-item').on('click',function(event) {
 
-			swal({   
-				title: "مطمین هستید ؟",   
-				text: "برای پاک کردن کاربر " + title + " مطمین هستید ؟",   
-				type: "warning",   
-				showCancelButton: true,   
-				confirmButtonColor: "#f83f37",   
-				confirmButtonText: "بله",   
-				cancelButtonText: "خیر",   
-				closeOnConfirm: false,   
-				closeOnCancel: false 
-			}, function(isConfirm){   
-				if (isConfirm) {
-					form.submit();
-				} else {     
-					swal("لغو شد", "هیچ کاربری حذف نشد :)", "error");   
-				} 
-			});
-			return false;
+		event.preventDefault();
+		event.stopPropagation();
+
+		var id = $(this).attr('aria-id');
+		var tr = $(this).parent().parent().parent().parent()
+
+		swal({   
+			title: "مطمین هستید ؟",   
+			text: "برای پاک کردن داده مورد نظر مطمین هستید ؟",   
+			type: "warning",   
+			showCancelButton: true,   
+			confirmButtonColor: "#f83f37",   
+			confirmButtonText: "بله",   
+			cancelButtonText: "خیر", 
+		}, function(isConfirm){   
+			if (isConfirm) {
+
+				fetch('/panel/{{ $ticket }}/' + id, {
+					method: 'post',
+					headers: {
+						"Content-Type": "application/json",
+						"Accept": "application/json",
+						"X-Requested-With": "XMLHttpRequest",
+						"X-CSRF-Token": "{{ csrf_token() }}"
+					},
+					body: JSON.stringify({
+						_method: 'delete'
+					})
+				})
+				.then(function(response) {
+
+					tr.remove()
+				})
+			}
+		});
+
+		return false;
 		});
 	</script>
 @endsection

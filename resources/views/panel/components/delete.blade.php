@@ -5,7 +5,7 @@
         event.stopPropagation();
 
         var id = $(this).attr('aria-id');
-        var form = $(this).parent();
+        var tr = $(this).parent().parent().parent().parent()
 
         swal({   
             title: "مطمین هستید ؟",   
@@ -16,8 +16,29 @@
             confirmButtonText: "بله",   
             cancelButtonText: "خیر", 
         }, function(isConfirm){   
+
+            
             if (isConfirm) {
-                form.submit();
+
+                fetch('/panel/{{ $type }}/' + id, {
+                    method: 'post',
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRF-Token": "{{ csrf_token() }}"
+                    },
+                    body: JSON.stringify({
+                        _method: 'delete'
+                    })
+                })
+                .then(function(response) {
+
+                    tr.fadeOut(400, function() {
+
+                        tr.remove()
+                    })
+                })
             }
         });
         

@@ -1,3 +1,7 @@
+@php
+	$groups = \App\Models\Grouping\Category::all();
+@endphp
+
 @extends('panel.master.main')
 
 @section('styles')
@@ -143,7 +147,7 @@
 																<div class="panel-body">
 																	<div class="col-md-12 images-gallery">
 																		<div class="mt-20">
-																			<input type="file" name="photo" id="input-file-now" class="dropify" @isset($currency) data-default-file="{{ $currency->photo }}" @endisset/>
+																			<input type="file" name="photo" id="input-file-now" class="dropify" @if ( isset($currency) && $currency->photo) data-default-file="{{ $currency->photo }}" @endif/>
 																		</div>
 																	</div>
 																</div>
@@ -252,29 +256,11 @@
 												</div>
 												<hr class="light-grey-hr"/>
 											</div>
-
-											{{-- <div id="pictures" class="tab-pane fade" role="tabpanel">
-												<div class="row">
-													<div class="col-sm-12">
-														<div class="panel panel-default border-panel card-view">
-															<div class="panel-wrapper collapse in">
-																<div class="panel-body">
-																	<div class="col-md-12 images-gallery">
-																		<div class="col-md-3 mt-20">
-																			<input type="file" name="photo" id="input-file-now" class="dropify" @isset($currency) data-default-file="{{ $currency->photo }}" @endisset/>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div> --}}
 											<div id="specifications" class="tab-pane fade" role="tabpanel">
 												<div class="container">
 													<div class="specs-table row">
 														@if(isset($currency) && !empty($currency->spec))
-
+														
 															@foreach ($currency->spec->toArray()['spec_headers'] as $spec_header)
 																<div class="row">
 																	<div class="col-md-12">

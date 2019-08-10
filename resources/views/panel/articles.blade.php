@@ -89,39 +89,39 @@
 	
 @section('content')
 	<div class="container">
-
-		
 		@component('panel.components.table', [
 			'data' => $articles,
 			'label' => 'مقاله',
+			'header_label'	=> 'وبلاگ',
 			'type' => 'article',
-			'fields' => [
-				[
-					'field' => 'image',
-					'label' => 'تصویر مقاله',
-					'resolver' => function($data) {
-						$result = '<div class="row" style="display: flex; justify-content: center;"><div class="col-md-8">';
-
-						$result .= '<img src="' . ( $data->first() ? $data->first()->getUrl('thumb') : '/images/placeholder/placeholder.png' );
-
-						return $result .= '" style="background-size: cover; max-width: 80px; max-height: 60px; border-radius: 5px; width: 100%; height: 100%;" alt="تصویر"></div></div>';
-					}
-				],
-				[
-					'field' => 'title',
-					'label' => 'عنوان مقاله',
-				],
-				[
-					'field' => 'subject',
-					'label' => 'عنوان دسته بندی مقاله',
-					'resolver' => function($data) {
-						return $data->title ?? '';
-					}
-				],
-			]
-		])
-		@endcomponent
+			'more_action' => true,
 		
+				'fields' => [
+					[
+						'field' => 'image',
+						'label' => 'تصویر مقاله',
+						'resolver' => function($data) {
+							$result = '<div class="row" style="display: flex; justify-content: center;"><div class="col-md-8">';
+										// dd($data);
+							$result .= '<img src="' . ( $data ? $data : '/images/placeholder/placeholder.png' );
+
+							return $result .= '" style="background-size: cover; max-width: 80px; max-height: 60px; border-radius: 5px; width: 100%; height: 100%;" alt="تصویر"></div></div>';
+						}
+					],
+					[
+						'field' => 'title',
+						'label' => 'عنوان مقاله',
+					],
+					[
+						'field' => 'subject',
+						'label' => 'عنوان دسته بندی مقاله',
+						'resolver' => function($data) {
+							return $data->title ?? 'دسته بندی ندارد';
+						}
+					],
+				],		
+			])		
+		@endcomponent
 	</div>
 @endsection
 

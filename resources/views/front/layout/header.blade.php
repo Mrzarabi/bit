@@ -5,7 +5,7 @@
             <div class="col-xl-2 col-lg-3 col-md-12 col-sm-12 col-12">
                 <div class="header-logo">
                     <a href="/" class="header-logo-link">
-                        <img src="{{ asset('logo/'.$options['site_logo']) }}" style="max-height: 60px;display: block;margin: auto" alt="لوگوی فروشگاه">
+                        <img src="{{ asset('logo/'.$options['site_logo']) }}" class="rounded" style="max-height: 60px;display: block;margin: auto" alt="لوگوی فروشگاه">
                     </a>
                 </div>
             </div>
@@ -42,8 +42,10 @@
                             <a href="{{ route('register') }}" class="btn btn-default btn-xs custom-btn-warning">{{ __('ثبت نام') }}</a>
                         @endif
                     @else
-                        @if (\Auth::user()->type == 1)
-                            <a target="_blank" class="btn btn-default custom-btn-warning" href="/panel">پنل مدیریت</a>
+                        @if (\Auth::user()->hasRole('owner'))
+                                <a class="btn btn-xs btn-default custom-btn-warning" @if( auth()->user()->can("create-currency") ) href="/panel/currency" @endif >دیدن محصول</a>
+                        @else
+                            <a class="btn btn-xs btn-default custom-btn-warning" href="/panel/client">دیدن محصول</a>
                         @endif
                             <a onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"

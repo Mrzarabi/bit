@@ -155,7 +155,7 @@
 																@endif
 															</div>
 															<div class="comment-body">
-																<h3>{{$comment->user->first_name . ' ' . $comment->user->last_name }}</h3>
+																<h3>{{$comment->title }}</h3>
 																<div class="meta" title="{{ \Morilog\Jalali\Jalalian::forge($comment->created_at)->format('%H:i:s - %d %B %Y') }}">
 																	{{ \Morilog\Jalali\Jalalian::forge($comment->created_at)->ago() }}
 																</div>
@@ -220,7 +220,7 @@
 																	@endif
 																</div>
 																<div class="comment-body">
-																	<h3>{{$reply->user->first_name. ' ' .$reply->user->last_name }}</h3>
+																	<h3>{{$reply->title }}</h3>
 																	<div class="meta" title="{{ \Morilog\Jalali\Jalalian::forge($reply->created_at)->format('%H:i:s - %d %B %Y') }}">
 																		{{ \Morilog\Jalali\Jalalian::forge($reply->created_at)->ago() }}
 																	</div>

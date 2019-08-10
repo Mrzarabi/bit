@@ -101,9 +101,9 @@
 			
 			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
 				<ol class="breadcrumb">
-					<li class="active"><span>تیکت ها</span></li>
-					<li><a href="#"><span>تیکت</span></a></li>
-					<li><a href="index.html">کاربران</a></li>
+					<li class="active"><span>تیکت </span></li>
+					<li><a href="/panel/client/create"><span> تیکت ها</span></a></li>
+					<li><a >مشخصات</a></li>
 				</ol>
 			</div>
 			<!-- /Breadcrumb -->
@@ -123,16 +123,16 @@
 				@include('errors.errors-show')
 			</div>
 			<div class="col-md-12">
-				<a href="{{route('ticket.index')}}"><button title="بازگشت به صفحه اصلی تیکت ها" class="btn btn-xs btn-purple pull-left custom-btn-purple custom-pama-btn" style="margin-left: 50px; margin-bottom: 10px !important;"><i class="ti-back-left"></i></button></a>
-				
-				<button aria-id="{{ $ticket->id }}" @if( !auth()->user()->can("answer-ticket_messages") ) disabled @endif title="پاسخ دادن به تیکت" type="button" class="btn btn-xs btn-primary custom-pama-btn custom-btn-primary pull-left" data-toggle="modal" data-target="#answer" data-whatever="@getbootstrap" style="border-radius: 7px; margin-left: 15px;"><i class="icon ti-plus custom-icon"></i></button>
+				<a href="{{route('client.create')}}"><button title="بازگشت به صفحه اصلی تیکت ها" class="btn btn-xs btn-purple pull-left custom-btn-purple custom-pama-btn" style="margin-left: 50px; margin-bottom: 10px !important;"><i class="ti-back-left"></i></button></a>
+
+				<button type="button" class="btn btn-xs btn-primary custom-pama-btn custom-btn-primary pull-left" data-toggle="modal" data-target="#answer" data-whatever="@getbootstrap" style="border-radius: 7px; margin-left: 15px;">ارسال تیکت</button>
                     
                     <div class="modal fade" id="answer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content" style="max-width: 700px; width: 700px;">
                                 <div class="modal-footer">
                                     <div class="row">
-                                        <form action="{{ route('ticket.store') }}" enctype="multipart/form-data" method="POST">
+                                        <form action="{{ route('storeTicketMessage') }}" enctype="multipart/form-data" method="POST">
                                             <div class="col-md-12">
 												<div class="row">
 													<div class="col-md-8">
@@ -159,7 +159,7 @@
 													</div>	
 													<div class="col-md-4">
 														<div class="mt-30">
-															<input type="file" name="image" id="input-file-now" class="dropify" @if ( isset($ticket 	) && $ticket->image) data-default-file="{{ $ticket->image }}" @endif/>
+															<input type="file" name="image" id="input-file-now" class="dropify"/>
 														</div>
 													</div>
 												</div>	
@@ -177,14 +177,15 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>		
+				
 				<div class="row">
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 product-card">
 						<div class="panel-wrapper collapse in">
 							<div class="panel-body">
 								<div class="table-wrap">
 									<div class="table-responsive" style="overflow: unset !important;">
-										@if (!$ticket->ticketmessages->isEmpty())
+                                        @if (!$ticket->ticketmessages->isEmpty())
 											@if (\auth::user()->hasRole('owner'))
 												@foreach ($ticket->ticketmessages as $item)
 													<div class="row" style="padding-bottom: 10px;">
@@ -264,9 +265,9 @@
 	<?php $scripts = [
 		// jQuery
 		'vendors/bower_components/jquery/dist/jquery.min.js',
-		// Bootstrap Core JavaScript
 		// Bootstrap Daterangepicker JavaScript
 		'vendors/bower_components/dropify/dist/js/dropify.min.js',
+		// Bootstrap Core JavaScript
 		'vendors/bower_components/bootstrap/dist/js/bootstrap.min.js',
 		// Slimscroll JavaScript
 		'dist/js/jquery.slimscroll.js',
@@ -281,11 +282,14 @@
 		'dist/js/dropdown-bootstrap-extended.js',
 		// Init JavaScript
 		'dist/js/init.js',
+		// Init Add Product Page JavaScript
+		'dist/js/init_add_product.js',
 	]; ?>
 
 	@foreach ($scripts as $script)
 		<script src="{{ asset($script) }}"></script>
 	@endforeach
+
 	<script>
 		$('.dropify').dropify({
 			messages: {
@@ -300,4 +304,5 @@
 			}
 		});
 	</script>
+
 @endsection

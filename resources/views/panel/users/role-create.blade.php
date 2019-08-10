@@ -1,3 +1,6 @@
+@php
+	$permissions = \App\Permission::all();
+@endphp
 @extends('panel.master.main')
 
 @section('styles')
@@ -56,28 +59,11 @@
 		.photo-actions a:hover, .photo-actions span:hover {
 			box-shadow: 0px 0px 15px -5px #000;
 		}
-		
-		
     </style>
 @endsection
 
 @section('content')
 	<div class="container">
-		<!-- Title -->
-		<div class="row heading-bg">
-			<!-- Breadcrumb -->
-			<div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-				<h5 class="txt-dark">@isset($role) ویرایش نقش @else ثبت نقش @endisset</h5>
-			</div>
-			<div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-				<ol class="breadcrumb">
-					<li class="active"><span>@isset($roel) ویرایش نقش @else ثبت نقش @endisset</span></li>
-					<li>فروشگاه</li>
-					<li>داشبورد</li>
-				</ol>
-			</div>
-			<!-- /Breadcrumb -->
-		</div>
 		<!-- /Title -->
 		<!-- Row -->
 		<div class="row">
@@ -90,7 +76,6 @@
 									<div class="panel-body">
 										@include('errors.errors-show')
 									</div>
-
 									<div class="row">
 										<div class="col-md-12">
 											<div class="col-md-6">
@@ -217,7 +202,7 @@
 	<script src="{{ asset($script) }}"></script>	
 	@endforeach
 
-	<script>
+	{{-- <script>
 		@isset($article)
 			$(window).load(function () {
 				var color = $('select.color-value').val();
@@ -232,5 +217,5 @@
 		@endisset
 
 		$("#dropzone").dropzone({ url: "/file/post" });
-	</script>
+	</script> --}}
 @endsection
