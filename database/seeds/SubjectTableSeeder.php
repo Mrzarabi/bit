@@ -62,6 +62,7 @@ class SubjectTableSeeder extends Seeder
         //For using all memory limit
         // ini_set('memory_limit', '-1');
 
+        
         //Showing all important Data in table
         $this->command->table(['id', 'user_id', 'article_id', 'created_at'], Comment::all()->map( function($comment)
         {
@@ -81,9 +82,11 @@ class SubjectTableSeeder extends Seeder
                     'user_id' => $user->id,
                     'subject_id' => $subjects->random()->id
                 ])
+                
                 // Create the comments & relation Users & articles & reply comment
             )->each( function($article) use($commentcount, $users, $replycommentcount)
             {
+                
                 //For using all memory limit
                 // ini_set('memory_limit', '-1');
 

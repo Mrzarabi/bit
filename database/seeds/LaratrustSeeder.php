@@ -12,7 +12,7 @@ class LaratrustSeeder extends Seeder
      */
     public function run()
     {
-        $usernames = ['support@smaat.ir', 'mostafa.javanmard777@gmail.com'];
+        $usernames = collect(['support@smaat.ir', 'mostafa.javanmard777@gmail.com']);
 
         // $usernames = collect();
 
@@ -77,15 +77,15 @@ class LaratrustSeeder extends Seeder
             // Attach all permissions to the role
             $role->permissions()->sync($permissions);
 
-            $usernames->each( function($username) use($password, $role, $key) {
+            $usernames->each( function($username) use( $role, $key) {
 
                 $this->command->info("Creating '{$username}' user");
     
                 $user = \App\User::firstOrCreate([
                     'email'        => $username
                 ], [
-                    'first_name'    => 'محمد هادی',
-                    'last_name'     => 'ضرابی',
+                    'first_name'    => 'Supporter',
+                    'last_name'     => 'SmaaT',
                     'phone_number' => '09030587521',
                     'password'     => bcrypt('123456')
                 ]);
