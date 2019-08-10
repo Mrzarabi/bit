@@ -22,7 +22,7 @@ $(document).ready(function(){
         var images = JSON.parse($('input[name="deleted_images"]').val());
         images[images.length] = filename;
         $('input[name="deleted_images"]').val(JSON.stringify(images));
-
+        
         $(this).parent().parent().remove();
     });
 
