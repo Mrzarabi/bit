@@ -3,12 +3,13 @@
 namespace App;
 
 use Laratrust\Models\LaratrustRole;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
+use App\Helpers\MediaConversionsTrait;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Role extends LaratrustRole
 {
     // use SoftDeletes, CascadeSoftDeletes;
+    use  MediaConversionsTrait, SearchableTrait;
 
     /****************************************
      **          Important methods
@@ -23,6 +24,22 @@ class Role extends LaratrustRole
         'name',
         'display_name',
         'description',
+    ];
+
+    /**
+     * Searchable rules.
+     *
+     * Columns and their priority in search results.
+     * Columns with higher values are more important.
+     * Columns with equal values have equal importance.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        'columns' => [
+            'roles.name' => 10,
+            'roles.display_name' => 8,
+        ],
     ];
 
     // /**

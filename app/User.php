@@ -17,10 +17,14 @@ use App\Models\Opinion\Review;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Laratrust\Traits\LaratrustUserTrait;
+use Nicolaslopezj\Searchable\SearchableTrait;
+use App\Models\User\Purchase;
 
 class User extends Authenticatable
 {
     use Notifiable, CanResetPassword, SoftDeletes, CascadeSoftDeletes, LaratrustUserTrait;
+    use SearchableTrait;
+
 
     protected $table = 'users';
 
@@ -41,12 +45,13 @@ class User extends Authenticatable
         'birthday',
         'address',
         'email',
+        'avatar',
+        'can_buy',
         'password',
         'password_confirmation',
-        'avatar',
         'image_national_code',
         'identify_certificate',
-        'image_bills',
+        'image_bill',
         'image_selfie_national_code',
     ];
 
@@ -80,7 +85,25 @@ class User extends Authenticatable
     protected $dates = [
         'deleted_at'
     ];
+
     
+    /**
+     * Searchable rules.
+     *
+     * Columns and their priority in search results.
+     * Columns with higher values are more important.
+     * Columns with equal values have equal importance.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        'columns' => [
+            'users.first_name' => 10,
+            'Users.last_name'  => 9,
+            'users.national_code' => 8,
+            'Users.phone_number'  => 7,
+        ],
+    ];
     
     /**
      * The attributes that should delete all relation with this model.
@@ -94,31 +117,8 @@ class User extends Authenticatable
         'ticketMessages',
         'currencies',
         'bankCard',
+        'purchases'
     ];
-
-    /****************************************
-     **         Important Method
-     ***************************************/
-
-    /**
-     * Full_name Mutators
-     *
-     * @return String
-     */
-    public function getFullNameAttribute()
-    {
-        return $this->first_name . ' ' . $this->last_name;
-    }
-
-    /**
-     * Role & permition
-     *
-     * @return String
-     */
-    public function is_admin($user_id)
-    {
-        return ($this->type == 1) ? true : false;   
-    }
 
     /****************************************
      **              Relations
@@ -130,6 +130,14 @@ class User extends Authenticatable
     public function articles()
     {
         return $this->hasMany(Article::class);
+    }
+
+    /**
+     * Get all of the purchases for the user.
+     */
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
     }
 
     /**
