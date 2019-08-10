@@ -4,16 +4,13 @@ namespace App\Http\Controllers\panel;
 
 use App\Models\Article\Article;
 use App\Http\Requests\V1\Article\ArticleRequest;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
-use App\Models\Grouping\Subject;
-use App\Models\Opinion\Comment;
 use App\Http\Controllers\MainController;
 use App\Helpers\SluggableController;
+use App\Helpers\HasUser;
 
 class ArticleController extends MainController
 {
-    use SluggableController;
+    use SluggableController, HasUser;
 
     /**
      * Instantiate a new MainController instance.
@@ -60,7 +57,6 @@ class ArticleController extends MainController
      */
     protected $relations = [
         'subject',
-        'image',
         'user:id:first_name,last_name'
     ];
 
@@ -73,12 +69,12 @@ class ArticleController extends MainController
      */
     protected $views = [
         'index' => 'panel.articles',
-        'show' => 'panel.show-comments',
-        'form' => 'panel.add-article',
+        'show'  => 'panel.show-comments',
+        'form'  => 'panel.add-article',
     ];
 
     /**
-     * Name of the field that should upload an image from that
+     * Name of the field that should upload an logo from that
      *
      * @var string
      */

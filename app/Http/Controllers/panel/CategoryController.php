@@ -4,157 +4,64 @@ namespace App\Http\Controllers\panel;
 
 use App\Models\Grouping\Category;
 use App\Http\Requests\V1\Grouping\CategoryRequest;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Input;
+use App\Http\Controllers\MainController;
 
-class CategoryController extends Controller
+class CategoryController extends MainController
 {
     /**
-     * Display a listing of the Categories.
+     * Type of this controller for use in messages
      *
-     * @return \Illuminate\Http\Response
+     * @var string
      */
-    public function index()
-    {
-        return view('panel.category', [
-            'categories' => Category::orderBy('created_at', 'DESC')->where('parent', null)->paginate(10),
-            'page_name' => 'category',
-            'page_title' => 'گروه بندی محصولات',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
-    }
+    protected $type = 'category';
 
     /**
-     * Show the form for creating a new Category.
+     * The model of this controller
      *
-     * @return \Illuminate\Http\Response
+     * @var Model
      */
-    public function create()
-    {
-        //
-    }
+    protected $model = Category::class;
 
     /**
-     * Store a newly created Category in storage.
+     * The request class for this controller
      *
-     * @param  \Illuminate\Http\Request\V1\Grouping\CategoryRequest  $request
-     * @return \Illuminate\Http\Response
+     * @var Model
      */
-    public function store(CategoryRequest $request)
-    {
-        Category::create( array_merge($request->all(), [
-            'logo' => $request->hasFile('logo') ? $this->upload_image( Input::file('logo') ) : null,
-        ]));
-// return $request->logo;
-        return redirect()->back()->with('message', 'گروه '.$request->title.' با موفقیت ثبت شد .');
-    }
+    protected $request = CategoryRequest::class;
+
+    protected $more_relations = [
+        'childs'
+    ];
 
     /**
-     * Display the specified Category.
+     * Name of the views that need by this controller
      *
-     * @param  \App\models\Grouping\Category  $category
-     * @return \Illuminate\Http\Response
+     * @var string
      */
-    public function show(Category $category)
-    {
-        $categories = $category->childs()->get();
-        $categories->orderBy('created_at', 'DESC')->get();
-        return $categories;
-        return view('panel.category', [
-            'categories' => $category->childs()->get(),
-
-            'id' => $category->id,
-            'category' => $category,
-            'breadcrumb' => $this -> breadcrumb($category),
-            'page_name' => 'group',
-            'page_title' => 'گروه های زیرمجموعه ' . $category->title,
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
-    }
+    protected $views = [
+        'index' => 'panel.category',
+    ];
 
     /**
-     * Show the form for editing the specified Category.
+     * Name of the field that should upload an logo from that
      *
-     * @param  \App\models\Grouping\Category  $category
-     * @return \Illuminate\Http\Response
+     * @var string
      */
-    public function edit(Category $category)
-    {
-        return view('panel.category', [
-            'categories' => $category->childs()->get(),
-            'category' => $category,
-            'id' => $category->id,
-            'breadcrumb' => $this -> breadcrumb($category),
-            'page_name' => 'category',
-            'page_title' => 'ویرایش گروه ' . $category->title,
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
-    }
+    protected $image_field = 'logo';
 
     /**
-     * Update the specified Category in storage.
+     * Get all data of the model,
+     * used by index method controller
      *
-     * @param  \Illuminate\Http\Request\V1\Grouping\CategoryRequest  $request
-     * @param  \App\models\Grouping\Category  $category
-     * @return \Illuminate\Http\Response
+     * @return Collection
      */
-    public function update(CategoryRequest $request, Category $category)
+    public function getAllData()
     {
-        // return $category->title;
-        if ($request->hasFile('logo'))
-        {
-            $logo = $this->upload_image( Input::file('logo') );
-            
-            if ( file_exists( public_path($category->logo) ) )
-                unlink( public_path($category->logo) );
-        }
-        else
-        {
-            $logo = $category->logo;
-        }
-                
-        $category->update(array_merge($request -> all(), [
-            'logo' => $logo
-        ]));
-        return redirect(route('category.index'))->with('message', 'گروه '.$request->title.' با موفقیت بروز رسانی شد .');
-    }
+        $data = $this->model::whereNull('parent')->search( request('query') )->latest();
+        
+        if ( isset( $this->relations ) )
+            $data->with( $this->relations );
 
-    /**
-     * Remove the specified Category from storage.
-     *
-     * @param  \App\models\Grouping\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Category $category)
-    {
-        $category->delete();
-        return redirect( route('category.index') )->with('message', 'گروه '.$category->title.' با موفقیت حذف شد .');
-    }
-
-    /**
-     * return a sub child of specified category in json
-     *
-     * @param Integer $id
-     * @return JSON
-     */
-    public function sub($id)
-    {
-        return json_encode( Category::select('id', 'title')->where('parent', $id)->get() );
-    }
-
-    /**
-     * Show the filtered categories from storage.
-     *
-     * @param  String  $query
-     * @return \Illuminate\Http\Response
-     */
-    public function search($query = '')
-    {
-        return view('panel.category', [
-            'categories' => Category::latest()->where('title', 'like', "%$query%")->paginate(10),
-            'page_name' => 'category',
-            'page_title' => 'گروه بندی محصولات',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
+        return $data->paginate( $this->getPerPage() );
     }
 }

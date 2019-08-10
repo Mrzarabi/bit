@@ -2,82 +2,50 @@
 
 namespace App\Http\Controllers\panel;
 
-use App\Http\Controllers\Controller;
 use App\Models\Grouping\Subject;
 use App\Http\Requests\V1\Grouping\SubjectRequest;
-use Illuminate\Support\Facades\Input;
+use App\Http\Controllers\MainController;
 
-class SubjectController extends Controller
+class SubjectController extends MainController
 {
-    /**
-     * Display a listing of the subject.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('panel.subject', [
-            'subjects' => Subject::latest()->paginate(10),
-            'page_name' => 'subject',
-            'page_title' => 'گروه بندی محصولات',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
-    }
 
     /**
-     * Show the form for creating a new Subject.
+     * Type of this controller for use in messages
      *
-     * @return \Illuminate\Http\Response
+     * @var string
      */
-    public function create()
-    {
-        //
-    }
+    protected $type = 'subject';
 
     /**
-     * Store a newly created Subject in storage.
+     * The model of this controller
      *
-     * @param  \Illuminate\Http\Request\V1\Grouping\SubjectRequest  $request
-     * @return \Illuminate\Http\Response
+     * @var Model
      */
-    public function store(SubjectRequest $request)
-    {
-        Subject::create(array_merge($request->all(), [
-            'logo' => $request->hasFile('logo') ? $this->upload_image( Input::file('logo') ) : null,
-        ]));
-     
-        // return $request->logo;   
-        return redirect()->back()->with('message', 'گروه '.$request->title.' با موفقیت ثبت شد .');
-    }
+    protected $model = Subject::class;
 
     /**
-     * Display the specified Subject.
+     * The request class for this controller
      *
-     * @param  \App\models\Grouping\Subject  $subject
-     * @return \Illuminate\Http\Response
+     * @var Model
      */
-    public function show(Subject $subject)
-    {
-        //
-    }
+    protected $request = SubjectRequest::class;
 
     /**
-     * Show the form for editing the specified Subject.
+     * Name of the views that need by this controller
      *
-     * @param  \App\models\Grouping\Subject  $subject
-     * @return \Illuminate\Http\Response
+     * @var string
      */
-    public function edit(Subject $subject)
-    {
-        return view('panel.subject', [
-            'id' => $subject->id,
-            'subject' => $subject,
-            'subjects' => Subject::latest()->paginate(10),
-            'page_name' => 'subject',
-            'page_title' => 'ویرایش گروه ' . $subject->title,
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
-    }
+    protected $views = [
+        'index' => 'panel.subject',
+        'show'  => 'panel.subject',
+    ];
+
+    /**
+     * Name of the field that should upload an image from that
+     *
+     * @var string
+     */
+    protected $image_field = 'logo';
 
     /**
      * Update the specified Subject in storage.
@@ -86,25 +54,25 @@ class SubjectController extends Controller
      * @param  \App\models\Grouping\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function update(SubjectRequest $request, Subject $subject)
-    {
-        if ($request->hasFile('logo'))
-        {
-            $logo = $this->upload_image( Input::file('logo') );
+    // public function update(SubjectRequest $request, Subject $subject)
+    // {
+    //     if ($request->hasFile('logo'))
+    //     {
+    //         $logo = $this->upload_image( Input::file('logo') );
             
-            if ( file_exists( public_path($subject->logo) ) )
-                unlink( public_path($subject->logo) );
-        }
-        else
-        {
-            $logo = $subject->logo;
-        }
+    //         if ( file_exists( public_path($subject->logo) ) )
+    //             unlink( public_path($subject->logo) );
+    //     }
+    //     else
+    //     {
+    //         $logo = $subject->logo;
+    //     }
                 
-        $subject->update(array_merge($request -> all(), [
-            'logo' => $logo
-        ]));
-        return redirect(route('subject.index'))->with('message', 'گروه '.$request->title.' با موفقیت بروز رسانی شد .');
-    }
+    //     $subject->update(array_merge($request -> all(), [
+    //         'logo' => $logo
+    //     ]));
+    //     return redirect(route('subject.index'))->with('message', 'گروه '.$request->title.' با موفقیت بروز رسانی شد .');
+    // }
 
     /**
      * Remove the specified Subject from storage.
@@ -112,10 +80,10 @@ class SubjectController extends Controller
      * @param  \App\models\Grouping\Subject  $subject
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subject $subject)
-    {
-        $subject->delete();
+    // public function destroy(Subject $subject)
+    // {
+    //     $subject->delete();
         
-        return redirect( route('subject.index') )->with('message', 'گروه '.$subject->title.' با موفقیت حذف شد .');
-    }
+    //     return redirect( route('subject.index') )->with('message', 'گروه '.$subject->title.' با موفقیت حذف شد .');
+    // }
 }

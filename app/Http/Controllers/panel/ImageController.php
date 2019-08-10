@@ -76,7 +76,7 @@ class ImageController extends Controller
     {
         if ( !$request->status )
         {
-            if ( file_exists( public_path( $user->{$request->type} ) ) )
+            if ( $user->{$request->type} && file_exists( public_path( $user->{$request->type} ) ) )
                 unlink( public_path( $user->{$request->type} ) );
         }
 

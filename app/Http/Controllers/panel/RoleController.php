@@ -2,220 +2,97 @@
 
 namespace App\Http\Controllers\panel;
 
-use App\Http\Controllers\Controller;
 use App\Role;
-use App\Permission;
 use App\Http\Requests\V1\User\RoleRequest;
-use App\User;
-use Laratrust\Laratrust;
+use App\Http\Controllers\MainController;
+use App\Helpers\DeleteRole;
 
-class RoleController extends Controller
+class RoleController extends MainController
 {
+    use DeleteRole;
     /**
-     * Display a listing of the role.
+     * Type of this controller for use in messages
      *
-     * @return \Illuminate\Http\Response
+     * @var string
      */
-    public function index()
-    {
-        return view('panel.users.role-index', [
-            'roles' => Role::all(),
-            'page_name' => 'role',
-            'page_title' => 'نقش',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
-    }
+    protected $type = 'role';
 
     /**
-     * Show the form for creating a new role.
+     * The model of this controller
      *
-     * @return \Illuminate\Http\Response
+     * @var Model
      */
-    public function create()
-    {
-        return view('panel.users.role-create', [
-            'permissions' => Permission::all(),
-            'page_name' => 'add_role',
-            'page_title' => 'ایجاد نقش',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
-    }
+    protected $model = Role::class;
 
     /**
-     * Store a newly created role in storage.
+     * The request class for this controller
      *
-     * @param  \Illuminate\Http\Request\V1\User\RoleRequest  $request
-     * @return \Illuminate\Http\Response
+     * @var Model
      */
-    public function store(RoleRequest $request)
-    {
-        $role = Role::create([
-            'name' => $request->input('name'),
-            'display_name' => $request->input('display_name'),
-            'description' => $request->input('description'),
-        ]);
-
-        $role->syncPermissions( $request->permission_id );
-        
-        return redirect()->route('role.index'
-            )->with('message', "نقش {$request->display_name} با موفقیت ثبت شد");
-    }
+    protected $request = RoleRequest::class;
 
     /**
-     * Display the specified role.
+     * The relation of the controller to get when accesing data from DB
      *
-     * @param  \App\Role $role
-     * @return \Illuminate\Http\Response
+     * @var array
      */
-    public function show(Role $role, User $user)
+    protected $relations = [];
+
+    protected $more_relations;
+
+    /**
+     * Name of the views that need by this controller
+     *
+     * @var string
+     */
+    protected $views = [
+        'index' => 'panel.users.role-index',
+        'show'  => 'panel.users.role-create',
+        'form'  => 'panel.users.role-create',
+    ];
+
+    /**
+     * The function that get the model and run after the model was created
+     *
+     * @param Request $request
+     * @param Model $data
+     * @return void
+     */
+    public function afterCreate($request, $data)
     {
-        return view('panel.users.role-show', [
-            'role' => $role,
-            'users' => User::whereRoleIs($role)->get(),
-            'page_name' => 'show-role',
-            'page_title' => 'مشاهده کاربران این نقش',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
+        $data->syncPermissions( $request->permission_id );
+        if ( isset( $this->relations ) )
+            $data->load( $this->relations );
     }
 
     /**
-     * Show the form for editing the specified role.
+     * The function that get the model and run after the model was updated
      *
-     * @param  \App\Role $role
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Model $data
+     * @return void
      */
-    public function edit(Role $role)
-    {   
-        if ($role->name === 'owner') {
-            return redirect()->route('role.index'
-            )->with('message', " متاسفانه شما قادر به ایجاد تغییر در نقش {$role->display_name} نیستید");
-        } else{
-
-        return view('panel.users.role-create', [
-            'role'  => $role,
-            'permissions' => Permission::all() ,   
-            'role_permissions' => $role->permissions()->get()->pluck('id' , 'name')->toArray(),
-            'page_name' => 'show-role',
-            'page_title' => 'مشاهده نقش ها',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
-        }
+    public function afterUpdate($request, $data)
+    {
+        $data->syncPermissions( $request->permission_id );
+        if ( isset( $this->relations ) )
+            $data->load( $this->relations );
     }
 
     /**
-     * Update the specified role in storage.
+     * Show the form for editing the specified data.
      *
-     * @param  \Illuminate\Http\Request\V1\User\RoleRequest  $request
-     * @param  \App\Role
+     * @param  Model  $data
      * @return \Illuminate\Http\Response
      */
-    public function update(RoleRequest $request, Role $role)
+    public function edit($data)
     {
-        $role->syncPermissions( $request->permission_id );
-        $role->update( $request->only('name', 'display_name', 'description') );
-        
-        return redirect()->route('role.index'
-            )->with('message', "نقش {$request->display_name} با موفقیت به روز رسانی شد");
-    }
-
-    /**
-     * Remove the specified role from storage.
-     *
-     * @param  \App\Role
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Role $role)
-    {
-        if ($role->name === 'owner') {
-            return redirect()->route('role.index'
-            )->with('message', " متاسفانه شما قادر به حذف کردن نقش {$role->display_name} نیستید");
-        } else{
-            $role->delete();
-            return redirect()->route('role.index'
-                )->with('message', "نقش {$role->display_name} با موفقیت حذف شد");
-        }
-    }
-
-    public function indexper()
-    {
-        //
-        $permissions = Permission::paginate(10);
-        $params = [
-            'title' => 'Permissions Listing',
-            'permissions' => $permissions,
-        ];
-        return view('admin.permission.perm_list')->with($params);
-    }
-    // Permission Delete Confirmation Page
-    public function showper($id)
-    {
-        //
-        try {
-            $permission = Permission::findOrFail($id);
-            $params = [
-                'title' => 'Delete Permission',
-                'permission' => $permission,
-            ];
-            
-            return view('admin.permission.perm_delete')->with($params);
-        } catch (ModelNotFoundException $ex) {
-            if ($ex instanceof ModelNotFoundException) {
-                return response()->view('errors.' . '404');
-            }
-        }
-    }
-    // Permission Editing Page
-    public function editper($id)
-    {
-        //
-        try {
-            $permission = Permission::findOrFail($id);
-            $params = [
-                'title' => 'Edit Permission',
-                'permission' => $permission,
-            ];
-
-            return view('admin.permission.perm_edit')->with($params);
-        } catch (ModelNotFoundException $ex) {
-            if ($ex instanceof ModelNotFoundException) {
-                return response()->view('errors.' . '404');
-            }
-        }
-    }
-    // Permission update to DB
-    public function updateper(Request $request, $id)
-    {
-        try {
-            $permission = Permission::findOrFail($id);
-            $this->validate($request, [
-                'display_name' => 'required',
-                'description' => 'required',
+        if ($this->model::findOrFail($data)->name === 'owner') {
+            return redirect()->back();
+        } else {
+            return view( $this->views['form'] ?? $this->views['index'], [
+                $this->type => $this->getModel($data)
             ]);
-            $permission->name = $request->input('name');
-            $permission->display_name = $request->input('display_name');
-            $permission->description = $request->input('description');
-            $permission->save();
-            return redirect()->route('permission.index')->with('success', "The permission <strong>$permission->name</strong> has successfully been updated.");
-        } catch (ModelNotFoundException $ex) {
-            if ($ex instanceof ModelNotFoundException) {
-                return response()->view('errors.' . '404');
-            }
-        }
-    }
-    // Permission Delete from DB
-    public function destroyper($id)
-    {
-        //
-        try {
-            $permission = Permission::findOrFail($id);
-            DB::table("permission_role")->where('permission_id', $id)->delete();
-            $permission->delete();
-            
-            return redirect()->route('permission.index')->with('success', "The Role <strong>$permission->name</strong> has successfully been archived.");
-        } catch (ModelNotFoundException $ex) {
-            if ($ex instanceof ModelNotFoundException) {
-                return response()->view('errors.' . '404');
-            }
         }
     }
 }

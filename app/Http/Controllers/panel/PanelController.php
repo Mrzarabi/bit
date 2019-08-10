@@ -46,8 +46,6 @@ class PanelController extends Controller
             // 'total_income'  => Order::total_income(),
             // 'order_compare' => Order::compare(),
             // 'total_sales'   => Order::total($total_type),
-            'total_type'    => $total_type,
-            'options'       => $this->options(['site_name', 'site_logo', 'dollar_cost'])
         ]);
     }
 
@@ -59,8 +57,6 @@ class PanelController extends Controller
     public function setting()
     {
         return view('panel.setting', [
-            'page_name' => 'setting',
-            'page_title' => 'تنظیمات',
             'options' => $this->options([
                 'slider', 'posters', 'site_name', 'site_description', 'site_logo', 'min_total',
                 'shop_phone', 'shop_address', 'social_link', 'shipping_cost', 'watermark'
@@ -97,34 +93,34 @@ class PanelController extends Controller
         return redirect()->back()->with('message', 'اسلایدر با موفقیت بروز رسانی شد');
     }
 
-    public function poster (Poster $req)
-    {
-        $option = Option::where('name', 'posters')->first();
-        $option_value = json_decode($option->value, true);
-        $posters = $req->posters;
+    // public function poster (Poster $req)
+    // {
+    //     $option = Option::where('name', 'posters')->first();
+    //     $option_value = json_decode($option->value, true);
+    //     $posters = $req->posters;
     
-        foreach ($req->posters as $key => $item) 
-        {
-            if (isset($item['photo']))
-            {
-                $file_path = public_path().'/poster/'.$option_value[$key]['photo'];
-                if(file_exists($file_path)) {
-                    unlink($file_path);
-                }
+    //     foreach ($req->posters as $key => $item) 
+    //     {
+    //         if (isset($item['photo']))
+    //         {
+    //             $file_path = public_path().'/poster/'.$option_value[$key]['photo'];
+    //             if(file_exists($file_path)) {
+    //                 unlink($file_path);
+    //             }
 
-                $photoName = substr(md5(time()), 0, 8) .'.'.$item['photo']->getClientOriginalExtension();
-                $item['photo']->move(public_path('poster'), $photoName);
+    //             $photoName = substr(md5(time()), 0, 8) .'.'.$item['photo']->getClientOriginalExtension();
+    //             $item['photo']->move(public_path('poster'), $photoName);
                 
-                $posters[$key]['photo'] = $photoName;
-            } else {
-                $posters[$key]['photo'] = $option_value[$key]['photo'];
-            }
-        }
+    //             $posters[$key]['photo'] = $photoName;
+    //         } else {
+    //             $posters[$key]['photo'] = $option_value[$key]['photo'];
+    //         }
+    //     }
         
-        $posters = json_encode($posters);
-        $option->update([ 'value' => $posters ]);
-        return redirect()->back()->with('message', 'پوستر ها با موفقیت بروز رسانی شدند');
-    }
+    //     $posters = json_encode($posters);
+    //     $option->update([ 'value' => $posters ]);
+    //     return redirect()->back()->with('message', 'پوستر ها با موفقیت بروز رسانی شدند');
+    // }
 
     public function info (Info $req)
     {
@@ -169,7 +165,7 @@ class PanelController extends Controller
         $options['site_description']['value'] = $info['description'];
         $options['shop_phone']['value'] = $info['phone'];
         $options['shop_address']['value'] = $info['address'];
-        $options['min_total']['value'] = $info['min_total'];
+        // $options['min_total']['value'] = $info['min_total'];
         
         foreach ($options as $item)
         {
@@ -198,27 +194,27 @@ class PanelController extends Controller
         return redirect()->back()->with('message', 'لینک شبکه های اجتماعی با موفقیت بروز رسانی شدند');
     }
 
-    public function dollar_cost ($dollar_cost)
-    {
-        Validator::make([ 'dollar_cost' => $dollar_cost ], [
-            'dollar_cost' => 'required|min:1|digits_between:1,10|integer',
-        ])->validate();
+    // public function dollar_cost ($dollar_cost)
+    // {
+    //     Validator::make([ 'dollar_cost' => $dollar_cost ], [
+    //         'dollar_cost' => 'required|min:1|digits_between:1,10|integer',
+    //     ])->validate();
 
-        Option::where('name', 'dollar_cost')->first()->update( ['value' => $dollar_cost ]);        
-        return redirect()->back()->with('message', 'قیمت دلار با موفقیت بروز رسانی شد');
-    }
+    //     Option::where('name', 'dollar_cost')->first()->update( ['value' => $dollar_cost ]);        
+    //     return redirect()->back()->with('message', 'قیمت دلار با موفقیت بروز رسانی شد');
+    // }
 
-    public function shipping_cost (ShippingCost $req)
-    {
-        $option = Option::where('name', 'shipping_cost')->first();
-        $option_value = json_decode($option->value, true);
-        for ($i = 1; $i < 5; ++$i)
-        {
-            $option_value["model$i"]['name'] = $req->shipping_cost["model$i"]['name'];
-            $option_value["model$i"]['cost'] = $req->shipping_cost["model$i"]['cost'];
-        }
+    // public function shipping_cost (ShippingCost $req)
+    // {
+    //     $option = Option::where('name', 'shipping_cost')->first();
+    //     $option_value = json_decode($option->value, true);
+    //     for ($i = 1; $i < 5; ++$i)
+    //     {
+    //         $option_value["model$i"]['name'] = $req->shipping_cost["model$i"]['name'];
+    //         $option_value["model$i"]['cost'] = $req->shipping_cost["model$i"]['cost'];
+    //     }
 
-        $option->update( ['value' => json_encode($option_value)] );
-        return redirect()->back()->with('message', 'هزینه های ارسال با موفقیت بروز رسانی شدند');
-    }
+    //     $option->update( ['value' => json_encode($option_value)] );
+    //     return redirect()->back()->with('message', 'هزینه های ارسال با موفقیت بروز رسانی شدند');
+    // }
 }

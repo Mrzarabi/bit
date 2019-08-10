@@ -38,8 +38,9 @@ class CommentController extends Controller
      */
     public function store(CommentRequest $request)
     {
+        
         auth()->user()->comments()->create(array_merge($request->all(), [
-            'comment_id' => $request->comment_id,
+            'parent_id' => $request->comment_id,
         ]));
 
         return redirect()->back()->with('message', "تیکت  {$request->title} با موفقیت ارسال شد");
@@ -114,6 +115,7 @@ class CommentController extends Controller
      */
     public function replie_comment(CommentRequest $request, Comment $comment, Comment $reply = null)
     {
+        return $request;
         dd($reply, $comment);
 
         $comment->update(['is_accept' => true]);

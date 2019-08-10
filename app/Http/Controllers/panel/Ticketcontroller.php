@@ -8,6 +8,8 @@ use App\Models\Ticket\Ticket;
 use App\User;
 use App\Models\Ticket\TicketMessage;
 use App\Http\Requests\V1\Ticket\TicketMessageRequest;
+use App\Mail\CloseTicketMail;
+use Illuminate\Support\Facades\Input;
 
 class Ticketcontroller extends Controller
 {
@@ -16,11 +18,11 @@ class Ticketcontroller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(TicketMessage $ticket_message, User $user)
+    public function index(User $user)
     {
         return view('panel.tickets', [
+            'tickets_u' => Ticket::orderBy('updated_at', 'DESC')->paginate(20),
             'tickets' => Ticket::orderBy('created_at', 'DESC')->paginate(20),
-            'ticket_message' => $ticket_message,
             'user'  => $user,
             'page_name' => 'ticket',
             'page_title' => 'تیکت',
@@ -47,7 +49,7 @@ class Ticketcontroller extends Controller
     public function store(TicketMessageRequest $request)
     {
         auth()->user()->ticketmessages()->create(array_merge($request->all(), [
-            'ticket_id' => $request->ticket_id,
+            'image' => $this->upload_image( Input::file('image') )
         ]));
 
         return redirect()->back()->with('message', "تیکت  {$request->title} با موفقیت ثبت شد");
@@ -71,7 +73,7 @@ class Ticketcontroller extends Controller
      * @param  \App\Models/Ticket/Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ticket $ticket)
+    public function edit(Ticket $ticket, User $user)
     {
         $ticket->load([
             'ticketmessages' => function($query) {
@@ -81,6 +83,7 @@ class Ticketcontroller extends Controller
         ]);
 
         return view('panel.ticket', [
+            'user'  => $user,
             'ticket' => $ticket,
             'page_name' => 'show-messages-ticket',
             'page_title' => 'مشاهده پیام های تیکت',
@@ -109,9 +112,10 @@ class Ticketcontroller extends Controller
     public function destroy(Ticket $ticket)
     {
         $ticket->load('user');
+        \Mail::to( $ticket->user->email )->send(new CloseTicketMail( $ticket ));
         $ticket->delete();
         $ticket->update(['is_close' => true]);
-
+        
         return redirect(route('ticket.index'))->with('message',  "تیکت کاربر {$ticket->user->first_name} {$ticket->user->last_name} با موفقیت حذف شد");
     }
 
@@ -123,26 +127,9 @@ class Ticketcontroller extends Controller
      */
     public function is_close(Ticket $ticket)
     {
-        $ticket->update([
-            'is_close' => true,
-            ]);
+        $ticket->update([ 'is_close' => true ]);
+        \Mail::to( $ticket->user->email )->send(new CloseTicketMail( $ticket ));
 
         return redirect(route('ticket.index'))->with('message',  "تیکت کاربر {$ticket->user->first_name} {$ticket->user->last_name} با موفقیت حذف شد");
-    }
-
-     /**
-     * Show the filtered tickets from storage.
-     *
-     * @param  String  $query
-     * @return \Illuminate\Http\Response
-     */
-    public function search($query = '')
-    {
-        return view('panel.tickets', [
-            'tickets' => Ticket::latest()->where('id', 'like', "%$query%")->paginate(10),
-            'page_name' => 'ticket',
-            'page_title' => 'تیکت',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
     }
 }

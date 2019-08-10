@@ -10,78 +10,79 @@ use Illuminate\Support\Facades\Input;
 use App\Http\Requests\V1\User\AcceptUserCertificate;
 use App\Role;
 use App\Http\Requests\V1\User\PasswordResetRequest;
+use App\Http\Controllers\MainController;
+use App\Mail\CloseTicketMail;
+use App\Mail\AcceptOrReject;
+use App\Http\Requests\V1\BankCard\AcceptBankCard;
+use App\Models\Bank\BankCard;
 
-class UserController extends Controller
+class UserController extends MainController
 {
     /**
-     * Display a listing of the user.
+     * Type of this controller for use in messages
      *
-     * @return \Illuminate\Http\Response
+     * @var string
      */
-    public function index()
-    {
-        // $users = User::all();
-        // foreach ($users as $user) {
-        //     return $user->roles;
-        // }
-
-        return view('panel.user', [
-            'users' => User::where('id', '!=', auth()->user()->id)->orderBy('created_at', 'DESC')->paginate(10),
-            'roles' => Role::all()->pluck('display_name'),
-            'page_name' => 'user',
-            'page_title' => 'کاربران',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
-    }
+    protected $type = 'user';
 
     /**
-     * Show the form for creating a new user.
+     * The model of this controller
      *
-     * @return \Illuminate\Http\Response
+     * @var Model
      */
-    public function create()
-    {
-        //
-    }
+    protected $model = User::class;
 
     /**
-     * Store a newly created user in storage.
+     * The request class for this controller
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @var Model
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    protected $request = UserRequest::class;
 
     /**
-     * Display the specified user.
+     * Name of the views that need by this controller
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @var string
      */
-    public function show(User $user)
-    {        
-        //
-    }
+    protected $views = [
+        'index' => 'panel.user',
+        'show'  => 'panel.user-show',
+        'form'  => 'panel.add-user',
+    ];
+    
+    /**
+     * Name of the field that should upload an logo from that
+     *
+     * @var string
+     */
+    protected $image_field = 'avatar';
+
 
     /**
-     * Show the form for editing the specified user.
+     * Get all data of the model,
+     * used by index method controller
      *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
+     * @return Collection
      */
-    public function edit(User $user)
-    {
-        // return $user->role_id;
-        return view('panel.add-user', [
-            'user' => $user,
-            'roles' => Role::where('name' , '!=', 'owner')->get(),
-            'page_name' => 'show-user',
-            'page_title' => 'مشاهده اطلاعات کاربر',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
+    // public function getAllData()
+    // {   
+    //     $data = $this->model::search( request('query') )->latest();
+
+    //     // this method for don't show users with they have role owner
+    //     $data = $this->model::whereDoesntHave('roles', function($query) {
+        
+    //         return $query->where('name', 'owner');
+    //     });
+        
+    //     return $data->paginate( $this->getPerPage() );
+    // }
+
+    public function afterUpdate($request, $data)
+    {   
+        //sync role for each user7
+        $data->syncRoles( $request->input('roles', []) );
+        if ( isset( $this->relations ) )
+            $data->load( $this->relations );
     }
 
     /**
@@ -94,43 +95,7 @@ class UserController extends Controller
     {
         return view('panel.password-reset', [
             'user' => $user,
-            'page_name' => 'password-reset-user',
-            'page_title' => 'تغییر رمز کاربر',
-            'options' => $this->options(['site_name', 'site_logo'])
         ]);
-    }
-
-    /**
-     * Update the specified user in storage.
-     *
-     * @param  \Illuminate\Http\Request\V1\User\UserRequest  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UserRequest $request, User $user)
-    {
-        if ($request->hasFile('avatar'))
-        {
-            $avatar = $this->upload_image( Input::file('avatar') );
-            
-            if ( file_exists( public_path($user->avatar) ) )
-                unlink( public_path($user->avatar) );
-        }
-        else
-        {
-            $avatar = $user->avatar;
-        }
-     
-        //sync role for each user
-        // isset($request->input('roles')) ? $request->input('roles') : null;
-        $user->syncRoles( $request->input('roles', []) );
-        
-        // return $user->roles;
-        $user->update(array_merge($request->all(), [
-            'avatar' => $avatar,
-            ]));
-        
-        return redirect(route('user.index'))->with('message', "کاربر {$user->last_name} با موفقیت بروز رسانی شد");
     }
 
     /**
@@ -153,24 +118,6 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified user from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        $user->delete();
-        
-        $roles = $user->roles;
-        foreach ($roles as $key => $value) {
-            $user->detachRole($value);
-        }
-
-        return redirect()->back()->with('message', "کاربر {$user->last_name} با موفقیت حذف شد");
-    }
-
-    /**
      * Accept the specified user from storage.
      *
      * @param  \Illuminate\Http\Request\V1\User\UserRequest  $request
@@ -181,37 +128,92 @@ class UserController extends Controller
     {
         if ( !$request->status )
         {
-            if ( file_exists( public_path( $user->{$request->type} ) ) )
+            if ( $user->{$request->type} && file_exists( public_path( $user->{$request->type} ) ) )
                 unlink( public_path( $user->{$request->type} ) );
-        }
+            {
+                if ( "accept_{$request->type}" === 'accept_image_national_code')
+                {
+                    $type = 'کد ملی';
+                    \Mail::to( $user->email )->send(new AcceptOrReject( $type ));
+                }
 
-        // TODO
-        // notify the user when accept or not it's certificates
+                if ( "accept_{$request->type}" === 'accept_identify_certificate')
+                {
+                    $type = 'شناسنامه';
+                    \Mail::to( $user->email )->send(new AcceptOrReject( $type ));
+                }
+
+                if ( "accept_{$request->type}" === 'accept_image_bill')
+                {
+                    $type = 'قبض';
+                    \Mail::to( $user->email )->send(new AcceptOrReject( $type ));
+                }
+
+
+                if ( "accept_{$request->type}" === 'accept_image_selfie_national_code')
+                {
+                    $type = 'سلفی با کد ملی';
+                    \Mail::to( $user->email )->send(new AcceptOrReject( $type = 'سلفی با کد ملی' ));
+                }
+
+            }
+
+        }
         
         $user->{"accept_{$request->type}"} = $request->status;
         $user->save();
         
         return view('panel.user-show', [
             'user' => $user,
-            'page_name' => 'show-blog-comment',
-            'page_title' => 'مشاهده مقاله و کامنت ها',
-            'options' => $this->options(['site_name', 'site_logo'])
         ]);
     }
 
     /**
-     * Show the filtered users from storage.
+     * Accept the specified user from storage.
      *
-     * @param  String  $query
+     * @param  \Illuminate\Http\Request\V1\User\UserRequest  $request
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function search($query = '')
+    public function canBuy(User $user)
     {
-        return view('panel.user', [
-            'users' => User::latest()->where('last_name', 'like', "%$query%")->paginate(10),
-            'page_name' => 'user',
-            'page_title' => 'کاربران',
-            'options' => $this->options(['site_name', 'site_logo'])
-        ]);
+        $user->update([ 'can_buy' => true ]);
+
+        return redirect()->back()->with('message',  " با موفقیت به روز رسانی شد");
+    }
+
+    /**
+     * Accept the specified user from storage.
+     *
+     * @param  \Illuminate\Http\Request\V1\User\UserRequest  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function accept_certificate_bank(AcceptBankCard $request, BankCard $bank_card, User $user)
+    {
+        if ( !$request->status )
+        {
+            if ( $bank_card->{$request->type} && file_exists( public_path( $bank_card->{$request->type} ) ) )
+                unlink( public_path( $bank_card->{$request->type} ) );
+            {
+                if ( "accept_{$request->type}" === 'accept_image_bank_card')
+                {
+                    $type = 'کارت بانکی' . ' ' . $bank_card->bank_name;
+                    \Mail::to( $bank_card->user->email )->send(new AcceptOrReject( $type ));
+                }
+            }
+        }
+        
+        $bank_card->{"accept_{$request->type}"} = $request->status;
+        $bank_card->save();
+        
+        return redirect()->route('user.index')->with('message',  " با موفقیت به روز رسانی شد");
+    }
+
+    public function show_purchases(User $user)
+    {
+        $this->checkPermission("read-purchase");
+
+        return view('panel.purchase', compact('user'));
     }
 }
