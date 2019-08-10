@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Option;
 use App\Models\Product;
 use Cookie;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -26,9 +27,19 @@ class LoginController extends Controller
     /**
      * Where to redirect users after login.
      *
-     * @var string
+     * @return string
      */
-    protected $redirectTo = '/';
+
+
+    public function redirectTo(){
+        
+        // User role owner
+        if(Auth::user()->hasRole('owner')) 
+            return '/panel/currency';
+        else 
+            return '/panel/client';
+    }
+
 
     /**
      * Create a new controller instance.

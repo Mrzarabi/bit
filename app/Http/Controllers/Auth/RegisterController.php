@@ -53,13 +53,12 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'first_name' => ['required', 'string', 'min:3', 'max:20', 'regex:/^[پچجحخهعغآفقثصضشسیبلاتنمکگوئدذرزطظژ\s]+$/u'],
             'last_name' => ['required', 'string', 'min:3', 'max:30', 'regex:/^[پچجحخهعغآفقثصضشسیبلاتنمکگوئدذرزطظژ\s]+$/u'],
-            'phone' => ['required', 'regex:/^(\+98|0)?9\d{9}$/'],
+            'birthday' => ['required', 'string'],
+            'phone_number' => ['required', 'regex:/^(\+98|0)?9\d{9}$/'],
+            'national_code' => ['required','string', 'min:10', 'regex:/^[0-9]{10}$/'],
             'email' => ['required', 'string', 'email', 'max:100', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'state' => ['required', 'max:30', 'regex:/^[پچجحخهعغآفقثصضشسیبلاتنمکگوئدذرزطظژ\s]+$/u'],
-            'city' => ['required', 'max:30', 'regex:/^[پچجحخهعغآفقثصضشسیبلاتنمکگوئدذرزطظژ\s]+$/u'],
             'address' => ['required', 'max:255', 'string'],
-            'postal_code' => ['required', 'digits:10', 'integer'],
         ], [
             'id.size' => 'خطا در اطلاعات ارسالی تشخیص داده شده است ، لطفا دوباره تلاش کنید',
             'first_name.required' => 'لطفا نام خود را وارد کنید',
@@ -109,13 +108,12 @@ class RegisterController extends Controller
             'id' => substr(md5(time()), 0, 8),
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
-            'phone' => $data['phone'],
+            'birthday' => $data['birthday'],
+            'national_code' => $data['national_code'],
+            'phone_number' => $data['phone_number'],
+            'address' => $data['address'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'state' => $data['state'],
-            'city' => $data['city'],
-            'address' => $data['address'],
-            'postal_code' => $data['postal_code'],
         ]);
     }
 
