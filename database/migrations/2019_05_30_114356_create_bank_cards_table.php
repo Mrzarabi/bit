@@ -30,7 +30,8 @@ class CreateBankCardsTable extends Migration
             $table->string('bank_name');
             $table->unsignedBigInteger('bank_card');
             $table->string('code')->comment('shomare shaba mibashad');
-            $table->string('image_benk_card');
+            $table->string('image_bank_card');
+            $table->boolean('accept_image_bank_card')->default(0);
             
             $table->full_timestamps();
         });

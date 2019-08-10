@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\Blueprint;
 
-class CreateArticlesTable extends Migration
+class CreatePurchaseRecordsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,26 +15,27 @@ class CreateArticlesTable extends Migration
      */
     public function up()
     {
-
         /** start for have default Blueprint class */
         $Schema = DB::connection()->getSchemaBuilder();
         $Schema->blueprintResolver( function( $table, $callback ) {
             return new Blueprint( $table, $callback );
         });
         /** end  */
-        
-        $Schema->create('articles', function (Blueprint $table) {
-            $table->increments('id')->unsigned();
 
+        $Schema->create('purchase_records', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            
             $table->foreign_key('user_id', 'users');
-            $table->foreign_key('subject_id', true, 'subjects');
-                    
-            $table->string('title', 50);
-            $table->string('slug', 50);
-            $table->string('description', 255)->nullable();
-            $table->string('image');
-            $table->text('body');
-            $table->full_timestamps();
+            $table->foreign_key('currency_id', 'currencies');
+            
+            $table->string('transactionId');
+            $table->string('refId');
+
+            $table->string('description')->nullable();
+            $table->string('purchase');
+            $table->string('inventory');
+            $table->unsignedBigInteger('bank_cart')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -45,6 +46,6 @@ class CreateArticlesTable extends Migration
      */
     public function down()
     {
-        $Schema->dropIfExists('articles');
+        $Schema->dropIfExists('purchase_records');
     }
 }

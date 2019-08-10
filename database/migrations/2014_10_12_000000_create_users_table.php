@@ -33,13 +33,14 @@ class CreateUsersTable extends Migration
             $table->string('phone_number', 15)->nullable();
             $table->string('birthday')->nullable();
             $table->string('address', 255)->nullable();
+            $table->string('avatar')->nullable();
 
             $table->string('email', 100)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password', 100);
+            $table->boolean('can_buy')->default(0);
 
-            $table->string('avatar', 50);
-            $table->string('type')->default(0);
+            // $table->string('avatar', 50);
 
             $table->string('image_national_code')->nullable();
             $table->boolean('accept_image_national_code')->default(0);

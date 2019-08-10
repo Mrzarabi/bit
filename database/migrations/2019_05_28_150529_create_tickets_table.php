@@ -29,7 +29,7 @@ class CreateTicketsTable extends Migration
 
             $table->string('title', 50);
             $table->string('status')->default(0);
-            $table->boolean('is_close')->default(1);
+            $table->boolean('is_close')->default(0);
             
             $table->full_timestamps();
         });
@@ -41,6 +41,7 @@ class CreateTicketsTable extends Migration
             $table->foreign_key('ticket_id', 'tickets');
 
             $table->string('title', 50);
+            $table->string('image')->nullable();
             $table->text('message');
 
             $table->full_timestamps();

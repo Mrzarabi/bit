@@ -36,7 +36,7 @@ class CreateCurrenciesTable extends Migration
             $table->bigInteger('price');
             $table->string('inventory');
             $table->tinyInteger('status')->default(1);
-            $table->string('photo');
+            $table->string('photo')->nullable();
             $table->string('code')->nullable();
             
             $table->full_timestamps();
