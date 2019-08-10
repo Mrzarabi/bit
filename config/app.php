@@ -162,6 +162,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Ybazli\Faker\FakerServiceProvider::class,
         Laratrust\LaratrustServiceProvider::class,
+        Larabookir\Gateway\GatewayServiceProvider::class, // <-- add this line at the end of provider array
 
         /*
          * Package Service Providers...
@@ -227,6 +228,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
         'Faker' => Ybazli\Faker\Facades\Faker::class,
         'Laratrust'   => Laratrust\LaratrustFacade::class,
+        'Gateway' => \Larabookir\Gateway\Gateway::class,
 
     ],
 

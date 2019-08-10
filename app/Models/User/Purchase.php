@@ -1,30 +1,30 @@
 <?php
 
-namespace App\Models\Grouping;
+namespace App\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Article\Article;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Iatstuti\Database\Support\CascadeSoftDeletes;
-use Nicolaslopezj\Searchable\SearchableTrait;
+use App\User;
+use App\Models\Currency\Currency;
 
-class Subject extends Model
+class Purchase extends Model
 {
-    use SoftDeletes, CascadeSoftDeletes, SearchableTrait;
+    
+    protected $table = 'users';
 
     /****************************************
-     **             Attributes
+     **          Important methods
      ***************************************/
-    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'title',
-        'logo',
+        'transactionId',
+        'refId',
         'description',
+        'purchase',
+        'inventory',
     ];
 
     /**
@@ -48,30 +48,28 @@ class Subject extends Model
      */
     protected $searchable = [
         'columns' => [
-            'subjects.title' => 10,
-            'subjects.description' => 8,
+            'purchases.refId' => 10,
+            'purchases.id' => 10,
         ],
-    ];
-
-    /**
-     * The attributes that should delete all relation with this model.
-     *
-     * @var array
-     */
-    protected $cascadeDeletes = [
-        'articles'
     ];
 
     /****************************************
      **              Relations
      ***************************************/
-    
+
     /**
-     * Get all of the articles for the subject.
+     * Get the users of the purchase.
      */
-    public function articles() 
+    public function user()
     {
-        return $this->hasMany(Article::class);
+        return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get the currency of the purchase.
+     */
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class);
+    }
 }

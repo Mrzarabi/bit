@@ -9,10 +9,14 @@ use App\Models\Grouping\Category;
 use App\Models\Spec\SpecData;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
+use Nicolaslopezj\Searchable\SearchableTrait;
+use App\Models\User\Purchase;
 
 class Currency extends Model
 {
     use Sluggable, SoftDeletes, CascadeSoftDeletes;
+    use SearchableTrait;
+    
     /****************************************
      **             Attributes
      ***************************************/
@@ -32,17 +36,30 @@ class Currency extends Model
         'code',
         'note',
         'status',
+        'photo',
         'inventory',
-        'photo'
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Searchable rules.
+     *
+     * Columns and their priority in search results.
+     * Columns with higher values are more important.
+     * Columns with equal values have equal importance.
      *
      * @var array
      */
-    protected $casts = [
-        // 'photo'  => 'array',
+    protected $searchable = [
+        'columns' => [
+            'currencies.title' => 10,
+            'currencies.short_description' => 9,
+            // 'currencies.price' => 8,
+            'currencies.code' => 7,
+            // 'currencies.inventory'  => 6,
+        ],
+        'joins' => [
+            'categories' => ['categories.id','currencies.category_id'],
+        ],
     ];
 
     /**
@@ -66,7 +83,7 @@ class Currency extends Model
      **              Relations
      ***************************************/
     
-    /**
+     /**
      * Get the user of the currency.
      */
     public function user()
@@ -93,6 +110,14 @@ class Currency extends Model
     public function specData()
     {
         return $this->hasMany(SpecData::class);
+    }
+
+    /**
+     * Get all of the purchases for the currency.
+     */
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
     }
 
     /**

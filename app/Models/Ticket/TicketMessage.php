@@ -20,6 +20,7 @@ class TicketMessage extends Model
     protected $fillable = [
         'title',
         'message',
+        'image',
         'ticket_id'
     ];
 

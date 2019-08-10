@@ -5,11 +5,11 @@ namespace App\Models\Ticket;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
-
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Ticket extends Model
 {
-    use SoftDeletes, CascadeSoftDeletes;
+    use SoftDeletes, CascadeSoftDeletes, SearchableTrait;
     
     /****************************************
      **             Attributes
@@ -51,6 +51,27 @@ class Ticket extends Model
      */
     protected $cascadeDeletes = [
         'ticketmessages'
+    ];
+
+    
+    /**
+     * Searchable rules.
+     *
+     * Columns and their priority in search results.
+     * Columns with higher values are more important.
+     * Columns with equal values have equal importance.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        'columns' => [
+            'tickets.title' => 10,
+            'tickets.id' => 9,
+            'user.fist_name' . ' ' . 'user.last_name' => 8,
+        ],
+        'joins' => [
+            'user' => ['user.id','tickets.user_id'],
+        ],
     ];
 
     /****************************************

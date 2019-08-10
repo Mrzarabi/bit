@@ -56,7 +56,7 @@ class SpecRow extends Model
     /**
      * Get the specrow's specdata.
      */
-    public function specData ()
+    public function spec_data ()
     {
         return $this->hasOne(SpecData::class, 'spec_row_id');
     }

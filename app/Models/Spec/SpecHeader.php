@@ -44,7 +44,7 @@ class SpecHeader extends Model
     /**
      * Get all of the specificationRows for the specificationHeader.
      */
-    public function specRows()
+    public function spec_rows()
     {
         return $this->hasMany(SpecRow::class);
     }
@@ -52,7 +52,7 @@ class SpecHeader extends Model
     /**
      * Get all of the specificationDatas for the specificationHeader.
      */
-    public function specData()
+    public function spec_data()
     {
         return $this->hasMany(SpecData::class);
     }

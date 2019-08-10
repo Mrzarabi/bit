@@ -8,15 +8,12 @@ use App\Models\Grouping\Subject;
 use App\Models\Opinion\Comment;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use App\Helpers\MediaConversionsTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
-class Article extends Model implements HasMedia
+class Article extends Model
 {
     use Sluggable, SoftDeletes, CascadeSoftDeletes, SearchableTrait;
-    use HasMediaTrait, MediaConversionsTrait;
     
     /****************************************
      **             Attributes
@@ -32,6 +29,7 @@ class Article extends Model implements HasMedia
         'title',
         'slug',
         'description',
+        'image',
         'body',
     ];
 
@@ -77,14 +75,6 @@ class Article extends Model implements HasMedia
      **              Relations
      ***************************************/
 
-    /**
-     * Get the media field of the model
-     */
-    public function image()
-    {
-        return $this->morphMany(config('medialibrary.media_model'), 'model');
-    }
-    
     /**
      * Get the user of the article.
      */

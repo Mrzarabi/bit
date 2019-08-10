@@ -64,7 +64,7 @@ class Spec extends Model
     /**
      * Get all of the specificationHeader for the specification.
      */
-    public function specHeaders()
+    public function spec_headers()
     {
         return $this->hasMany(SpecHeader::class);
     }

@@ -22,7 +22,8 @@ class BankCard extends Model
         'bank_name',
         'bank_card',
         'code',
-        'image_benk_card',
+        'image_bank_card',
+        'accept_image_bank_card',
     ];
 
     /**
@@ -31,7 +32,7 @@ class BankCard extends Model
      * @var array
      */
     protected $casts = [
-        'image_benk_card'  => 'array',
+        'accept_image_bank_card'  => 'boolean',
     ];
 
     /**

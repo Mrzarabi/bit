@@ -7,10 +7,11 @@ use App\Models\Spec\Spec;
 use App\Models\Currency\Currency;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Category extends Model
 {
-    use SoftDeletes, CascadeSoftDeletes;
+    use SoftDeletes, CascadeSoftDeletes, SearchableTrait;
      
     /****************************************
      **             Attributes
@@ -24,8 +25,24 @@ class Category extends Model
     protected $fillable = [
         'parent',
         'title',
+        'logo',
         'description',
-        'logo'
+    ];
+
+    /**
+     * Searchable rules.
+     *
+     * Columns and their priority in search results.
+     * Columns with higher values are more important.
+     * Columns with equal values have equal importance.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        'columns' => [
+            'categories.title' => 10,
+            'categories.description' => 8,
+        ],
     ];
 
     /**
@@ -48,30 +65,11 @@ class Category extends Model
         'specs'
     ];
 
-    /**
-     * Return first level , or cateogries with depth == 1
-     *
-     * @return Collection
-     */
-    // public static function first_levels()
-    // {
-    //     return Static::select('id', 'title', 'description', 'logo')
-    //         ->where('parent', null)->latest()->get();
-    // }
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'logo' => 'array',
-    ];
 
     /****************************************
      **              Relations
      ***************************************/
-    
+
     /**
      * Get the all category parent.
      */
