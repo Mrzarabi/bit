@@ -26,10 +26,25 @@ abstract class MainController extends Controller
     public function index()
     {
         return view($this->views['index'], [
-            'articles' => $this->getAllData()
+            str_plural($this->type) => $this->getAllData(),
+
+            //for single delete with fetch into view panel/components/delete
+            'type' => $this->type
         ]);
     }
+    
+    /**
+     * Show the form for creating a new data.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $this->checkPermission("create-{$this->type}");
 
+        return view( $this->views['form'] ?? $this->views['index'] );
+    }
+    
     /**
      * Store a newly created group in (stor)age.
      *
@@ -39,9 +54,9 @@ abstract class MainController extends Controller
     public function store(Request $request)
     {
         $request->validate( (new $this->request)->rules() );
-
+        
         $this->checkPermission("create-{$this->type}");
-
+        
         $data = $this->storeData( $request );
 
         if ( method_exists($this, 'afterCreate') )
@@ -49,30 +64,7 @@ abstract class MainController extends Controller
 
         return redirect(route("{$this->type}.index"))->with('message', "با موفقیت ثبت شد");
     }
-
-    /**
-     * Show the form for creating a new data.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view($this->views['form']);
-    }
     
-    /**
-     * Show the form for editing the specified data.
-     *
-     * @param  Model  $data
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($data)
-    {
-        return view($this->views['form'], [
-            $this->type => $this->getModel($data)
-        ]);
-    }
-
     /**
      * Display the specified group with it's breadcrumb.
      *
@@ -81,8 +73,26 @@ abstract class MainController extends Controller
      */
     public function show($data)
     {
+        $this->checkPermission("read-{$this->type}");
+
         return view($this->views['show'], [
             $this->type => $this->getSingleData( $data ),
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified data.
+     *
+     * @param  Model  $data
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($data)
+    {
+        
+        $this->checkPermission("update-{$this->type}");
+
+        return view( $this->views['form'] ?? $this->views['index'], [
+            $this->type => $this->getModel($data)
         ]);
     }
 
@@ -97,13 +107,14 @@ abstract class MainController extends Controller
     public function update(Request $request, $data)
     {
         $request->validate( (new $this->request)->rules() );
-
+        
         $this->checkPermission("update-{$this->type}");
-
+        
         $this->updateData( $request, $data = $this->getModel($data) );
-
+        
         if ( method_exists($this, 'afterUpdate') )
-            $this->afterUpdate( $request, $data );
+        $this->afterUpdate( $request, $data );
+        
         
         return redirect(route("{$this->type}.index"))->with('message', "با موفقیت بروزرسانی شد");
     }
@@ -117,13 +128,12 @@ abstract class MainController extends Controller
     public function destroy($data)
     {
         $this->checkPermission("delete-{$this->type}");
-        
+
         if ( request()->has('selected') )
             $result = $this->model::whereIn('id', request()->selected)->delete();
 
         else 
             $result = $this->model::where('id', $data)->delete();
-
 
         if ( $result )
             return redirect(route("{$this->type}.index"))->with('message', request()->has('selected') ? "موارد انتخاب شده با موفقیت حذف شد" : "با موفقیت حذف شد");

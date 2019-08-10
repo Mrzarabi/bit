@@ -74,20 +74,50 @@ class Controller extends BaseController
      * @param Model $model
      * @return Request
      */
-    public function requestWithImage($request, $field_name = 'logo', $model = null)
+    public function requestWithImage($request, $field_name = 'image', $model = null)
     {
         if ( !$request->hasFile($field_name) )
             return $request;
 
-        /** ! TODO */
-        // if ( $model && file_exists( public_path($model->$field_name) ) )
-        //         unlink( public_path($model->$field_name) );
+        if ( $model && $model->$field_name && file_exists( public_path($model->$field_name) ) )
+                unlink( public_path($model->$field_name) );
 
         return collect( array_merge( $request->except($field_name), [
             $field_name => $this->upload_image( $request->file( $field_name ) )
         ]) );
     }
 
+    public static function upload_image ($image, $crop = 300, $watermark = null)
+    {
+        // Create file name & file path with /year/month/day/filename formats
+        $time = Carbon::now();   
+        $file_path = "uploads/{$time->year}/{$time->month}/{$time->day}";
+        $file_ext = $image->getClientOriginalExtension();
+        $file_name = rtrim($image->getClientOriginalName(), ".$file_ext");
+        $file_name = time() . '_' . substr($file_name, 0, 30);
+        
+        // Create directories if doesn't exists
+        if (!file_exists( public_path($file_path) )) {
+            mkdir(public_path($file_path), 0777, true);
+        }
+        
+        // Reszie and upload the image to storge
+        $image = Image::make( $image );
+        $image->resize($crop, null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+
+        if ( $watermark && file_exists( $watermark ) )
+        {
+            $watermark = Image::make( $watermark );
+            $ratio = $watermark->width() / $watermark->height();
+            $watermark->resize(50 * $ratio, 50);
+            $image->insert($watermark, 'bottom-right', 10, 10);
+        }
+
+        $image->save( public_path("$file_path/$file_name.$file_ext") );
+        return "/$file_path/$file_name.$file_ext";
+    }
     /**
      * Get a request with a file and upload it's file,
      * then return the same request with uploaded file names

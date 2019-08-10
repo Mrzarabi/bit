@@ -120,7 +120,7 @@ trait MainControllerHelper
      */
     public function getRequest( $request)
     {
-        return $request->all();
+        return gettype($request) === 'array' ? $request : $request->all();
     }
 
     /**
@@ -132,13 +132,14 @@ trait MainControllerHelper
      */
     public function storeData($request)
     {
-        $model = $this->createNewModel( $this->getRequest( $request ) );
-
         if ( isset($this->image_field) && $request->hasFile( $this->image_field ) )
         {
-            $model->addMedia( $request->file( $this->image_field ) )
-                  ->toMediaCollection( $this->image_field );
+            $model = $this->createNewModel(
+                $this->getRequest( $this->requestWithImage($request, $this->image_field) )
+            );
         }
+        else
+            $model = $this->createNewModel( $this->getRequest( $request ) );
 
         return $model;
     }
@@ -152,17 +153,14 @@ trait MainControllerHelper
      */
     public function updateData($request, $data)
     {
-        $data->update( $this->getRequest( $request ) );
-
         if ( isset($this->image_field) && $request->hasFile( $this->image_field ) )
         {
-            $data->clearMediaCollection( $this->image_field );
-            
-            $data->addMedia( $request->file( $this->image_field ) )
-                  ->toMediaCollection( $this->image_field );
+            $data->update(
+                $this->getRequest( $this->getRequest( $this->requestWithImage($request, $this->image_field, $data) ) )
+            );
         }
-        elseif ( isset($this->image_field) && $request->get('is_deleted_image') )
-            $data->clearMediaCollection( $this->image_field );
+        else
+            $data->update( $this->getRequest( $request ) );
 
         return $data;
     }
