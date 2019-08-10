@@ -1008,6 +1008,28 @@ caption { padding-top: .75rem; padding-bottom: .75rem; color: #6b6c6d; text-alig
   list-style-type: none;
 }
 
+.pb-18 {
+  padding-bottom: 18px !important;
+}
+
+.custom-width-article {
+  width: 700px;
+  max-width: 700px;
+}
+
+.custom-color {
+  color: #ff9f2a;
+}
+
+.mt--45 {
+  margin-top: -45px;
+  padding-right: 120px;
+}
+
+.mt-22 {
+  margin-top: -22px;
+}
+
 /*==========  End All ==========*/
 
 /*------------------------
@@ -1040,6 +1062,7 @@ caption { padding-top: .75rem; padding-bottom: .75rem; color: #6b6c6d; text-alig
     margin-top: 180px;
   }
 }
+
 
 /*==========  End Custom Media  ==========*/
 
