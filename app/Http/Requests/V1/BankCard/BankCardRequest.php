@@ -24,10 +24,18 @@ class BankCardRequest extends FormRequest
     public function rules()
     {
         return [
-            'bank_name'          => 'required|string|',
-            'bank_card'          => 'required|integer|digit:16',
-            'code'               => 'required|string|digit:24',
-            'image_benk_card'    => 'required|image|mimes:jpeg,jpg,png,gif|max:1024',
+            'bank_name'          => [
+                request()->method() === 'POST' ? 'required' : 'nullable', 'string',
+            ],
+            'bank_card'          => [
+                request()->method() === 'POST' ? 'required' : 'nullable', 'integer', 'digits:16',
+            ],
+            'code'               => [
+                request()->method() === 'POST' ? 'required' : 'nullable', 'string', 'regex:/^[a-z0-9_-]{3,16}$/',
+            ],
+            'image_bank_card'        => [
+                request()->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' 
+            ],
         ];
     }
 }

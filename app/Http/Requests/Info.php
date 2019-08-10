@@ -27,7 +27,7 @@ class Info extends FormRequest
             'site_name'     => 'required|max:30|string',
             'phone'         => ['required', 'regex:/(\+98|0)?9\d{9}/'],
             'description'   => 'required|max:255|string',
-            'min_total'     => 'required|min:0|integer',
+            // 'min_total'     => 'required|min:0|integer',
             'address'       => 'required|max:100|string',
             'logo'          => 'nullable|image|mimes:jpeg,png,jpg|max:512',
             'watermark'     => 'nullable||mimes:jpeg,png,jpg|max:512',

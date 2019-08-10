@@ -22,7 +22,7 @@ class AcceptUserCertificate extends FormRequest
      * @return array
      */
     public function rules()
-    {
+    { 
         return [
             'type' => 'required|in:image_national_code,identify_certificate,image_bill,image_selfie_national_code',
             'status' => 'required|boolean'

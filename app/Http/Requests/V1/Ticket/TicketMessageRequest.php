@@ -25,6 +25,7 @@ class TicketMessageRequest extends FormRequest
     {
         return [
             'title'        => 'required|string|max:50',
+            'image'        => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'message'      => 'required|string|min:5',
             
             /* relateion */

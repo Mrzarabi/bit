@@ -32,17 +32,17 @@ class CurrencyRequest extends FormRequest
             'code'                 => 'nullable|string',
             'status'               => 'required|integer',
             'photo'                => [
-                $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'
+                request()->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'
             ],
             
             // 'photo'          => 'required|image|mimes:jpeg,jpg,png|max:1024',
             
             /* relateion */
-            'categories.*'         => 'required|integer|exists:categories,id',
-            "specs"                => 'nullable|array',
-            "specs.*"              => 'required|integer|exists:specs,id',
-            "specs.*.id"           => 'nullable|array',
-            "specs.*.data"         => 'nullable',
+            'categories.*'          => 'required|integer|exists:categories,id',
+            "specs"                 => 'nullable|array',
+            "specs.*"               => 'nullable|array',
+            "specs.*.id"            => 'nullable|integer|exists:specs,id',
+            "specs.*.data"          => 'nullable',
         ];
     }
 }

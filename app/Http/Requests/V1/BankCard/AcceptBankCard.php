@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\V1\User;
+namespace App\Http\Requests\V1\BankCard;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class RoleRequest extends FormRequest
+class AcceptBankCard extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +24,8 @@ class RoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => [
-                Rule::unique('roles')->ignore( request()->route()->role )
-            ],
-            
-            'display_name'  => 'required',
-            'description'   => 'required',
+            'type' => 'required|in:image_bank_card',
+            'status' => 'required|boolean'
         ];
     }
 }

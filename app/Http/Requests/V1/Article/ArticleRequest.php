@@ -28,7 +28,8 @@ class ArticleRequest extends FormRequest
             'description'    => 'nullable|string|max:255',
             'body'           => 'required|string',
             'image'          => [
-                request()->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'
+
+                request()->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:2048' 
             ],
             
             /* relateion */

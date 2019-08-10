@@ -30,35 +30,35 @@ class UserRequest extends FormRequest
             'birthday'                   => 'required|string|',
             'address'                    => 'nullable|string|max:255',
 
+            
             'national_code'              => [
                 'required','string', 'min:10', 
-                Rule::unique('users')->ignore( request()->route()->user->id )
+                Rule::unique('users')->ignore( request()->route()->parameters['user'] ), 'regex:/^[0-9]{10}$/'
             ],
             'phone_number'               => [
                 'nullable', 'string', 'min:7',
-                Rule::unique('users')->ignore( request()->route()->user->id ), 'regex:/^(\+98|0)?9\d{9}$/'
+                Rule::unique('users')->ignore( request()->route()->parameters['user'] ), 'regex:/^(\+98|0)?9\d{9}$/'
             ],
 
             'email'                      => [
                 'nullable',
-                Rule::unique('users')->ignore( request()->route()->user->id ),
-            ],
-            
-            'avatar'                     => [
-                $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'
+                Rule::unique('users')->ignore( request()->route()->parameters['user'] ),
             ],
 
-            'image_national_code'        => [
-                $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],
+            'avatar'                    => [
+                request()->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],
 
-            'identify_certificate'          => [
-                $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],
+            'image_national_code'       => [
+                request()->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],
+
+            'identify_certificate'      => [
+                request()->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],
             
-            'image_bill'                 => [
-                $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],
+            'image_bill'                => [
+                request()->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],
             
-            'image_selfie_national_code' => [
-                $this->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],
+            'image_selfie_national_code'=> [
+                request()->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' ],
         ];
     }
 }

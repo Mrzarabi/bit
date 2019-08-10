@@ -25,7 +25,7 @@ class PasswordResetRequest extends FormRequest
     {
         return [
             'password' => [ 
-                $this->method() === 'POST' ? 'required' : 'nullable', 'string', 'min:4', 'confirmed'
+                request()->method() === 'POST' ? 'required' : 'nullable', 'string', 'min:4', 'confirmed'
             ],
         ];
     }
