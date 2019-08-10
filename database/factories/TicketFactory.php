@@ -15,6 +15,7 @@ $factory->define(App\Models\Ticket\TicketMessage::class, function (Faker $faker)
     $faker = \Faker\Factory::create('fa_IR');
     return [
         'title'   => $faker->name(),
+        'image'   => $faker->imageUrl(50, 50),
         'message' => $faker->sentence()
     ];
 });

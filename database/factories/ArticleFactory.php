@@ -13,6 +13,6 @@ $factory->define(App\Models\Article\Article::class, function (Faker $faker) {
         'title'         => $faker->name(),
         'description'   => nullable($faker->realText(255)),
         'body'          => $faker->realText(255),
-        'image'         => $faker->imageUrl($width = 640, $height = 480)
+        'image'         => $faker->imageUrl(50, 50),
     ];
 });
