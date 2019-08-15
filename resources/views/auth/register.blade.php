@@ -44,11 +44,6 @@
 							@endphp
 							@include('errors.errors-show')
 							<div class="row">
-								<div class="col-lg-6">
-									<div class="mt-30">
-										<input type="file" name="avatar" id="input-file-now" class="dropify"/>
-									</div>	
-								</div>
 								<div class="col-lg-6 form-group">
 									<label class="control-label sr-only" for="first_name"></label>
 									<input id="first_name" type="text" name="first_name" placeholder="نام" class="rounded text-right form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" value="{{ old('first_name') }}" required>
