@@ -2,13 +2,13 @@
 <div class="footer">
     <div class="container">
         <div class="row ">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+            {{-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
                 <div class="header-logo">
                     <a href="/" class="header-logo-link">
                         <img src="{{ asset('logo/'.$options['site_logo']) }}" class="rounded" style="max-height: 60px;display: block;" alt="لوگوی فروشگاه">
                     </a>
                 </div>
-            </div>
+            </div> --}}
         </div>
         <hr class="footer-line">
         <div class="row ">
@@ -82,9 +82,9 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center ">
                 <div class="tiny-footer">
                     <p class="pull-right"> تمام حقوق وبسایت © تا سال 2020 محفوظ است  | طراحی سایت توسط  <a href="https://www.smaat.ir " target="_blank" class="copyrightlink custom-color">SmaaT.CO</a></p>
-                    <div class="pull-left" style="width: 400px;">
+                    <div class="pull-left" style="width: auto;">
                         <p><a class="custom-color pull-left " href="tel:09105009868"> تماس با تیم توسعه دهنده</a></p>
-                        <p><a class="custom-color pull-right mt-22 " href="tel:09153388688"> تماس با پشتیبانی</a></p>
+                        <p><a class="custom-color  pull-right " href="tel:09153388688"> تماس با پشتیبانی</a></p>
                     </div>
                 </div>
             </div>

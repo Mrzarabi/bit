@@ -2,22 +2,42 @@
 <div class=" header-wrapper fixed-top ">
     <div class="container">
         <div class="row">
-            <div class="col-xl-2 col-lg-3 col-md-12 col-sm-12 col-12">
+            {{-- <div class="col-xl-2 col-lg-3 col-md-12 col-sm-12 col-12">
                 <div class="header-logo">
                     <a href="/" class="header-logo-link">
                         <img src="{{ asset('logo/'.$options['site_logo']) }}" class="rounded" style="max-height: 60px;display: block;margin: auto" alt="لوگوی فروشگاه">
                     </a>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12">
                 <!-- navigations-->
                 <div class="navigation">
                     <div id="navigation">
                         <ul>
                             {{-- <li class=""><a href="index.html">درباره ما</a></li> --}}
-                            <li class=""><a href="{{route('blog')}}">مقالات</a>
-                            <li class="active"><a href="{{route('index')}}">صفحه اصلی</a></li>
-                            </li>
+                            <li class="text-right"><a href="{{route('blog')}}">مقالات</a></li>
+                            <li class="active text-right"><a href="{{route('index')}}">صفحه اصلی</a></li>
+                            @guest
+                                <li class="text-right"><a href="{{ route('login') }}" class="cu">{{ __('ورود') }}</a></li>
+                                @if (Route::has('register'))
+                                    <li class="text-right"><a href="{{ route('register') }}" class="cu">{{ __('ثبت نام') }}</a></li>
+                                @endif
+                            @else
+                                @if (\Auth::user()->hasRole('owner'))
+                                    <li class="text-right"><a class="cu" @if( auth()->user()->can("create-currency") ) href="/panel/currency" @endif >دیدن محصول</a></li>
+                                @else
+                                    <li class="text-right"><a class="cu" href="/panel/client">دیدن محصول</a></li>
+                                @endif
+                                    <li class="text-right"><a onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();"
+                                    title="خروج" href="{{ route('logout') }}" class="cu">
+                                        خروج
+                                    </a></li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            @endguest
+                            
                             {{-- <li class="has-sub"><a href="#">Pages</a>
                                 <ul>
                                     <li><a href="about.html">about</a></li>
