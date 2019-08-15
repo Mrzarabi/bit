@@ -1042,6 +1042,15 @@ caption { padding-top: .75rem; padding-bottom: .75rem; color: #6b6c6d; text-alig
   .mt {
     margin-top: 98px;
   }
+  
+}
+
+@media only screen and (min-width: 990px )
+{
+  
+  .cu {
+    display: none !important;
+  }
 }
 
 /* Medium Devices, Wide Screens */
@@ -1053,6 +1062,10 @@ caption { padding-top: .75rem; padding-bottom: .75rem; color: #6b6c6d; text-alig
   .mb {
     margin-bottom: 30px;
   }
+  
+  .cu {
+    display: block;
+  }
 }
 
 /* Small Devices, Wide Screens */
@@ -1060,6 +1073,10 @@ caption { padding-top: .75rem; padding-bottom: .75rem; color: #6b6c6d; text-alig
 {
   .mt {
     margin-top: 180px;
+  }
+
+  .cu {
+    display: block;
   }
 }
 
