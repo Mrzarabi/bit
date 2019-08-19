@@ -15,7 +15,7 @@ return [
 
             'subject' => 'r,c,u,d',
             'article' => 'r,c,u,d',
-            'comment' => 'r,c,a,d',
+            'comment' => 'r,a,d',
             
             'category' => 'r,c,u,d',
             'currency' => 'c,r,u,d',
