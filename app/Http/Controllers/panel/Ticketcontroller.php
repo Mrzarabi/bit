@@ -11,7 +11,7 @@ use App\Http\Requests\V1\Ticket\TicketMessageRequest;
 use App\Mail\CloseTicketMail;
 use Illuminate\Support\Facades\Input;
 
-class Ticketcontroller extends Controller
+class TicketController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -48,9 +48,13 @@ class Ticketcontroller extends Controller
      */
     public function store(TicketMessageRequest $request)
     {
-        auth()->user()->ticketmessages()->create(array_merge($request->all(), [
-            'image' => $this->upload_image( Input::file('image') )
-        ]));
+        if (Input::file('image')) {
+            auth()->user()->ticketmessages()->create(array_merge($request->all(), [
+                'image' => $this->upload_image( Input::file('image') )
+            ]));
+        } else {
+            auth()->user()->ticketmessages()->create(array_merge( $request->all() ));
+        }
 
         return redirect()->back()->with('message', "تیکت  {$request->title} با موفقیت ثبت شد");
     }
