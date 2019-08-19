@@ -27,7 +27,7 @@ class SubjectRequest extends FormRequest
             'title'           => 'required|string|max:50',
             'description'     => 'nullable|string|max:255',
             'logo'            => [
-                request()->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'
+                'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'
             ],
         ];
     }
