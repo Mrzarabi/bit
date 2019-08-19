@@ -130,33 +130,33 @@ class UserController extends MainController
         {
             if ( $user->{$request->type} && file_exists( public_path( $user->{$request->type} ) ) )
                 unlink( public_path( $user->{$request->type} ) );
-            {
-                if ( "accept_{$request->type}" === 'accept_image_national_code')
-                {
-                    $type = 'کد ملی';
-                    \Mail::to( $user->email )->send(new AcceptOrReject( $type ));
-                }
+            // {
+            //     if ( "accept_{$request->type}" === 'accept_image_national_code')
+            //     {
+            //         $type = 'کد ملی';
+            //         \Mail::to( $user->email )->send(new AcceptOrReject( $type ));
+            //     }
 
-                if ( "accept_{$request->type}" === 'accept_identify_certificate')
-                {
-                    $type = 'شناسنامه';
-                    \Mail::to( $user->email )->send(new AcceptOrReject( $type ));
-                }
+            //     if ( "accept_{$request->type}" === 'accept_identify_certificate')
+            //     {
+            //         $type = 'شناسنامه';
+            //         \Mail::to( $user->email )->send(new AcceptOrReject( $type ));
+            //     }
 
-                if ( "accept_{$request->type}" === 'accept_image_bill')
-                {
-                    $type = 'قبض';
-                    \Mail::to( $user->email )->send(new AcceptOrReject( $type ));
-                }
+            //     if ( "accept_{$request->type}" === 'accept_image_bill')
+            //     {
+            //         $type = 'قبض';
+            //         \Mail::to( $user->email )->send(new AcceptOrReject( $type ));
+            //     }
 
 
-                if ( "accept_{$request->type}" === 'accept_image_selfie_national_code')
-                {
-                    $type = 'سلفی با کد ملی';
-                    \Mail::to( $user->email )->send(new AcceptOrReject( $type = 'سلفی با کد ملی' ));
-                }
+            //     if ( "accept_{$request->type}" === 'accept_image_selfie_national_code')
+            //     {
+            //         $type = 'سلفی با کد ملی';
+            //         \Mail::to( $user->email )->send(new AcceptOrReject( $type = 'سلفی با کد ملی' ));
+            //     }
 
-            }
+            // }
 
         }
         
@@ -199,7 +199,7 @@ class UserController extends MainController
                 if ( "accept_{$request->type}" === 'accept_image_bank_card')
                 {
                     $type = 'کارت بانکی' . ' ' . $bank_card->bank_name;
-                    \Mail::to( $bank_card->user->email )->send(new AcceptOrReject( $type ));
+                    // \Mail::to( $bank_card->user->email )->send(new AcceptOrReject( $type ));
                 }
             }
         }
