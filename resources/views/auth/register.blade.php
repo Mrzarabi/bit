@@ -39,9 +39,6 @@
                         <h2 class="text-center mb30">ایجاد حساب کاربری</h2>
 						<form method="POST" action="{{ route('register') }}" class="validate-form">
 							@csrf
-							@php
-								// dd(route('register'))
-							@endphp
 							@include('errors.errors-show')
 							<div class="row">
 								<div class="col-lg-6 form-group">
