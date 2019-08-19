@@ -14,11 +14,9 @@
                                 {{ \Morilog\Jalali\Jalalian::forge($article->created_at)->ago() }}
                             </span>
                             <span class="meta-comments"> تعداد نظرات :
-                                @if ( $article->comments )
-                                    @foreach ($article->comments as $comment)
-                                        {{count($article->comments) + count($comment->replies)}}
-                                    @endforeach    
-                                @endif
+                                @foreach ($article->comments as $comment)
+                                    {{count($article->comments) + count($comment->replies)}}
+                                @endforeach
                             </span>
                         </div>
                         <!-- page-header -->

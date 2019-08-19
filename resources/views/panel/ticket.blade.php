@@ -159,7 +159,7 @@
 													</div>	
 													<div class="col-md-4">
 														<div class="mt-30">
-															<input type="file" name="image" id="input-file-now" class="dropify" @if ( isset($ticket 	) && $ticket->image) data-default-file="{{ $ticket->image }}" @endif/>
+															<input type="file" name="image" id="input-file-now" class="dropify" @if ( isset($ticket ) && $ticket->image) data-default-file="{{ $ticket->image }}" @endif/>
 														</div>
 													</div>
 												</div>	
@@ -222,7 +222,6 @@
 															<h2 style="padding: 5px; font-size: 30px; font-weight: bold;"> {{$item->title}} </h2>
 															<p style="padding: 25px; text-align: justify; word-break: break-all;">{{$item->message}}</p>
 															@if ( isset($item->image) )
-															{{-- @php dd($item->image) @endphp --}}
 																<button type="button" class="custom-btn-primary btn btn-primary pull-left" data-toggle="modal" data-target="#image" data-whatever="@getbootstrap" style="border-radius: 7px; margin-top: -116px;">باز کردن تصویر</button>
 																<div class="modal fade" id="image" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 																	<div class="modal-dialog" role="document">

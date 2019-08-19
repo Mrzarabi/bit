@@ -58,7 +58,7 @@
                     <div class="footer-title">مشخصات ما</div>
                     <ul class="list-unstyled">
                         <span class="support-number"><strong>شماره تلفن :</strong> {{ $options['shop_phone'] }}</span><br/>
-                        <li class="menu-item animate-dropdown"><a title="آدرس"><i class="ec ec-map-pointer"></i>{{ $options['shop_address'] }}</a></li>
+                        <li class="menu-item animate-dropdown"><a title="آدرس">{{ $options['shop_address'] }}</a></li>
                     </ul>
                 </div>
             </div>
