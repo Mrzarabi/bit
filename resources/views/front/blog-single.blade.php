@@ -14,9 +14,11 @@
                                 {{ \Morilog\Jalali\Jalalian::forge($article->created_at)->ago() }}
                             </span>
                             <span class="meta-comments"> تعداد نظرات :
-                                @foreach ($article->comments as $comment)
-                                    {{count($article->comments) + count($comment->replies)}}
-                                @endforeach    
+                                @if ( $article->comments )
+                                    @foreach ($article->comments as $comment)
+                                        {{count($article->comments) + count($comment->replies)}}
+                                    @endforeach    
+                                @endif
                             </span>
                         </div>
                         <!-- page-header -->
@@ -222,11 +224,12 @@
                                                     <span class="meta-comments"> تعداد نظرات :
                                                         @foreach ($article->comments as $comment)
                                                             {{count($article->comments) + count($comment->replies)}}
-                                                        @endforeach    
+                                                        @endforeach 
                                                     </span>    
                                                 </h4>
                                                 <ul class="comment-list list-unstyled">
                                                     @foreach ($article->comments as $comment)
+                                                    @if ($comment->is_accept)
                                                         <li class="row">
                                                             <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12">
                                                                 @if ($comment->user->avatar)
@@ -247,7 +250,8 @@
                                                                 </div>
                                                             </div>
                                                         </li>
-                                                        @foreach ($comment->replies as $reply)
+                                                    @endif
+                                                        {{-- @foreach ($comment->replies as $reply)
                                                             <li class="row pr-5">
                                                                 <div class="col-md-2">
                                                                     @if ($reply->user->avatar)
@@ -268,7 +272,7 @@
                                                                     </div>
                                                                 </div>
                                                             </li>
-                                                        @endforeach    
+                                                        @endforeach     --}}
                                                     @endforeach
                                                 </ul>
                                             </div>
@@ -305,7 +309,7 @@
                                                 </div>
                                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                                     <button type="submit" class="btn btn-warning custom-btn-warning btn-icon right-icon mr-10 pull-left"><span>ارسال</span></button>
-                                                    <input type="hidden" name="comment_id" value="{{ $comment->id }}" />
+                                                    <input type="hidden" name="article_id" value="{{ $article->id }}" />
                                                 </div>
                                             </div>
                                             @csrf
