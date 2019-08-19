@@ -65,21 +65,20 @@ class ShowClient extends MainController
      */
     protected $image_field = 'avatar';
 
-
     /**
-     * Display a listing of the resource.
+     * Display a listing of the currency.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $currencies = Currency::search( request('query') )->latest()->paginate(20);
+        $currencies = Currency::where('status', true)->search( request('query') )->latest()->paginate(20);
 
         return view('client.client-currency', compact('currencies'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new ticket.
      *
      * @return \Illuminate\Http\Response
      */
@@ -90,9 +89,9 @@ class ShowClient extends MainController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created ticket in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request\V1\Ticket\TicketRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function storeTicket(TicketRequest $request)
@@ -103,9 +102,9 @@ class ShowClient extends MainController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created bankCard in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request\V1\BankCard\BankCardRequest   $request
      * @return \Illuminate\Http\Response
      */
     public function storeBankCard(BankCardRequest $request)
@@ -118,9 +117,9 @@ class ShowClient extends MainController
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created ticketMessage in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request\V1\Ticket\TicketMessageRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function storeTicketMessage(TicketMessageRequest $request)
@@ -137,9 +136,9 @@ class ShowClient extends MainController
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified ticket.
      *
-     * @param  int  $id
+     * @param  App\Models\Ticket\Ticket
      * @return \Illuminate\Http\Response
      */
     public function editTicket(Ticket $ticket)
@@ -164,15 +163,19 @@ class ShowClient extends MainController
      * @param  Model $data
      * @return JSON\Array
      */
-    public function update(Request $request, $data)
-    {
-        $request->validate( (new $this->request)->rules() );
+    // public function update(Request $request, $data)
+    // {
+    //     $request->validate( (new $this->request)->rules() );
         
-        $this->updateData( $request, $data = $this->getModel($data) );
+    //     $this->updateData( $request, $data = $this->getModel($data) );
         
-        return redirect(route("{$this->type}.index"))->with('message', "با موفقیت بروزرسانی شد");
-    }
+    //     return redirect(route("{$this->type}.index"))->with('message', "با موفقیت بروزرسانی شد");
+    // }
 
+    /**
+     * Display the specified user.
+     *
+     */
     public function profile_setting()
     {
         $user = Auth::user();
@@ -184,13 +187,12 @@ class ShowClient extends MainController
      * Get the $request & $data,
      * then Update the $data in storage.
      *
-     * @param  Request  $request
-     * @param  Model $data
+     * @param  \Illuminate\Http\Request\V1\User\ProfileRequest  $request
+     * @param  App\User $user
      * @return JSON\Array
      */
     public function updateProfile(ProfileRequest $request, User $user)
     {
-        // dd($request);
         if ( !$request->hasFile('avatar') )
             $user->update(array_merge( $request->except(['roles']) ));
             
@@ -206,14 +208,21 @@ class ShowClient extends MainController
         return redirect()->back()->with('message', "با موفقیت بروز رسانی شد");
     }
 
-
+    /**
+     * Get the $request & $data,
+     * then Update the $data in storage.
+     *
+     * @param  \Illuminate\Http\Request\V1\User\ImageProfileRequest  $request
+     * @param  App\User $user
+     * @return JSON\Array
+     */
     public function updateImageProfile(ImageProfileRequest $request, User $user) 
     {
         if ( !$request->hasFile($request->type) )
             $user->update(array_merge( $request->except(['roles']) ));
             
         else {
-            if ( $user->accept_{$request->type} == false && file_exists( public_path( $user->{$request->type} ) ))
+            if ( $user->accept_{$request->type} == false && $user->{$request->type} && file_exists( public_path( $user->{$request->type} ) ))
                 unlink( public_path($user->{$request->type}) );
 
             $user->update(array_merge( $request->except(['roles']), [
@@ -223,6 +232,14 @@ class ShowClient extends MainController
         return redirect()->back()->with('message', "با موفقیت بروز رسانی شد");
     }
 
+    /**
+     * Get the $request & $data,
+     * then Update the $data in storage.
+     *
+     * @param  \Illuminate\Http\Request\V1\User\BankCardRequest  $request
+     * @param  App\Models\BankCard\BankCard $bankCard
+     * @return JSON\Array
+     */
     public function updateImageBankCard( BankCardRequest $request, BankCard $bankCard )
     {
         if ($request->hasFile('image_bank_card'))
