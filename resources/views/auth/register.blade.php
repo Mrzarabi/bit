@@ -42,20 +42,20 @@
 							@include('errors.errors-show')
 							<div class="row">
 								<div class="col-lg-6 form-group">
-									<label class="control-label sr-only" for="first_name"></label>
-									<input id="first_name" type="text" name="first_name" placeholder="نام" class="rounded text-right form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" value="{{ old('first_name') }}" required>
-									@if ($errors->has('first_name'))
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $errors->first('first_name') }}</strong>
-										</span>
-									@endif
-								</div>
-								<div class="col-lg-6 form-group">
 									<label class="control-label sr-only" for="last_name"></label>
 									<input id="last_name" type="text" name="last_name" placeholder="نام خانوادگی" class="rounded text-right form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" value="{{ old('last_name') }}" required>
 									@if ($errors->has('last_name'))
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $errors->first('last_name') }}</strong>
+										</span>
+									@endif
+								</div>
+								<div class="col-lg-6 form-group">
+									<label class="control-label sr-only" for="first_name"></label>
+									<input id="first_name" type="text" name="first_name" placeholder="نام" class="rounded text-right form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" value="{{ old('first_name') }}" required>
+									@if ($errors->has('first_name'))
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $errors->first('first_name') }}</strong>
 										</span>
 									@endif
 								</div>
