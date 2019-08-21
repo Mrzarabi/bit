@@ -318,45 +318,29 @@
 	@endforeach
 
 	<script>
-		$('.delete-item').on('click',function(event) {
+		$('.delete-item').on('click',function(){
+			var title = $(this).parent().parent().next().find('h5').text();
+			var id = $(this).attr('product');
+			var form = $(this).parent();
 
-		event.preventDefault();
-		event.stopPropagation();
-
-		var id = $(this).attr('aria-id');
-		var tr = $(this).parent().parent().parent().parent()
-
-		swal({   
-			title: "مطمین هستید ؟",   
-			text: "برای پاک کردن داده مورد نظر مطمین هستید ؟",   
-			type: "warning",   
-			showCancelButton: true,   
-			confirmButtonColor: "#f83f37",   
-			confirmButtonText: "بله",   
-			cancelButtonText: "خیر", 
-		}, function(isConfirm){   
-			if (isConfirm) {
-
-				fetch('/panel/{{ $ticket }}/' + id, {
-					method: 'post',
-					headers: {
-						"Content-Type": "application/json",
-						"Accept": "application/json",
-						"X-Requested-With": "XMLHttpRequest",
-						"X-CSRF-Token": "{{ csrf_token() }}"
-					},
-					body: JSON.stringify({
-						_method: 'delete'
-					})
-				})
-				.then(function(response) {
-
-					tr.remove()
-				})
-			}
-		});
-
-		return false;
+			swal({   
+				title: "مطمین هستید ؟",   
+				text: "برای پاک کردن مقاله " + title + " مطمین هستید ؟",   
+				type: "warning",   
+				showCancelButton: true,   
+				confirmButtonColor: "#f83f37",   
+				confirmButtonText: "بله",   
+				cancelButtonText: "خیر",   
+				closeOnConfirm: false,   
+				closeOnCancel: false 
+			}, function(isConfirm){   
+				if (isConfirm) {
+					form.submit();
+				} else {     
+					swal("لغو شد", "هیچ مقاله ای حذف نشد :)", "error");   
+				} 
+			});
+			return false;
 		});
 	</script>
 @endsection
