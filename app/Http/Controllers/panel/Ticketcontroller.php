@@ -116,7 +116,7 @@ class TicketController extends Controller
     public function destroy(Ticket $ticket)
     {
         $ticket->load('user');
-        \Mail::to( $ticket->user->email )->send(new CloseTicketMail( $ticket ));
+        // \Mail::to( $ticket->user->email )->send(new CloseTicketMail( $ticket ));
         $ticket->delete();
         $ticket->update(['is_close' => true]);
         
@@ -132,7 +132,7 @@ class TicketController extends Controller
     public function is_close(Ticket $ticket)
     {
         $ticket->update([ 'is_close' => true ]);
-        \Mail::to( $ticket->user->email )->send(new CloseTicketMail( $ticket ));
+        // \Mail::to( $ticket->user->email )->send(new CloseTicketMail( $ticket ));
 
         return redirect(route('ticket.index'))->with('message',  "تیکت کاربر {$ticket->user->first_name} {$ticket->user->last_name} با موفقیت حذف شد");
     }
