@@ -539,7 +539,7 @@ img.grayscale:hover { filter: grayscale(0); opacity: 1; transition-property: fil
    6. Slider / Hero Image
 -------------------------------------*/
 
-.hero-section { background: url(../../images/bitcoin/internet-business-high-definition-desktop-wallpaper-widescreen-high-definition-1024x640.jpg) no-repeat; position: relative; 
+.hero-section { background: url(../../images/bitcoin/banner-site.jpg) no-repeat; position: relative; 
   background-size: cover;
   background-position: bottom;
   background-attachment: fixed;
