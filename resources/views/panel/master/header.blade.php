@@ -64,34 +64,42 @@
     <div class="fixed-sidebar-left">
         <ul class="nav navbar-nav side-nav nicescroll-bar">
             <li>
-                <a @if( in_array(request()->route()->getName(), ['profile-setting' ,'user', 'ticket', 'role']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><span class="right-nav-text"><i class="ti-user ml-5" aria-hidden="true"></i>کاربران</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
+                <a @if( in_array(request()->route()->getName(), ['profile-setting' ,'user', 'ticket', 'role']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr">
+                    <div class="pull-left">
+                        <span class="right-nav-text"><i class="ti-user ml-5" aria-hidden="true"></i>کاربران</span>
+                    </div>
+                    <div class="pull-left">
+                        <i class="ti-angle-down"></i>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
                 <ul id="ecom_dr" class="collapse collapse-level-1">
                     <li>
-                        <a @if(request()->route()->getName() == 'profile-setting') class="active-page" @endif href="/panel/profile-setting/{{\Auth::user()->id}}" ><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>پروفایل</a>
+                        <a @if(request()->route()->getName() == 'profile-setting') style="padding-right: 36px;" class="active-page" @endif href="/panel/profile-setting/{{\Auth::user()->id}}"><i class="fa fa-user ml-5" aria-hidden="true"></i>پروفایل</a>
                     </li>
                     <li>
-                        <a @if(request()->route()->getName() == 'user') class="active-page" @endif @if( auth()->user()->can("read-user") ) href="/panel/user" @endif ><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>کاربران</a>
+                        <a @if(request()->route()->getName() == 'user') style="padding-right: 36px;" class="active-page" @endif @if( auth()->user()->can("read-user") ) href="/panel/user" @endif ><i class="fa fa-user ml-5" aria-hidden="true"></i>کاربران</a>
                     </li>
                     <li>
-                        <a @if(request()->route()->getName() == 'role') class="active-page" @endif @if( auth()->user()->can("read-role") ) href="/panel/role" @endif ><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>نقش ها</a>
+                        <a @if(request()->route()->getName() == 'role') style="padding-right: 36px;" class="active-page" @endif @if( auth()->user()->can("read-role") ) href="/panel/role" @endif ><i class="fa fa-user ml-5" aria-hidden="true"></i>نقش ها</a>
                     </li>
                     <li>
-                        <a @if(request()->route()->getName() == 'ticket') class="active-page" @endif @if( auth()->user()->can("read-ticket") ) href="/panel/ticket" @endif ><i class="fa fa-university ml-5" aria-hidden="true"></i>تیکت ها</a>
+                        <a @if(request()->route()->getName() == 'ticket') style="padding-right: 36px;"  class="active-page" @endif @if( auth()->user()->can("read-ticket") ) href="/panel/ticket" @endif ><i class="fa fa-table ml-5" aria-hidden="true"></i>تیکت ها</a>
                     </li>
                 </ul>
             </li>
             <li>
-                <a @if( in_array(request()->route()->getName(), ['category', 'subject','specification']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-shopping-basket ml-5" aria-hidden="true"></i>فروشگاه</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
-                <ul id="ecom_dr" class="collapse collapse-level-1">
+                <a @if( in_array(request()->route()->getName(), ['category', 'subject','specification']) ) class="active" @endif href="javascript:void(0);" data-toggle="collapse" data-target="#shop_dr"><div class="pull-left"><span class="right-nav-text"><i class="fa fa-shopping-basket ml-5" aria-hidden="true"></i>فروشگاه</span></div><div class="pull-left"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
+                <ul id="shop_dr" class="collapse collapse-level-1">
                     <li>
-                        <a @if(request()->route()->getName() == 'category') class="active-page" @endif @if( auth()->user()->can("read-category") ) href="/panel/category" @endif ><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>گروه بندی محصولات</a>
+                        <a @if(request()->route()->getName() == 'category') style="padding-right: 36px;" class="active-page" @endif @if( auth()->user()->can("read-category") ) href="/panel/category" @endif ><i class="fa fa-sitemap ml-5" aria-hidden="true"></i>گروه بندی محصولات</a>
                     </li>
                     <li>
-                        <a @if(request()->route()->getName() == 'subject') class="active-page" @endif @if( auth()->user()->can("read-subject") ) href="/panel/subject" @endif ><i class="fa fa-university ml-5" aria-hidden="true"></i>گروه بندی مقالات</a>
+                        <a @if(request()->route()->getName() == 'subject') style="padding-right: 36px;" class="active-page" @endif @if( auth()->user()->can("read-subject") ) href="/panel/subject" @endif ><i class="fa fa-university ml-5" aria-hidden="true"></i>گروه بندی مقالات</a>
                     </li>
-                    <li>
+                    {{-- <li> --}}
                         {{-- <a @if(request()->route()->getName() == 'specification') class="active-page" @endif @if( auth()->user()->can("read-spec") ) href="/panel/specification" @endif ><i class="fa fa-table ml-5" aria-hidden="true"></i>جداول مشخصات فنی</a> --}}
-                    </li>
+                    {{-- </li> --}}
                 </ul>
             </li>
             <li>
