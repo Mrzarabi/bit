@@ -15,6 +15,11 @@
                     <div id="navigation">
                         <ul>
                             {{-- <li class=""><a href="index.html">درباره ما</a></li> --}}
+                            <li class="text-right"><a href="tel:09153388688">تماس با ما</a></li>
+                            @if (request()->route()->getName() == 'index')
+                            <li class="text-right"><a href="#about">درباره ما</a></li>
+                                <li class="text-right"><a href="#rules">قوانین</a></li>
+                            @endif
                             <li class="text-right"><a href="{{route('blog')}}">مقالات</a></li>
                             <li class="active text-right"><a href="{{route('index')}}">صفحه اصلی</a></li>
                             @guest
