@@ -13,8 +13,8 @@
                 <div class="offset-xl-7 col-xl-5 offset-lg-7 col-lg-5 col-md-12 col-sm-12 col-12 text-center ">
                     <!--  hero-block-->
                     <div class="hero-block">
-                        <h1 class="hero-title mb30">خرید و فروش ارز دیجیتال</h1>
-                        <p class="text-white">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
+                        <h2 class="hero-title mb30">برای خرید آسان و امن با قیمت مناسب با ما همراه باشید .</h2>
+                        {{-- <p class="text-white">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p> --}}
                         {{-- <a href="#" class="btn btn-default btn-lg custom-btn-warning">شروع کنید</a> --}}
                     </div>
                     <!--  /.hero-block-->
@@ -50,7 +50,7 @@
                 <!--  section-title -->
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
                     <div class="section-title">
-                        <h2 class="text-right mt-100">قوانین </h2>
+                        <h2 class="text-right mt-120">قوانین </h2>
                     </div>
                 </div>
                 <!--  /.section-title -->
@@ -229,7 +229,7 @@
         <div class="container">
             <div class="row text-right">
                 <!-- feature-left -->
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                     <div class="feature-left">
                         <div class="feature-icon float-right">
                             <img src="/images/bitcoin/icons/reload.png" class="custom-icons" alt="تصویر">
@@ -242,7 +242,7 @@
                 </div>
                 <!-- /.feature-left -->
                 <!-- feature-left -->
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                     <div class="feature-left">
                         <div class="feature-icon float-right">
                             <img src="/images/bitcoin/icons/choices.png" class="custom-icons" alt="تصویر">
@@ -255,7 +255,7 @@
                 </div>
                 <!-- /.feature-left -->
                 <!-- feature-left -->
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                     <div class="feature-left">
                         <div class="feature-icon float-right">
                             <img src="/images/bitcoin/icons/call-center.png" class="custom-icons" alt="تصویر">    
@@ -263,19 +263,6 @@
                         <div class="feature-content">
                             <h4>پشتیبانی</h4>
                             <p> پشتیبانی با کیفیت از طریق تیکت </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.feature-left -->
-                <!-- feature-left -->
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12 col-12">
-                    <div class="feature-left float-right">
-                        <div class="feature-icon">
-                            <img src="/images/bitcoin/icons/wallet.png" class="custom-icons" alt="تصویر">    
-                        </div>
-                        <div class="feature-content">
-                            <h4>کیف پول</h4>
-                            <p> مناسب ترین نرخ خرید و فروش </p>
                         </div>
                     </div>
                 </div>
