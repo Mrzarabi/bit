@@ -20,6 +20,12 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     <!-- Fontello CSS -->
     <link rel="stylesheet" type="text/css" href="css/front/fontello.css">
+    @foreach ([
+        'assets/css/font.css',
+        // 'css/fontello.css'
+    ] as $item)
+        <link rel="stylesheet" type="text/css" href="{{ asset($item) }}" media="all" />
+    @endforeach
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
