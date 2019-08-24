@@ -3219,6 +3219,7 @@ button.fc-agendaWeek-button, .fc-prev-button, .fc-next-button, .fc-today-button 
       background: rgba(33, 33, 33, 0.05); }
     .fixed-sidebar-left .side-nav > li > ul > li a {
       padding: 12px 15px 12px 51px;
+      padding-right: 36px !important;
       display: block;
       color: #727272; }
       .fixed-sidebar-left .side-nav > li > ul > li a:hover, .fixed-sidebar-left .side-nav > li > ul > li a:focus, .fixed-sidebar-left .side-nav > li > ul > li a:active {
