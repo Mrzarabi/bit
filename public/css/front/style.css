@@ -1034,6 +1034,15 @@ caption { padding-top: .75rem; padding-bottom: .75rem; color: #6b6c6d; text-alig
   text-shadow: 1px 1px 5px #000000ad;
 }
 
+.as-flex {
+  display: flex;
+}
+
+.as-flex.open {
+  display: flex !important;
+}
+
+
 /*==========  End All ==========*/
 
 /*------------------------
@@ -1065,6 +1074,10 @@ caption { padding-top: .75rem; padding-bottom: .75rem; color: #6b6c6d; text-alig
   }
   .mb {
     margin-bottom: 30px;
+  }
+
+  .as-flex {
+    flex-direction: column;
   }
   
   .cu {
