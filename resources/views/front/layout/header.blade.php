@@ -13,19 +13,19 @@
                 <!-- navigations-->
                 <div class="navigation">
                     <div id="navigation">
-                        <ul>
+                        <ul class="as-flex">
                             {{-- <li class=""><a href="index.html">درباره ما</a></li> --}}
-                            <li class="text-right"><a href="tel:09153388688">تماس با ما</a></li>
+                            <li class="text-right order-5"><a href="tel:09153388688">تماس با ما</a></li>
                             @if (request()->route()->getName() == 'index')
-                            <li class="text-right"><a href="#about">درباره ما</a></li>
-                                <li class="text-right"><a href="#rules">قوانین</a></li>
+                            <li class="text-right order-4"><a href="#about">درباره ما</a></li>
+                                <li class="text-right order-3"><a href="#rules">قوانین</a></li>
                             @endif
-                            <li class="text-right"><a href="{{route('blog')}}">مقالات</a></li>
-                            <li class="active text-right"><a href="{{route('index')}}">صفحه اصلی</a></li>
+                            <li class="text-right order-2"><a href="{{route('blog')}}">مقالات</a></li>
+                            <li class="active text-right order-1"><a href="{{route('index')}}">صفحه اصلی</a></li>
                             @guest
-                                <li class="text-right"><a href="{{ route('login') }}" class="cu">{{ __('ورود') }}</a></li>
+                                <li class="text-right order-6"><a href="{{ route('login') }}" class="cu">{{ __('ورود') }}</a></li>
                                 @if (Route::has('register'))
-                                    <li class="text-right"><a href="{{ route('register') }}" class="cu">{{ __('ثبت نام') }}</a></li>
+                                    <li class="text-right order-7"><a href="{{ route('register') }}" class="cu">{{ __('ثبت نام') }}</a></li>
                                 @endif
                             @else
                                 @if (\Auth::user()->hasRole('owner'))
