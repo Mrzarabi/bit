@@ -27,7 +27,7 @@ class CreateCurrenciesTable extends Migration
 
             $table->foreign_key('user_id', 'users');
             $table->foreign_key('category_id', 'categories');
-            $table->foreign_key('spec_id', 'specs');
+            // $table->foreign_key('spec_id', 'specs');
 
             $table->string('title', 50);
             $table->string('slug', 50);
@@ -46,7 +46,7 @@ class CreateCurrenciesTable extends Migration
             $table->increments('id')->unsigned();
 
             $table->foreign_key('spec_row_id', 'spec_rows');
-            $table->foreign_key('currency_id', 'currencies');
+            // $table->foreign_key('currency_id', 'currencies');
 
             $table->string('data', 255);
             

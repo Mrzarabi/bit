@@ -28,12 +28,10 @@ class Currency extends Model
      */
     protected $fillable = [
         'category_id',
-        'spec_id',
         'title',
         'slug',
         'short_description',
         'price',
-        'code',
         'note',
         'status',
         'photo',
@@ -54,7 +52,7 @@ class Currency extends Model
             'currencies.title' => 10,
             'currencies.short_description' => 9,
             // 'currencies.price' => 8,
-            'currencies.code' => 7,
+            // 'currencies.code' => 7,
             // 'currencies.inventory'  => 6,
         ],
         'joins' => [
@@ -168,8 +166,8 @@ class Currency extends Model
         if ( auth()->check() )
             // $feilds = array_merge( $feilds, [ 'code', 'status' ]);
 
-        if ( isset($options['more']) )
-            $feilds = array_merge( $feilds, [ 'advantages', 'disadvantages', 'code' ]);
+        // if ( isset($options['more']) )
+        //     $feilds = array_merge( $feilds, [ 'advantages', 'disadvantages', 'code' ]);
         
         $relations = [
             // 'variation:id,product_id,color_id,warranty_id,price,unit,offer,offer_deadline,stock_inventory',

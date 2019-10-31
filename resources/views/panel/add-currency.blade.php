@@ -99,21 +99,21 @@
 
 									<div  class="pills-struct">
 										<ul role="tablist" class="nav nav-pills nav-pills-rounded" id="myTabs_11" style="float: right; margin-bottom: 20px;">
-											<li role="presentation" class="">
+											{{-- <li role="presentation" class="">
 												<a  data-toggle="tab" id="profile_tab_11" role="tab" href="#specifications" aria-expanded="false">
 													<i class="font-20 txt-grey zmdi zmdi-calendar-note ml-10"></i>اطلاعات فنی
 												</a>
-											</li>
+											</li> --}}
 											<li role="presentation" class="">
 												<a  data-toggle="tab" id="profile_tab_11" role="tab" href="#currencies" aria-expanded="false">
 													<i class="font-20 txt-grey zmdi zmdi-card-membership ml-10"></i>قیمت و موجودی محصول
 												</a>
 											</li>
-											<li role="presentation" class="">
+											{{-- <li role="presentation" class="">
 												<a  data-toggle="tab" id="profile_tab_11" role="tab" href="#advantages" aria-expanded="false">
 													<i class="font-20 txt-grey zmdi zmdi-swap ml-10"></i>معایب و مزایا
 												</a>
-											</li>
+											</li> --}}
 											<li role="presentation" class="">
 												<a  data-toggle="tab" id="profile_tab_11" role="tab" href="#description" aria-expanded="false">
 													<i class="font-20 txt-grey zmdi zmdi-comment-text ml-10"></i>توضیح محصول
@@ -133,7 +133,7 @@
 														<div class="form-group @if( $errors->has('title') ) has-error @endif">
 															<label class="control-label mb-10">نام محصول</label>
 															<div class="input-group">
-																<input type="text" name="title" @isset($currency) value="{{$currency->title}}" @else value="{{old('title')}}" @endisset id="firstName" class="form-control" placeholder="مثلا : 'گوشی موبایل سامسونگGalaxy S7'">
+																<input type="text" name="title" @isset($currency) value="{{$currency->title}}" @else value="{{old('title')}}" @endisset id="firstName" class="form-control" placeholder="نام ارز">
 																<div class="input-group-addon"><i class="ti-text"></i></div>
 															</div>
 															@if( $errors->has('title') )
@@ -154,7 +154,7 @@
 															</div>
 														</div>
 													</div>
-													<div class="col-md-8">
+													{{-- <div class="col-md-8">
 														<div class="form-group @if( $errors->has('code') ) has-error @endif">
 															<label class="control-label mb-10">شناسه محصول</label>
 															<div class="input-group">
@@ -165,6 +165,48 @@
 																<span class="help-block">{{ $errors->first('code') }}</span>
 															@endif
 														</div>
+													</div> --}}
+													<div class="col-md-8">
+														<div class="form-group @if( $errors->has('category_id') ) has-error @endif">
+															<label class="control-label mb-10">گروه</label>
+															<div class="input-group">
+																<select name="parent" class="form-control select2 categories">
+																	<option value="">دسته بندی نشده</option>
+																	@foreach ($groups as $group)
+																		<option value="{{$group['id']}}"
+																			@if( isset($currency) && $currency->category_id === $group['id']) selected @endif>
+																			{{$group['title']}}
+																		</option>
+																	@endforeach
+																</select>
+																<div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
+															</div>
+															@if( $errors->has('category_id') )
+																<span class="help-block">{{ $errors->first('category_id') }}</span>
+															@endif
+														</div>
+													</div>
+													<div class="col-md-8">
+														<div class="form-group @if( $errors->has('status') ) has-error @endif">
+															<label class="control-label mb-10">وضعیت</label>
+															<div class="radio-list">
+																<div class="radio-inline">
+																	<div class="radio radio-info">
+																		<input type="radio" @if(isset($currency) && $currency->status == 0) checked="checked" @elseif(old('status') == 0) checked @endif name="status" id="radio2" value="0">
+																		<label for="radio2">پیش نویس</label>
+																	</div>
+																</div>
+																<div class="radio-inline pl-0">
+																	<div class="radio radio-info">
+																		<input type="radio" @if(isset($currency) && $currency->status == 1) checked="checked" @elseif(old('status') == 1) checked @endif  @if(!isset($currency)) checked="checked" @endisset name="status" id="radio1" value="1">
+																		<label for="radio1">ثبت محصول</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+														@if( $errors->has('status') )
+															<span class="help-block">{{ $errors->first('status') }}</span>
+														@endif
 													</div>
 													<div class="col-md-12">
 														<div class="form-group @if( $errors->has('short_description') ) has-error @endif">
@@ -181,7 +223,7 @@
 													<!--/span-->
 												</div>
 												<!-- Row -->
-												<div class="row">
+												{{-- <div class="row">
 													<div class="col-md-6">
 														<div class="form-group @if( $errors->has('category_id') ) has-error @endif">
 															<label class="control-label mb-10">گروه</label>
@@ -225,7 +267,7 @@
 															<span class="help-block">{{ $errors->first('status') }}</span>
 														@endif
 													</div>
-												</div>
+												</div> --}}
 												<hr class="light-grey-hr"/>
 												<!-- Row -->
 											</div>
@@ -256,94 +298,7 @@
 												</div>
 												<hr class="light-grey-hr"/>
 											</div>
-											<div id="specifications" class="tab-pane fade" role="tabpanel">
-												<div class="container">
-													<div class="specs-table row">
-														@if(isset($currency) && !empty($currency->spec))
-														
-															@foreach ($currency->spec->toArray()['spec_headers'] as $spec_header)
-																<div class="row">
-																	<div class="col-md-12">
-																		<div class="col-md-2">
-																			<h5 class="mb-10 col-md-12 border-bottom">
-																				<i class="ti-angle-double-left" style="font-size: 15px; color:darkgray; margin-left: 5px;"></i>
-																				<b>{{ $spec_header['title'] }}</b><br/>
-																				<span class="help-block" style="font-size:12px">{{ $spec_header['description'] }}</span>
-																			</h5>
-																		</div>
-																		
-																		<div class="col-md-10">
-																			@foreach ($spec_header['spec_rows'] as $spec_rows)
-																				<div class="col-md-6">
-																					<div class="form-group @if( $errors->has('price') ) has-error @endif">
-																						<label class="control-label mb-10">{{ $spec_rows['title'] }}</label>
-																						<input type="hidden" name="specs[{{ $spec_rows['id'] }}][id]" value="{{ $spec_rows['spec_data']['id'] }}" />
-																						
-																						@if($spec_rows['values'])
-																							
-																							@isset($spec_rows['label'])
-																							<div class="input-group">
-																							@endisset
-																								<select @if($spec_rows['multiple']) class="select2 select2-multiple" multiple="multiple" data-placeholder="انتخاب کنید ..." @else class="selectpicker" @endif name="specs[{{ $spec_rows['id'] }}][data][]" data-style="form-control btn-default btn-outline">
-																									@if(!$spec_rows['multiple'])
-																									<option value="">یک گزینه را انتخاب کنید</option>
-																									@endif
-
-																									@foreach ($spec_rows['values'] as $key => $item)
-																										<option value="{{$key}}"
-																											@isset( $spec_rows['spec_data']['data'] )
-																												@if(strpos($spec_rows['spec_data']['data'], ','))
-																													<?php $temp = explode(',', $spec_rows['spec_data']['data']) ?>
-																													@if ( in_array($key, $temp) ) selected="selected" @endif
-																												@elseif($spec_rows['spec_data']['data'] == $key) selected="selected" @endif
-																											@endisset >
-																											{{ $item }}
-																										</option>
-																									@endforeach
-																								</select>
-																							@isset($spec_rows['label'])
-																								<div class="input-group-addon">{{ $spec_rows['label'] }}</div>
-																							</div>
-																							<span class="help-block">{{ $spec_rows['help'] }}</span>
-																							@endisset
-
-																						@else
-																							
-																							@isset($spec_rows['label'])
-																							<div class="input-group">
-																							@endisset
-																								<input type="text" @if($spec_rows['spec_data']) placeholder="{{ $spec_rows['multiple'] }}" value="{{$spec_rows['spec_data']['data']}}" @endif @if($spec_rows['multiple']) data-role="tagsinput" @endif name="specs[{{ $spec_rows['id'] }}][data]" class="form-control" />
-																							@isset($spec_rows['label'])
-																								<div class="input-group-addon">{{ $spec_rows['label'] }}</div>
-																							</div>
-																							<span class="help-block">{{ $spec_rows['help'] }}</span>
-																							@endisset
-
-																						@endif
-
-																						@if( $errors->has('price') )
-																							<span class="help-block">{{ $errors->first('price') }}</span>
-																						@endif
-																					</div>
-																				</div>
-																			@endforeach
-																		</div>
-																	</div>
-																</div>
-																<div class="seprator-block"></div>
-																<hr class="light-grey-hr"/>
-																<div class="seprator-block"></div>
-															@endforeach
-														@else
-														<div class="alert alert-warning alert-dismissable col-md-12">
-															<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-															هنوز گروهی انتخاب نکرده اید یا گروه مورد نظر شما دارای جدول اطلاعات فنی نیست 
-														</div>
-														@endif
-													</div>
-												</div>
-											</div>
-											<div id="advantages" class="tab-pane fade" role="tabpanel">
+											{{-- <div id="advantages" class="tab-pane fade" role="tabpanel">
 												<div class="row">
 													<div class="col-sm-6">
 														<div class="form-group advantages @if( $errors->has('advantages') ) has-error @endif">
@@ -362,11 +317,11 @@
 														</div>
 													</div>
 												</div>
-											</div>
+											</div> --}}
 											<div id="currencies" class="tab-pane fade" role="tabpanel">
 												<div class="row">
 													<div class="col-md-12">
-														<div class="col-md-4">
+														<div class="col-md-6">
 															<div class="form-group @if( $errors->has('price') ) has-error @endif">
 																<label class="control-label mb-10">قیمت</label>
 																<div class="input-group">
@@ -379,11 +334,11 @@
 															</div>
 														</div>
 														<!--/span-->
-														<div class="col-md-3">
+														<div class="col-md-6">
 															<div class="form-group @if( $errors->has('inventory') ) has-error @endif">
 																<label class="control-label mb-10">تعداد موجود در انبار</label>
 																<div class="input-group">
-																	<input type="number" name="inventory" min="0" @isset($currency) value="{{$currency->inventory}}" @else value="{{old("inventory")}}" @endisset id="firstName" class="form-control" placeholder="موجودی این محصول در انبار شما">
+																	<input  name="inventory" min="0" @isset($currency) value="{{$currency->inventory}}" @else value="{{old("inventory")}}" @endisset id="firstName" class="form-control" placeholder="موجودی این محصول در انبار شما">
 																	<div class="input-group-addon"><i class="ti-layout-grid4-alt"></i></div>
 																</div>
 																@if( $errors->has('stock_inventory') )

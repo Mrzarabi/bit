@@ -39,7 +39,7 @@
                         <h2 class="text-center mb30">ایجاد حساب کاربری</h2>
 						<form method="POST" action="{{ route('register') }}" class="validate-form">
 							@csrf
-							@include('errors.errors-show')
+							{{-- @include('errors.errors-show') --}}
 							<div class="row">
 								<div class="col-lg-6 form-group">
 									<label class="control-label sr-only" for="last_name"></label>
@@ -80,7 +80,7 @@
 							</div>
                             <div class="form-group">
                                 <label class="control-label sr-only" for="birthday"></label>
-                                <input id="birthday" type="text" name="birthday" name="تاریخ تولد" placeholder="روز/ماه/سال" class="rounded text-right form-control{{ $errors->has('birthday') ? ' is-invalid' : '' }}" value="{{ old('birthday') }}" required>
+                                <input id="birthday" type="text" name="birthday" placeholder="متولد چه سالی هستید؟ مثلا : 1376 " class="rounded text-right form-control{{ $errors->has('birthday') ? ' is-invalid' : '' }}" value="{{ old('birthday') }}" required>
 								@if ($errors->has('birthday'))
 									<span class="invalid-feedback" role="alert">
 										<strong>{{ $errors->first('birthday') }}</strong>

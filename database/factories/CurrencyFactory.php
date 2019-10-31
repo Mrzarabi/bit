@@ -7,7 +7,6 @@ $factory->define(App\Models\Currency\Currency::class, function (Faker $faker) {
     return [
         'title'                 => $faker->name(),
         'short_description'     => nullable($faker->realText(255)),
-        'short_description'     => nullable($faker->realText(255)),
         'price'                 => $faker->numberBetween(1000, 500000),
         'inventory'             => $faker->numberBetween(1, 500000),
         'status'                => $faker->numberBetween(0, 1),

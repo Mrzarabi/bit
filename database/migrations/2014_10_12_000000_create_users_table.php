@@ -40,8 +40,6 @@ class CreateUsersTable extends Migration
             $table->string('password', 100);
             $table->boolean('can_buy')->default(0);
 
-            // $table->string('avatar', 50);
-
             $table->string('image_national_code')->nullable();
             $table->boolean('accept_image_national_code')->default(0);
             $table->string('identify_certificate')->nullable();

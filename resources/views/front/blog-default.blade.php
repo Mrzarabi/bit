@@ -1,6 +1,9 @@
+@include('front.layout.loading')
+
 @extends('front.layout.master')
 
 @section('content')
+
 
     <!-- page-header -->
     <div class="page-header">

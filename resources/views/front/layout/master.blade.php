@@ -40,7 +40,8 @@
         <link rel="shortcut icon" href="assets/images/fav-icon.png">
     </head>
 
-    <body class="@yield('body-class')">
+    <body class="@yield('body-class')" onload="loading()">
+        
         <div id="page" class="hfeed site">
             {{-- <a class="skip-link screen-reader-text" href="#site-navigation">Skip to navigation</a>
             <a class="skip-link screen-reader-text" href="#content">Skip to content</a> --}}
@@ -103,6 +104,12 @@
         @endforeach
     
         <script>
+
+            function loading() {
+                document.getElementById('spin').style.display = 'none';
+                document.getElementById('loading-div').style = 'height: 0px !important';
+            }
+
             var nums = document.getElementsByClassName('num-comma');
 
             for (num in nums) {

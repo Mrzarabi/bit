@@ -357,17 +357,17 @@
 												<div class="col-md-6">
 													<label class="control-label mb-10" for="exampleInputEmail_5">توییتر</label>
 													<div class="input-group">
-														<input type="text" dir="ltr" value="{{$options['social_link']->twitter}}" name="twitter" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی توییتر">
-														<div class="input-group-addon"><i class="fa fa-twitter" aria-hidden="true"></i></div>
+														<input type="text" dir="ltr" value="{{$options['social_link']->whatsapp}}" name="whatsapp" class="form-control" id="exampleInputEmail_5" placeholder="لینک صفحه شما در شبکه اجتماعی واتس آپ">
+														<div class="input-group-addon"><i class="fa fa-whatsapp" aria-hidden="true"></i></div>
 													</div>
 												</div>
-												<div class="col-md-6">
+												{{-- <div class="col-md-6">
 													<label class="control-label mb-10" for="exampleInputEmail_4">فیسبوک</label>
 													<div class="input-group">
 														<input type="text" dir="ltr" value="{{$options['social_link']->facebook}}" name="facebook" class="form-control" id="exampleInputEmail_4" placeholder="لینک صفحه شما در شبکه اجتماعی فیسبوک">
 														<div class="input-group-addon"><i class="fa fa-facebook" aria-hidden="true"></i></div>
 													</div>
-												</div>
+												</div> --}}
 											</div>
 										</div>
 									</div>

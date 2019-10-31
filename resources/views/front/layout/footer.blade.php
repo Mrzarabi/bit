@@ -44,10 +44,9 @@
                 <div class="footer-widget text-right">
                     <div class="footer-title">شبکه های اجتماعی</div>
                     <ul class="list-unstyled">
-                        <li><a href="{{ asset('social_link/'.$options['social_link']->twitter) }}">Twitter</a></li>
-                        <li><a href="{{ asset('social_link/'.$options['social_link']->instagram) }}">Telegram</a></li>
-                        <li><a href="{{ asset('social_link/'.$options['social_link']->facebook) }}">facebook</a></li>
-                        <li><a href="{{ asset('social_link/'.$options['social_link']->telegram) }}">telegram</a></li>
+                        <li><a href="{{ asset($options['social_link']->instagram) }}">Instagram</a></li>
+                        <li><a href="{{ asset($options['social_link']->whatsapp) }}">WhatsApp</a></li>
+                        <li><a href="{{ asset($options['social_link']->telegram) }}">Telegram</a></li>
                     </ul>
                 </div>
             </div>

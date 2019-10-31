@@ -49,7 +49,7 @@ class OptionTableSeeder extends Seeder
                     'value' => 'خراسان رضوی ، مشهد ، بین دستغیب 15 و 17 ، پلاک 231 ، واحد 1',
                 ], [
                     'name' => 'social_link',
-                    'value' => "{\"instagram\":\"https:\\/\\/instagram.com\\/\",\"telegram\":\"https:\\/\\/telegram.com\\/\",\"facebook\":\"https:\\/\\/facebook.com\\/\",\"twitter\":\"https:\\/\\/twitter.com\"}",
+                    'value' => "{\"instagram\":\"https:\\/\\/instagram.com\\/\",\"telegram\":\"https:\\/\\/telegram.com\\/\",\"whatsapp\":\"https:\\/\\/whatsapp.com\\/\"}",
                 ], [
                     'name' => 'dollar_cost',
                     'value' => '14500',

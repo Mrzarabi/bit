@@ -138,7 +138,7 @@
                                                         <div class="form-group @if( $errors->has('national_code') ) has-error @endif">
                                                             <label class="control-label mb-10">شماره کارت ملی :</label>
                                                             <div class="input-group">
-                                                                <input type="text" name="national_code" @if(isset($user) && !empty($user->national_code)) value="{{$user->national_code}}" @else value="{{old('social_link')}}" @endif id="title" class="form-control" placeholder="شماره کارت ملی کاربر">
+                                                                <input type="text" name="national_code" @if(isset($user) && !empty($user->national_code)) value="{{$user->national_code}}" @else value="{{old('national_code')}}" @endif id="title" class="form-control" placeholder="شماره کارت ملی کاربر">
                                                                 <div class="input-group-addon"><i class="ti-text"></i></div>
                                                             </div>
                                                             @if( $errors->has('national_code') )
@@ -165,7 +165,7 @@
                                                         <div class="form-group @if( $errors->has('created_at') ) has-error @endif">
                                                             <label class="control-label mb-10"> تاریخ ثبت نام :</label>
                                                             <div class="input-group">
-                                                                <input type="text" name="created_at" @if(isset($user) && !empty($user->created_at)) value="{{$user->created_at}}" @else value="{{old('created_at')}}" @endif id="title" class="form-control" placeholder="تاریخ ثبت نام کاربر">
+                                                                <input type="text" name="created_at" @if(isset($user) && !empty($user->created_at)) value="{{ \Morilog\Jalali\Jalalian::forge($user->created_at)->format('%H:i:s - %d %B %Y') }}" @else value="{{old('created_at')}}" @endif id="title" class="form-control" placeholder="تاریخ ثبت نام کاربر">
                                                                 <div class="input-group-addon"><i class="ti-text"></i></div>
                                                             </div>
                                                             @if( $errors->has('created_at') )
@@ -175,9 +175,9 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group @if( $errors->has('birthday') ) has-error @endif">
-                                                            <label class="control-label mb-10">تاریخ تولد کاربر :</label>
+                                                            <label class="control-label mb-10">سال تولد</label>
                                                             <div class="input-group">
-                                                                <input type="text" name="birthday" @if(isset($user) && !empty($user->birthday)) value="{{$user->birthday}}" @else value="{{old('birthday')}}" @endif id="title" class="form-control" placeholder="تاریخ تولد کاربر">
+                                                                <input type="text" name="birthday" @if(isset($user) && !empty($user->birthday)) value="{{$user->birthday}}" @else value="{{old('birthday')}}" @endif id="title" class="form-control" placeholder="متولد چه سالی هستید؟ مثلا : 1376">
                                                                 <div class="input-group-addon"><i class="ti-text"></i></div>
                                                             </div>
                                                             @if( $errors->has('birthday') )

@@ -7,9 +7,13 @@
 
             <div class="col-sm-6 text-left">
                 <p> دنبال کنید</p>
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-google-plus"></i></a>
+                <a href="#"><i class="fa fa-telegram"></i></a>
+                <a href="#"><i class="fa fa-instagram"></i></a>
+                <a href="#"><i class="fa fa-whatsapp"></i></a>
+                
+                {{-- <li><a href="">Instagram</a></li>
+                <li><a href="{{ asset($options['social_link']->whatsapp) }}">WhatsApp</a></li>
+                <li><a href="{{ asset($options['social_link']->telegram) }}">Telegram</a></li> --}}
             </div>
         </div>
     </div>

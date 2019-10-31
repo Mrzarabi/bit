@@ -184,8 +184,7 @@ class PanelController extends Controller
 
         $option_value['instagram'] = $req->instagram;
         $option_value['telegram'] = $req->telegram;
-        $option_value['twitter'] = $req->twitter;
-        $option_value['facebook'] = $req->facebook;
+        $option_value['whatsapp'] = $req->whatsapp;
 
         $option = Option::find($option_id);
         $option -> value = json_encode($option_value);

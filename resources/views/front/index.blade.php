@@ -1,3 +1,5 @@
+@include('front.layout.loading')
+
 @extends('front.layout.master')
 
 @section('body-class', 'page home page-template-default')

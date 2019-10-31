@@ -25,21 +25,10 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name'                 => [
-                request()->method() === 'POST' ? 'required' : 'nullable', 'string', 'max:20'
-            ],
-
-            'last_name'                  => [
-                request()->method() === 'POST' ? 'required' : 'nullable', 'string', 'max:30'
-            ],
-
-            'birthday'                   => [
-                request()->method() === 'POST' ? 'required' : 'nullable', 'string'
-            ],
-
-            'address'                    => [
-                request()->method() === 'POST' ? 'required' : 'nullable', 'string', 'max:255'
-            ],
+            'first_name'                 => 'required|string|max:30',
+            'last_name'                  => 'required|string|max:30',
+            'birthday'                   => "required|integer|max:4|regex:/^\d{4}$/|min:2",
+            'address'                    => 'nullable|string|max:255',
 
             'national_code'              => [
                 'required','string', 'min:10', 

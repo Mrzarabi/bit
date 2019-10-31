@@ -27,13 +27,10 @@ class CurrencyRequest extends FormRequest
             'title'                => 'required|string|max:50',
             'short_description'    => 'nullable|string|max:255',
             'note'                 => 'nullable|string|max:255',
-            'price'                => 'required|integer',
-            'inventory'            => 'required|integer',
-            'code'                 => 'nullable|string',
+            'price'                => 'required',
+            'inventory'            => 'required',
             'status'               => 'required|integer',
-            'photo'                => [
-                request()->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'
-            ],
+            'photo'                => 'nullable|image|mimes:jpeg,jpg,png,gif|max:1024',
             
             // 'photo'          => 'required|image|mimes:jpeg,jpg,png|max:1024',
             
