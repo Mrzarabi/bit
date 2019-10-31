@@ -83,7 +83,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $dates = [
-        'deleted_at'
+        'deleted_at',
     ];
 
     
