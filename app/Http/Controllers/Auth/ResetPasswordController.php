@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Auth;
 
 class ResetPasswordController extends Controller
 {
@@ -19,14 +20,21 @@ class ResetPasswordController extends Controller
     */
 
     use ResetsPasswords;
-
-    /**
-     * Where to redirect users after resetting their password.
+/**
+     * Where to redirect users after login.
      *
-     * @var string
+     * @return string
      */
-    protected $redirectTo = '/';
 
+
+    public function redirectTo(){
+        
+        // User role owner
+        if(Auth::user()->hasRole('owner')) 
+            return '/panel/currency';
+        else 
+            return '/panel/client';
+    }
     /**
      * Create a new controller instance.
      *

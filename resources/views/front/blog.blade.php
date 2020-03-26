@@ -84,7 +84,7 @@
                         <div class="st-pagination">
                             <ul class="pagination custom-style-paginate">
                                 <li class="active">
-                                    {{$articles->links()}}
+                                    {{-- {{$articles->links()}} --}}
                                 </li>
                             </ul>
                         </div>

@@ -25,12 +25,11 @@ class Info extends FormRequest
     {
         return [
             'site_name'     => 'required|max:30|string',
-            'phone'         => ['required', 'regex:/(\+98|0)?9\d{9}/'],
+            'phone'         => ['required', 'regex:/^(\+98|0)?\d{10}$/'],
             'description'   => 'required|max:255|string',
-            // 'min_total'     => 'required|min:0|integer',
             'address'       => 'required|max:100|string',
-            'logo'          => 'nullable|image|mimes:jpeg,png,jpg|max:512',
-            'watermark'     => 'nullable||mimes:jpeg,png,jpg|max:512',
+            'logo'          => ['nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024'],
+            'watermark'     => 'nullable|image|mimes:jpeg,png,jpg|max:512',
         ];
     }
 }

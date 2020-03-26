@@ -31,7 +31,7 @@ class BankCardRequest extends FormRequest
                 request()->method() === 'POST' ? 'required' : 'nullable', 'integer', 'digits:16',
             ],
             'code'               => [
-                request()->method() === 'POST' ? 'required' : 'nullable', 'string', 'regex:/^[a-z0-9_-]{3,16}$/',
+                request()->method() === 'POST' ? 'required' : 'nullable', 'string', 'regex:/^[A-z0-9\s]{32}$/',
             ],
             'image_bank_card'        => [
                 request()->method() === 'POST' ? 'required' : 'nullable', 'image', 'mimes:jpeg,jpg,png,gif', 'max:1024' 

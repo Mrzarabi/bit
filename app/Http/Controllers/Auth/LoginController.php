@@ -31,13 +31,14 @@ class LoginController extends Controller
      */
 
 
-    public function redirectTo(){
-        
+    public function redirectTo()
+    {
+
         // User role owner
-        if(Auth::user()->hasRole('owner')) 
+        if (Auth::user()->hasRole('owner'))
             return '/panel/currency';
-        else 
-            return '/panel/client';
+        else
+            return '/';
     }
 
 
@@ -54,7 +55,7 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('auth.login', [
-            'options'=> $this->options(['site_name', 'site_logo'])
+            'options' => $this->options(['site_name', 'site_logo'])
         ]);
     }
 }

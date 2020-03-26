@@ -220,6 +220,21 @@
                                 {{-- end --}}
                                 {{-- show upload some images --}}
                                 @if (!$user->hasRole('owner'))
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                        </div>
+                                        <div class="col-md-8"><ul style="list-style-type: disc float: right;">
+                                            <div class="row">
+                                                
+                                                <img class="col-md-12 col-sm-12" src="/images/sample/sample.jpg" alt="sample" style="max-width: 400px; float: right;">
+                                                <ul class="col-md-12 pb-10">    
+                                                    <li >
+                                                        <p class="text-info">لطفا طبق تصویر بالا اقدام به آپلود تصاویر مدارک مورد نیاز کنید .</p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row pb-5">
                                         <div class="col-md-12">
                                             <form action="@isset($user) {{ route('updateImageProfile', ['user' => $user->id]) }} @endisset" method="POST"  enctype="multipart/form-data">
@@ -231,6 +246,7 @@
                                                                 style="background: url('{{ $user->image_national_code }}') center center;
                                                                     background-size: cover; max-width: 300px; width: 270px; height: 200px; border-radius: 7px;">
                                                             </div>
+                                                            
                                                             <P class="text-center mt-5"><span class="label bg-success">تایید شده</span></P>
                                                         @else
                                                             <input type="file" name="image_national_code" id="input-file-now" class="dropify" data-default-file="{{ $user->image_national_code }}"/>
@@ -307,7 +323,7 @@
                                                 
                                                 @isset($user) @method('put') @endisset
                                                 @csrf
-                                            </form>    
+                                            </form>
                                         </div>	
                                     </div>
                                 @endif
@@ -357,6 +373,16 @@
                                                                                 <div class="input-group">
                                                                                     <input type="text" name="code" id="title" class="form-control" placeholder="شماره شبا ">
                                                                                     <div class="input-group-addon"><i class="ti-text"></i></div>
+                                                                                </div>
+                                                                                <div class="col-md-12 pt-10" style="color:red">
+                                                                                    <ul style="list-style-type: disc">
+                                                                                        <li>
+                                                                                            <p>فرمت شماره شبا باید اینگونه باشد </p>
+                                                                                        </li>
+                                                                                        <li>
+                                                                                            <p>IR06 2960 0000 0010 0324 2000 01</p>
+                                                                                        </li>
+                                                                                    </ul>
                                                                                 </div>
                                                                                 @if( $errors->has('code') )
                                                                                     <span class="help-block">{{ $errors->first('code') }}</span>

@@ -66,7 +66,8 @@
                             <button type="submit" name="singlebutton" class="btn btn-default btn-lg rounded custom-btn-warning btn-block mt20">ورود به حساب</button>
                         </form>
 					</div>
-						<a href="{{ route('register') }}" class="text-yellow pull-left pl-3">هنوز ثبت نام نکرده اید ؟</a>
+                        <a href="{{ route('register') }}" class="text-yellow pull-left pl-3">هنوز ثبت نام نکرده اید ؟</a>
+                        <a class="text-yellow pull-left pl-3" href="{{ route('password.request') }}">بازیابی رمز عبور</a>
 						<span class="pull-right">
 							<a href="{{route('index')}}" class="text-white">برگشتن به صفحه اصلی</a>
 						</span>

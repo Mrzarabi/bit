@@ -250,8 +250,6 @@
 								<form action="/panel/setting/info" enctype="multipart/form-data" method="POST">
 									<h6 class="txt-dark flex flex-middle  capitalize-font"><i class="fa fa-info font-20 txt-grey ml-10" aria-hidden="true"></i>تغییر اطلاعات کلی</h6>
 									<hr class="light-grey-hr"/>
-
-									
 									<div class="panel-body">										
 										<div class="row">
 											<div class="col-md-8">

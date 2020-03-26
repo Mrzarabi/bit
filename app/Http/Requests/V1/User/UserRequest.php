@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
         return [
             'first_name'                 => 'required|string|max:20',
             'last_name'                  => 'required|string|max:30',
-            'birthday'                   => 'required|integer|max:4|regex:/^\d{4}$/|min:2',
+            'birthday'                   => 'required|integer|regex:/^\d{4}$/',
             'address'                    => 'nullable|string|max:255',
 
             
@@ -37,7 +37,7 @@ class UserRequest extends FormRequest
             ],
             'phone_number'               => [
                 'nullable', 'string', 'min:7',
-                Rule::unique('users')->ignore( request()->route()->parameters['user'] ), 'regex:/^(\+98|0)?9\d{9}$/'
+                Rule::unique('users')->ignore( request()->route()->parameters['user'] ), 'regex:/^(\+98|0)?\d{10}$/'
             ],
 
             'email'                      => [

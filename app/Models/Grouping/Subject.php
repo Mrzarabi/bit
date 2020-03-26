@@ -38,6 +38,15 @@ class Subject extends Model
 
     
     /**
+     * The attributes that should delete all relation with this model.
+     *
+     * @var array
+     */
+    protected $cascadeDeletes = [
+        'articles'
+    ];
+    
+    /**
      * Searchable rules.
      *
      * Columns and their priority in search results.
@@ -51,15 +60,6 @@ class Subject extends Model
             'subjects.title' => 10,
             'subjects.description' => 8,
         ],
-    ];
-
-    /**
-     * The attributes that should delete all relation with this model.
-     *
-     * @var array
-     */
-    protected $cascadeDeletes = [
-        'articles'
     ];
 
     /****************************************

@@ -64,32 +64,30 @@ class PanelController extends Controller
         ]);
     }
 
-    public function slider (Slider $req)
+    public function slider(Slider $req)
     {
         $option = Option::where('name', 'slider')->first();
         $option_value = json_decode($option->value, true);
         $slider = $req->slides;
-        
-        foreach ($req->slides as $key => $item) 
-        {
-            if (isset($item['photo']))
-            {
-                $file_path = public_path().'/slider/'.$option_value[$key]['photo'];
-                if(file_exists($file_path)) {
+
+        foreach ($req->slides as $key => $item) {
+            if (isset($item['photo'])) {
+                $file_path = public_path() . '/slider/' . $option_value[$key]['photo'];
+                if (file_exists($file_path)) {
                     unlink($file_path);
                 }
 
-                $photoName = substr(md5(time()), 0, 8) .'.'.$item['photo']->getClientOriginalExtension();
+                $photoName = substr(md5(time()), 0, 8) . '.' . $item['photo']->getClientOriginalExtension();
                 $item['photo']->move(public_path('slider'), $photoName);
-                
+
                 $slider[$key]['photo'] = $photoName;
             } else {
                 $slider[$key]['photo'] = $option_value[$key]['photo'];
             }
         }
-        
+
         $slider = json_encode($slider);
-        $option->update([ 'value' => $slider ]);
+        $option->update(['value' => $slider]);
         return redirect()->back()->with('message', 'اسلایدر با موفقیت بروز رسانی شد');
     }
 
@@ -98,7 +96,7 @@ class PanelController extends Controller
     //     $option = Option::where('name', 'posters')->first();
     //     $option_value = json_decode($option->value, true);
     //     $posters = $req->posters;
-    
+
     //     foreach ($req->posters as $key => $item) 
     //     {
     //         if (isset($item['photo']))
@@ -110,85 +108,82 @@ class PanelController extends Controller
 
     //             $photoName = substr(md5(time()), 0, 8) .'.'.$item['photo']->getClientOriginalExtension();
     //             $item['photo']->move(public_path('poster'), $photoName);
-                
+
     //             $posters[$key]['photo'] = $photoName;
     //         } else {
     //             $posters[$key]['photo'] = $option_value[$key]['photo'];
     //         }
     //     }
-        
+
     //     $posters = json_encode($posters);
     //     $option->update([ 'value' => $posters ]);
     //     return redirect()->back()->with('message', 'پوستر ها با موفقیت بروز رسانی شدند');
     // }
 
-    public function info (Info $req)
+    public function info(Info $req)
     {
         $option = Option::select('id', 'name', 'value')->whereIn('name', [
-            'site_name', 'site_description', 'site_logo', 'watermark', 'shop_phone', 'shop_address', 'min_total'
+            'site_name', 'site_description', 'site_logo', 'watermark', 'shop_phone', 'shop_address',
         ])->get();
 
-        
+
         $options = [];
         foreach ($option as $item) {
             $options[$item['name']] = ['id' => $item['id'], 'value' => $item['value']];
         }
         $info = $req->all();
-        
-        if (isset($info['logo']))
-        {
-            $file_path = public_path().'/logo/'.$options['site_logo']['value'];
-            if(file_exists($file_path)) {
+
+        if (isset($info['logo'])) {
+            $file_path = public_path() . '/logo/' . $options['site_logo']['value'];
+            if (file_exists($file_path)) {
                 unlink($file_path);
             }
 
-            $photoName = substr(md5(time()), 0, 8) .'.'.$info['logo']->getClientOriginalExtension();
+            $photoName = substr(md5(time()), 0, 8) . '.' . $info['logo']->getClientOriginalExtension();
             $info['logo']->move(public_path('logo'), $photoName);
-            
+
             $options['site_logo']['value'] = $photoName;
         }
-        
-        if (isset($info['watermark']))
-        {
-            $file_path = public_path().'/logo/'.$options['watermark']['value'];
-            if(file_exists($file_path)) {
+
+        if (isset($info['watermark'])) {
+            $file_path = public_path() . '/logo/' . $options['watermark']['value'];
+            if (file_exists($file_path)) {
                 unlink($file_path);
             }
 
-            $photoName = substr(md5(time()), 0, 8) .'.'.$info['watermark']->getClientOriginalExtension();
+            $photoName = substr(md5(time()), 0, 8) . '.' . $info['watermark']->getClientOriginalExtension();
             $info['watermark']->move(public_path('logo'), $photoName);
-            
+
             $options['watermark']['value'] = $photoName;
         }
-    
+
         $options['site_name']['value'] = $info['site_name'];
         $options['site_description']['value'] = $info['description'];
         $options['shop_phone']['value'] = $info['phone'];
         $options['shop_address']['value'] = $info['address'];
         // $options['min_total']['value'] = $info['min_total'];
-        
-        foreach ($options as $item)
-        {
+
+        foreach ($options as $item) {
             $option = Option::find($item['id']);
-            $option -> value = $item['value'];
-            $option -> save();
+            $option->value = $item['value'];
+            $option->save();
         }
         return redirect()->back()->with('message', 'اطلاعات کلی با موفقیت بروز رسانی شدند');
     }
 
-    public function social_link (SocialLink $req)
+    public function social_link(SocialLink $req)
     {
         $option = Option::select('id', 'value')->where('name', 'social_link')->get();
-        $option_id = $option[0] -> id;
-        $option_value = json_decode($option[0] -> value, true);
+        $option_id = $option[0]->id;
+        $option_value = json_decode($option[0]->value, true);
 
         $option_value['instagram'] = $req->instagram;
         $option_value['telegram'] = $req->telegram;
         $option_value['whatsapp'] = $req->whatsapp;
 
         $option = Option::find($option_id);
-        $option -> value = json_encode($option_value);
-        $option -> save();
+        $option->value = json_encode($option_value);
+        $option->save();
 
         return redirect()->back()->with('message', 'لینک شبکه های اجتماعی با موفقیت بروز رسانی شدند');
     }

@@ -15,6 +15,7 @@ use App\Mail\CloseTicketMail;
 use App\Mail\AcceptOrReject;
 use App\Http\Requests\V1\BankCard\AcceptBankCard;
 use App\Models\Bank\BankCard;
+use App\Models\Ticket\Ticket;
 
 class UserController extends MainController
 {
@@ -215,5 +216,31 @@ class UserController extends MainController
         $this->checkPermission("read-purchase");
 
         return view('panel.purchase', compact('user'));
+    }
+
+    /**
+     * Remove the one or multiple groups from storage.
+     *
+     * @param  String $features
+     * @return Array\JSON
+     */
+    public function destroy($data)
+    {    
+        $this->checkPermission("delete-{$this->type}");
+
+        if ( request()->has('selected') )
+        {
+            $result = $this->model::whereIn('id', request()->selected)->delete();
+            Ticket::where('user_id', request()->selected)->delete();
+        }
+            // if($result->ticket)
+        else 
+            $result = $this->model::where('id', $data)->delete();
+            Ticket::where('user_id', $data)->delete();
+        if ( $result )
+            return redirect(route("{$this->type}.index"))->with('message', request()->has('selected') ? "موارد انتخاب شده با موفقیت حذف شد" : "با موفقیت حذف شد");
+            
+        else
+            return redirect(route("{$this->type}.index"))->withErros(["متاسفانه هیچ داده ای یافت نشد"]);
     }
 }

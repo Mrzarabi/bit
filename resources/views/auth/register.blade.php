@@ -39,41 +39,44 @@
                         <h2 class="text-center mb30">ایجاد حساب کاربری</h2>
 						<form method="POST" action="{{ route('register') }}" class="validate-form">
 							@csrf
-							{{-- @include('errors.errors-show') --}}
-							<div class="row">
-								<div class="col-lg-6 form-group">
-									<label class="control-label sr-only" for="last_name"></label>
-									<input id="last_name" type="text" name="last_name" placeholder="نام خانوادگی" class="rounded text-right form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" value="{{ old('last_name') }}" required>
-									@if ($errors->has('last_name'))
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $errors->first('last_name') }}</strong>
-										</span>
-									@endif
-								</div>
-								<div class="col-lg-6 form-group">
-									<label class="control-label sr-only" for="first_name"></label>
-									<input id="first_name" type="text" name="first_name" placeholder="نام" class="rounded text-right form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" value="{{ old('first_name') }}" required>
-									@if ($errors->has('first_name'))
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $errors->first('first_name') }}</strong>
-										</span>
-									@endif
-								</div>
+							<div class="form-group">
+								<label class="control-label sr-only" for="first_name"></label>
+								<input id="first_name" type="text" name="first_name" placeholder="نام" class="rounded text-right form-control{{ $errors->has('first_name') ? ' is-invalid' : '' }}" value="{{ old('first_name') }}" required>
+								@if ($errors->has('first_name'))
+									<span class="invalid-feedback text-right" role="alert">
+										<strong>{{ $errors->first('first_name') }}</strong>
+									</span>
+								@endif
+							</div>
+							<div class="form-group">
+								<label class="control-label sr-only" for="last_name"></label>
+								<input id="last_name" type="text" name="last_name" placeholder="نام خانوادگی" class="rounded text-right form-control{{ $errors->has('last_name') ? ' is-invalid' : '' }}" value="{{ old('last_name') }}" required>
+								@if ($errors->has('last_name'))
+									<span class="invalid-feedback text-right" role="alert">
+										<strong>{{ $errors->first('last_name') }}</strong>
+									</span>
+								@endif
 							</div>
                             <div class="form-group">
                                 <label class="control-label sr-only" for="national_code"></label>
                                 <input id="national_code" type="text" name="national_code" placeholder="کد ملی" class="rounded text-right form-control{{ $errors->has('national_code') ? ' is-invalid' : '' }}" value="{{ old('national_code') }}" required>
 								@if ($errors->has('national_code'))
-									<span class="invalid-feedback" role="alert">
+									<span class="invalid-feedback text-right" role="alert">
 										<strong>{{ $errors->first('national_code') }}</strong>
 									</span>
 								@endif
 							</div>
                             <div class="form-group">
+								<div class="form-group float-right" dir="rtl">
+									<span class="font-w text-red">!</span>
+									<span class="pb-3 text-red">
+										شماره همراه جهت تماس تصویری در whatsapp
+									</span>
+								</div>
                                 <label class="control-label sr-only" for="phone_number"></label>
-                                <input id="phone_number" type="text" name="phone_number" placeholder="تلفن ثابت / تلفن همراه" class="rounded text-right form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" value="{{ old('phone_number') }}" required>
+                                <input id="phone_number" type="text" name="phone_number" placeholder="تلفن همراه / ثابت" class="rounded text-right form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" value="{{ old('phone_number') }}" required>
 								@if ($errors->has('phone_number'))
-									<span class="invalid-feedback" role="alert">
+									<span class="invalid-feedback text-right" role="alert">
 										<strong>{{ $errors->first('phone_number') }}</strong>
 									</span>
 								@endif
@@ -82,7 +85,7 @@
                                 <label class="control-label sr-only" for="birthday"></label>
                                 <input id="birthday" type="text" name="birthday" placeholder="متولد چه سالی هستید؟ مثلا : 1376 " class="rounded text-right form-control{{ $errors->has('birthday') ? ' is-invalid' : '' }}" value="{{ old('birthday') }}" required>
 								@if ($errors->has('birthday'))
-									<span class="invalid-feedback" role="alert">
+									<span class="invalid-feedback text-right" role="alert">
 										<strong>{{ $errors->first('birthday') }}</strong>
 									</span>
 								@endif
@@ -91,7 +94,7 @@
                                 <label class="control-label sr-only" for="address"></label>
                                 <input id="address" type="text" name="address" placeholder="آدرس" class="rounded text-right form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" value="{{ old('address') }}" required>
 								@if ($errors->has('address'))
-									<span class="invalid-feedback" role="alert">
+									<span class="invalid-feedback text-right" role="alert">
 										<strong>{{ $errors->first('address') }}</strong>
 									</span>
 								@endif
@@ -100,7 +103,7 @@
                                 <label class="control-label sr-only" for="email"></label>
                                 <input id="email" type="text" name="email" placeholder="آدرس ایمیل" class="rounded text-right form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" value="{{ old('email') }}" required>
 								@if ($errors->has('email'))
-									<span class="invalid-feedback" role="alert">
+									<span class="invalid-feedback text-right" role="alert">
 										<strong>{{ $errors->first('email') }}</strong>
 									</span>
 								@endif
@@ -109,7 +112,7 @@
                                 <label class="control-label sr-only" for="password"></label>
 								<input id="password" type="password" name="password" placeholder="رمز عبور" class="rounded text-right form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" required>
 								@if ($errors->has('password'))
-									<span class="invalid-feedback" role="alert">
+									<span class="invalid-feedback text-right" role="alert">
 										<strong>{{ $errors->first('password') }}</strong>
 									</span>
 								@endif
@@ -118,7 +121,7 @@
                                 <label class="control-label sr-only" for="password_confirmation"></label>
                                 <input type="password" name="password_confirmation" placeholder="تکرار رمز عبور" class="rounded text-right form-control{{ $errors->has('password-confirm') ? ' is-invalid' : '' }}" required>
 								@if ($errors->has('password-confirm'))
-									<span class="invalid-feedback" role="alert">
+									<span class="invalid-feedback text-right" role="alert">
 										<strong>{{ $errors->first('password-confirm') }}</strong>
 									</span>
 								@endif

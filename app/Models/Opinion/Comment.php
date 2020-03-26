@@ -44,6 +44,15 @@ class Comment extends Model
         'deleted_at'
     ];
     
+    
+    /**
+     * The attributes that should delete all relation with this model.
+     *
+     * @var array
+     */
+    protected $cascadeDeletes = [
+        'parent_id'
+    ];
     /****************************************
      **              Relations
      ***************************************/

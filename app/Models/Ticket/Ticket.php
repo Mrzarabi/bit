@@ -10,11 +10,11 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 class Ticket extends Model
 {
     use SoftDeletes, CascadeSoftDeletes, SearchableTrait;
-    
+
     /****************************************
      **             Attributes
      ***************************************/
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -53,7 +53,7 @@ class Ticket extends Model
         'ticketmessages'
     ];
 
-    
+
     /**
      * Searchable rules.
      *
@@ -70,15 +70,15 @@ class Ticket extends Model
             'user.fist_name' . ' ' . 'user.last_name' => 8,
         ],
         'joins' => [
-            'user' => ['user.id','tickets.user_id'],
+            'user' => ['user.id', 'tickets.user_id'],
         ],
     ];
 
     /****************************************
      **              Relations
      ***************************************/
-    
-     /**
+
+    /**
      * Get the user of the ticket.
      */
     public function user()

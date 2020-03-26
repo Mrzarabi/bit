@@ -133,7 +133,7 @@
 								</div>
 								{{-- @php dd($article->comments) @endphp --}}
 								<hr class="light-grey-hr"/>
-								@empty($article->comments)
+								{{-- @empty($article->comments)
 									<div class="alert alert-warning alert-dismissable">
 										<i class="zmdi zmdi-alert-circle-o pl-15 pull-right"></i>
 										<p class="pull-right">هیچ کامنتی یافت نشد !</p>
@@ -285,7 +285,7 @@
 										</div>
 									<div class="col-lg-1"></div>
 								</div>
-								@endempty
+								@endempty --}}
 							</div>
 						</div>
 					</div>

@@ -3,7 +3,6 @@
 @extends('front.layout.master')
 
 @section('content')
-
     <!-- page-header -->
     <div class="post-pageheader">
         <div class="container">
@@ -12,15 +11,19 @@
                     <div class="post-pagecaption">
                         <h1 class="text-white">{{$article->title}} </h1>
                         <div class="meta text-white">
-                            <span class="meta-admin meta-divider"><a class="meta-link">{{$article->user->first_name . ' ' . $article->user->last_name}} </a></span>
-                            <span class="meta-date meta-divider"  title="{{ \Morilog\Jalali\Jalalian::forge($article->created_at)->format('%H:i:s - %d %B %Y') }}"> 
+                            <span class="meta-admin meta-divider"><a class="meta-link">{{ $article->user ? $article->user->first_name . ' ' . $article->user->last_name : 'کاربر حذف شده است'}} </a></span>
+                            <span class="meta-date"  title="{{ \Morilog\Jalali\Jalalian::forge($article->created_at)->format('%H:i:s - %d %B %Y') }}"> 
                                 {{ \Morilog\Jalali\Jalalian::forge($article->created_at)->ago() }}
                             </span>
-                            <span class="meta-comments"> تعداد نظرات :
-                                @foreach ($article->comments as $comment)
-                                    {{count($article->comments) + count($comment->replies)}}
-                                @endforeach
-                            </span>
+                            {{-- <span class="meta-comments"> تعداد نظرات :
+                                @if ($article->comments)
+                                    @foreach ($article->comments as $comment)
+                                        {{count($article->comments) + count($comment->replies)}}
+                                    @endforeach
+                                @else
+                                    0
+                                @endif
+                            </span> --}}
                         </div>
                         <!-- page-header -->
                        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
@@ -99,12 +102,17 @@
                     </div> --}}
                     <!-- /.widget-archievs -->
                     <!-- widget-tags -->
-                    {{-- <div class="widget widget-tags">
-                        <h4 class="widget-title">Tags</h4>
-                        <a href="#" class="btn btn-default btn-xs">Cryptocurrency</a> <a href="#" class="btn btn-default btn-xs">Bitcoin</a> <a href="#" class="btn btn-default btn-xs">Coin</a> <a href="#" class="btn btn-default btn-xs">Sell</a><a href="#" class="btn btn-default btn-xs">Ethereum</a> <a href="#" class="btn btn-default btn-xs">Ripple</a>
-                    </div> --}}
-                    <!-- /.widget-tags -->
-                </div>
+                    <div class="widget widget-tags">
+                        <h4 class="widget-title">برچسپ ها</h4>
+                        @php
+                            $tags = explode(",", $article->tagList);
+                        @endphp
+                        @foreach ($tags as $tag)
+                            <a href="{{route('tagged', ['tag' => $tag])}}">{{$tag}}</a>
+                        @endforeach
+                        </div>
+                        <!-- /.widget-tags -->
+                    </div>
                 <div class="col-xl-8 col-lg-8 col-md-7 col-sm-12 col-12">
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -191,8 +199,12 @@
                                                 </div>
                                                 <div class="author-header row">
                                                     <div class="col-md-2">
-                                                        @if ($article->user->avatar)
-                                                            <img src="{{$article->user->avatar}}" class="custom-style-img float-right pt-1 pl-0 pb-18" alt="تصویر">
+                                                        @if ($article->user)
+                                                            @if ($article->user->avatar)
+                                                                <img src="{{$article->user->avatar}}" class="custom-style-img float-right pt-1 pl-0 pb-18" alt="تصویر">
+                                                            @else
+                                                                <img src="/images/placeholder/download.png" class="img-fluid pt-1 pl-0 pb-18" alt="تصویر">
+                                                            @endif    
                                                         @else
                                                             <img src="/images/placeholder/download.png" class="img-fluid pt-1 pl-0 pb-18" alt="تصویر">
                                                         @endif
@@ -201,13 +213,13 @@
                                                         <ul class="w-100 pr-0">
                                                             <li class="author-title text-right w-100 d-flex justify-content-between">
                                                                 <span>
-                                                                    {{$article->user->first_name . ' ' . $article->user->last_name}}
+                                                                    {{ $article->user ? $article->user->first_name . ' ' . $article->user->last_name : 'کاربر حذف شده است'}} 
                                                                 </span>
                                                                 <span class="meta-date custom-font-size text-left" title="{{ \Morilog\Jalali\Jalalian::forge($article->created_at)->format('%H:i:s - %d %B %Y') }}"> 
                                                                     {{ \Morilog\Jalali\Jalalian::forge($article->created_at)->ago() }}
                                                                 </span>
                                                             </li class="w-100">
-                                                            <li class="author-title text-right">{{$article->user->email}}</li>
+                                                            <li class="author-title text-right">{{$article->user ? $article->user->email : "کاربر حذف شده است"}}</li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -217,7 +229,7 @@
                                     </div>
                                 </div>
                                 <!--comments start-->
-                                <div class="comment-area">
+                                 {{-- <div class="comment-area">
                                     <div class="row">
                                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                             <div>
@@ -230,29 +242,33 @@
                                                 </h4>
                                                 <ul class="comment-list list-unstyled">
                                                     @foreach ($article->comments as $comment)
-                                                    @if ($comment->is_accept)
-                                                        <li class="row">
-                                                            <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12">
-                                                                @if ($comment->user->avatar)
-                                                                    <img src="{{$comment->user->avatar}}" class="custom-style-img float-right pt-1 pl-0" alt="تصویر">
-                                                                @else
-                                                                    <img src="/images/placeholder/download.png" class="img-fluid pt-1 pl-0" alt="تصویر">
-                                                                @endif
-                                                            </div>
-                                                            <div class=" col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12 comment-info">
-                                                                <div class="comment-header">
-                                                                    <h5 class="comment-title"> {{$comment->title}} </h5>
-                                                                    <span class="meta-date custom-font-size text-left" title="{{ \Morilog\Jalali\Jalalian::forge($comment->created_at)->format('%H:i:s - %d %B %Y') }}"> 
-                                                                        {{ \Morilog\Jalali\Jalalian::forge($comment->created_at)->ago() }}
-                                                                    </span>
+                                                        @if ($comment->is_accept)
+                                                            <li class="row">
+                                                                <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12 col-12">
+                                                                    @if ($comment->user)
+                                                                        @if ($comment->user->avatar)
+                                                                            <img src="{{$comment->user->avatar}}" class="custom-style-img float-right pt-1 pl-0" alt="تصویر">
+                                                                        @else
+                                                                            <img src="/images/placeholder/download.png" class="img-fluid pt-1 pl-0" alt="تصویر">
+                                                                        @endif
+                                                                    @else
+                                                                        <img src="/images/placeholder/download.png" class="img-fluid pt-1 pl-0" alt="تصویر">
+                                                                    @endif
                                                                 </div>
-                                                                <div class="comment-content">
-                                                                    <p> {{$comment->message}} </p>
+                                                                <div class=" col-xl-10 col-lg-10 col-md-12 col-sm-12 col-12 comment-info">
+                                                                    <div class="comment-header">
+                                                                        <h5 class="comment-title"> {{$comment->title}} </h5>
+                                                                        <span class="meta-date custom-font-size text-left" title="{{ \Morilog\Jalali\Jalalian::forge($comment->created_at)->format('%H:i:s - %d %B %Y') }}"> 
+                                                                            {{ \Morilog\Jalali\Jalalian::forge($comment->created_at)->ago() }}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="comment-content">
+                                                                        <p> {{$comment->message}} </p>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </li>
-                                                    @endif
-                                                        {{-- @foreach ($comment->replies as $reply)
+                                                            </li>
+                                                        @endif
+                                                        @foreach ($comment->replies as $reply)
                                                             <li class="row pr-5">
                                                                 <div class="col-md-2">
                                                                     @if ($reply->user->avatar)
@@ -273,15 +289,15 @@
                                                                     </div>
                                                                 </div>
                                                             </li>
-                                                        @endforeach     --}}
+                                                        @endforeach    
                                                     @endforeach
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>  --}}
                                 <!--comments close-->
-                                @if (\auth::check())
+                                {{-- @if (\auth::check())
                                     <div class="leave-comments">
                                         <h3 class="leave-comments-title">نظر خود را بنویسید</h3>
                                         <form action=" {{route('comment.store')}} " enctype="multipart/form-data" method="post">
@@ -316,7 +332,7 @@
                                             @csrf
                                         </form>
                                     </div>
-                                @endif
+                                @endif --}}
                             </div>
                         </div>
                     </div>

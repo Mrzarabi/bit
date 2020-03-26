@@ -16,35 +16,12 @@
                     <!--  hero-block-->
                     <div class="hero-block">
                         <h2 class="hero-title mb30">برای خرید آسان و امن با قیمت مناسب با ما همراه باشید .</h2>
-                        {{-- <p class="text-white">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p> --}}
-                        {{-- <a href="#" class="btn btn-default btn-lg custom-btn-warning">شروع کنید</a> --}}
                     </div>
                     <!--  /.hero-block-->
                 </div>
             </div>
         </div>
     </div>
-    <!--  /.hero-section -->
-    <!--  bitcoin-price-section -->
-    {{-- <div class="bg-light">
-        <div class="container">
-            <div class="row ">
-                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 ">
-                    <p class="text-primary pdt10 pdb10">Bitcoin BTC <strong>$9919.41</strong> </p>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 ">
-                    <p class="text-primary pdt10 pdb10">Ethereum ETH <strong>$759.41</strong> </p>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 ">
-                    <p class="text-primary pdt10 pdb10">Ripple XRP <strong>$0.8612</strong> </p>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 ">
-                    <p class="text-primary pdt10 pdb10">Litecoin LTC <strong>$184.91</strong> </p>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    <!--  /.bitcoin-price-section -->
     <!--  about-section -->
     <div class="space-medium" id="rules">
         <div class="container mt">
@@ -71,45 +48,9 @@
                         </ul>
                     </div>
                 </div>
-                {{-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
-                    <div class="mb20">
-                        <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. </p>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
-                    <div class="mb20">
-                        <p class="lead">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. </p>
-                    </div>
-                </div> --}}
             </div>
             <!-- /.about description -->
             <hr>
-            {{-- <div class="row ">
-                <!-- counter -->
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
-                    <div class="counter-block">
-                        <h2 class="counter-title">$10B+</h2>
-                        <p class="counter-text">In Digital Currency Exchanged</p>
-                    </div>
-                </div>
-                <!-- /.counter -->
-                <!-- counter -->
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
-                    <div class="counter-block">
-                        <h2 class="counter-title">10M+</h2>
-                        <p class="counter-text">Customers Served</p>
-                    </div>
-                </div>
-                <!-- /.counter -->
-                <!-- counter -->
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12 ">
-                    <div class="counter-block">
-                        <h2 class="counter-title">16+</h2>
-                        <p class="counter-text">Countries Supported</p>
-                    </div>
-                </div>
-                <!-- /.counter -->
-            </div> --}}
         </div>
     </div>
     <!-- /.about -->
@@ -146,86 +87,6 @@
         </div>
     </div>
     <!--  buy/sell-section -->
-    <!--  deposite options -->
-    {{-- <div class="bg-secondary pinside30">
-        <div class="container">
-            <div class="row ">
-                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-                    <div class="mt-3">
-                        <h4>Variety of deposits and withdrawal options</h4>
-                    </div>
-                </div>
-                <div class="offset-xl-1 col-xl-5 offset-lg-1 col-lg-5 col-md-6 col-sm-12 col-12">
-                    <div class="">
-                        <span><a href="#" class="zoomimg mr-2"><img src="./images/paypal.png" alt=""></a></span>
-                        <span><a href="#" class="zoomimg mr-2"><img src="./images/mastercard.png" alt=""></a></span>
-                        <span><a href="#" class="zoomimg mr-2"><img src="./images/mestro.png" alt=""></a></span>
-                        <span><a href="#" class="zoomimg mr-2"><img src="./images/visa.png" alt=""></a></span>
-                        <span><a href="#"  class="zoomimg mr-2"><img src="./images/skrill.png" alt=""></a></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    <!--  /.deposite options -->
-    <!-- Process Step -->
-    {{-- <div class="space-medium">
-        <div class="container">
-            <div class="row ">
-                <div class="offset-xl-3 col-xl-6 offset-lg-3 col-lg-6 col-md-12 col-sm-12 col-12 text-center">
-                    <div class="section-title">
-                        <h2>Simple Steps to Get Started</h2>
-                        <p>Morbi egestas dictum sid volutpat est pharete hendrerit quis tortoret urabitur quis sceleest pharetu.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row ">
-                <div class="offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12">
-                    <div class="row">
-                        <!-- Step-1 -->
-                        <div class="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12">
-                            <img src="./images/form.png" alt="">
-                        </div>
-                        <div class="offset-xl-1 col-xl-6 offset-lg-1 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <div class="pdt120">
-                                <h3>Sign up</h3>
-                                <p>Morbi egestas dictum sid volutpat est pharetra eraesente hendrerit quis tortoret urabitur quis scelerisqetpat est pharetra eraesente hendreri est pharetra eraesente hendrerit . </p>
-                            </div>
-                        </div>
-                        <!-- /.Step-1 -->
-                        <!-- Step-2 -->
-                        <div class="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12">
-                            <div class="pdt120">
-                                <h3>Connect</h3>
-                                <p>Morbi egestas dictum sid volutpat est pharetra eraesente hendrerit quistortoret urabitur quis scelerisque tellusest paesenteorbi egestas dictum sid volutpat est . </p>
-                            </div>
-                        </div>
-                        <!-- /.Step-2 -->
-                        <!-- Step-3 -->
-                        <div class="offset-xl-2 col-xl-5 offset-lg-2 col-lg-5 col-md-6 col-sm-12 col-12">
-                            <img src="./images/connect.png" alt="">
-                        </div>
-                        <div class="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-12">
-                            <img src="./images/bitcoin.png" alt="">
-                        </div>
-                        <div class="offset-xl-1 col-xl-6 offset-lg-1 col-lg-6 col-md-6 col-sm-12 col-12">
-                            <div class="pdt120">
-                                <h3>Buy Digital Currancy</h3>
-                                <p>Squis tortoret urabitur quis scelerisque tellus dictum sid volutpat est pharetum sid volutpat est pharetra eraesente tortoret urabitur quis scelerisque tellus dictum sid. </p>
-                            </div>
-                        </div>
-                        <!-- /.Step-2 -->
-                    </div>
-                </div>
-            </div>
-            <div class="row ">
-                <div class="offset-xl-4 col-xl-4 offset-lg-4 col-lg-4 col-md-12 col-sm-12 col-12 text-center mt60">
-                   <a href="#" class="btn btn-default btn-lg btn-block">Get Started</a>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    <!--/. Process Step -->
     <!-- feature-section -->
     <div class="space-medium bg-light">
         <div class="container">
@@ -291,25 +152,9 @@
         <div class="shadow-effect"></div>
     </div>
     <!-- /.cta-section -->
-    <!-- app-section -->
-    {{-- <div class="space-medium">
-        <div class="container">
-            <div class="row ">
-                <div class="col-xl-7 col-lg-7 col-md-7 col-sm-12 col-12 ">
-                    <h2>Leading bitcoin & <br> cryptocurrency exchange</h2>
-                </div>
-                <div class="col-xl-5 col-lg-5 col-md-5 col-sm-12 col-12 ">
-                    <div class="">
-                        <span><a href="#"><img src="./images/apple_app.png" alt=""></a></span>
-                        <span><a href="#"><img src="./images/google_app.png" alt=""></a></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-    <!-- /.app-section -->
+@endsection
+    
     <!-- footer -->
-
 @section('script')
     
     <a href="javascript:" id="return-to-top"><i class="fa fa-angle-up"></i></a>

@@ -2,13 +2,13 @@
 <div class="footer">
     <div class="container">
         <div class="row ">
-            {{-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
                 <div class="header-logo">
                     <a href="/" class="header-logo-link">
                         <img src="{{ asset('logo/'.$options['site_logo']) }}" class="rounded" style="max-height: 60px;display: block;" alt="لوگوی فروشگاه">
                     </a>
                 </div>
-            </div> --}}
+            </div>
         </div>
         <hr class="footer-line">
         <div class="row ">

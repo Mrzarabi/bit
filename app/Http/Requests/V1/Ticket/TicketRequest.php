@@ -26,7 +26,7 @@ class TicketRequest extends FormRequest
         return [
             'title'    => 'required|string|max:50',
             'status'   => 'required|min:0|max:3|integer',
-            'is_close' => 'boolean'
+            'is_close' => 'boolean',
         ];
     }
 }

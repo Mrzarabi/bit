@@ -2,13 +2,13 @@
 <div class=" header-wrapper fixed-top ">
     <div class="container">
         <div class="row">
-            {{-- <div class="col-xl-2 col-lg-3 col-md-12 col-sm-12 col-12">
+            <div class="col-xl-2 col-lg-3 col-md-12 col-sm-12 col-12">
                 <div class="header-logo">
                     <a href="/" class="header-logo-link">
                         <img src="{{ asset('logo/'.$options['site_logo']) }}" class="rounded" style="max-height: 60px;display: block;margin: auto" alt="لوگوی فروشگاه">
                     </a>
                 </div>
-            </div> --}}
+            </div>
             <div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12">
                 <!-- navigations-->
                 <div class="navigation">
@@ -31,7 +31,7 @@
                                 @if (\Auth::user()->hasRole('owner'))
                                     <li class="text-right"><a class="cu" @if( auth()->user()->can("create-currency") ) href="/panel/currency" @endif >دیدن محصول</a></li>
                                 @else
-                                    <li class="text-right"><a class="cu" href="/panel/client">دیدن محصول</a></li>
+                                    <li class="text-right"><a class="cu" href="{{route('profile_setting', ['user' => auth()->user()->id])}}">دیدن پرفایل</a>
                                 @endif
                                     <li class="text-right"><a onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();"
@@ -58,6 +58,10 @@
                     </div>
                 </div>
                 <!-- /.navigations-->
+                @php
+                    
+                    // dd(auth()->user()->id);
+                @endphp
             </div>
             <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 d-none d-xl-block d-lg-block">
                 <div class="header-quick-info">
@@ -70,7 +74,7 @@
                         @if (\Auth::user()->hasRole('owner'))
                                 <a class="btn btn-xs btn-default custom-btn-warning" @if( auth()->user()->can("create-currency") ) href="/panel/currency" @endif >دیدن محصول</a>
                         @else
-                            <a class="btn btn-xs btn-default custom-btn-warning" href="/panel/client">دیدن محصول</a>
+                            <a class="btn btn-xs btn-default custom-btn-warning" href="{{route('profile_setting', ['user' => auth()->user()->id])}}">دیدن پرفایل</a>
                         @endif
                             <a onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"
