@@ -148,8 +148,8 @@
                                                     <td>{{ $user->national_code }}</td>
                                                     <td>{{ $user->phone_number }}</td>
                                                     <td>
-                                                        <p title="میلادی : {{$user->birthday}}">
-                                                            {{ \Morilog\Jalali\Jalalian::forge($user->birthday)->format('%d %B %Y') }}
+                                                        <p>
+                                                            {{ $user->birthday }}
                                                         </p>
                                                     </td>
                                                     <td> 

@@ -143,14 +143,27 @@
 
 											<div class="col-md-3">
 												<div class="mt-30">
-													{{-- @php
-														$article
-													@endphp --}}
 													<input type="file" name="image" id="input-file-now" class="dropify" @if ( isset($article) && $article->image) data-default-file="{{ $article->image }}" @endif />
 												</div>	
 											</div>
 										</div>
 
+										<div class="col-md-12 @if( $errors->has('tags') ) has-error @endif" >
+											<div class="form-group ">
+												<label class="control-label mb-10">برچسب ها</label>
+												<div class="input-group">
+													<input name="tags" class="form-control select2" @if(isset($article) && !empty($article->tags)) value="{{$article->tagList}}" @else value="{{old('tags')}}" @endif id="tags" class="form-control" placeholder="لطفا برچسپ های خود را با  قرار دادن فاصله بینشان از هم جدا کنید.">
+														{{-- @foreach ($tags as $tag) --}}
+															{{-- <option value="{{$tag['id']}}"
+																@if( isset($article) && $article->tags ) selected @endif>
+																{{$tag}}
+															</option>
+														@endforeach --}}
+													</input>
+													<div class="input-group-addon"><i class="ti-layout-grid2-alt"></i></div>
+												</div>
+											</div>
+										</div>
 
 										<div class="col-md-12">
 											<div class="form-group @if( $errors->has('body') ) has-error @endif">

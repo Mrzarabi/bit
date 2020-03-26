@@ -96,7 +96,7 @@
 			'type' => 'user',
 			'more_action' => true,
 			'reset_pass' => true,
-			'show_purchases'	=> true,
+			// 'show_purchases'	=> true,
 			'work'	=> ' تغییر پسورد',
 			'class'	=> 'btn btn-info btn-xs custom-btn-info',
 			'class_i' => 'ti-key custom-icon',

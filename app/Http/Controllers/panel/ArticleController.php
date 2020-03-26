@@ -86,4 +86,52 @@ class ArticleController extends MainController
      * @var string
      */
     protected $rel_from_user = 'articles';
+
+    /**
+     * Check the request to it'has image or not,
+     * then create a data with appropirate method
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function storeData($request)
+    {
+        if ( isset($this->image_field) && $request->hasFile( $this->image_field ) )
+        {
+            $tags = explode(" ", $request->tags);
+
+            $model = $this->createNewModel(
+                $this->getRequest( $this->requestWithImage($request, $this->image_field) )
+            );
+
+            $model->tag($tags);
+        }
+        return $model;
+    }
+
+    /**
+     * Check the request to it'has image or not,
+     * then update the data with appropirate method
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function updateData($request, $data)
+    {
+        $tags = explode(" ", $request->tags);
+        if ( isset($this->image_field) && $request->hasFile( $this->image_field ) )
+        {
+
+            $data->update(
+                $this->getRequest( $this->getRequest( $this->requestWithImage($request, $this->image_field, $data) ) )
+            );
+            $data->retag($tags);
+        } else {
+
+            $data->update( $this->getRequest( $request ) );
+            $data->retag($tags);
+        }
+
+        return $data;
+    }
 }

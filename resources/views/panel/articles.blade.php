@@ -94,7 +94,6 @@
 			'label' => 'مقاله',
 			'header_label'	=> 'وبلاگ',
 			'type' => 'article',
-			'more_action' => true,
 		
 				'fields' => [
 					[

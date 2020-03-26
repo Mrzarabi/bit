@@ -13,12 +13,13 @@ use App\Models\Ticket\Ticket;
 use App\Models\Ticket\TicketMessage;
 use App\Models\Bank\BankCard;
 use App\Models\Opinion\Comment;
-use App\Models\Opinion\Review; 
+use App\Models\Opinion\Review;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Laratrust\Traits\LaratrustUserTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
 use App\Models\User\Purchase;
+use App\Notifications\MailResetPasswordToken;
 
 class User extends Authenticatable
 {
@@ -86,25 +87,6 @@ class User extends Authenticatable
         'deleted_at',
     ];
 
-    
-    /**
-     * Searchable rules.
-     *
-     * Columns and their priority in search results.
-     * Columns with higher values are more important.
-     * Columns with equal values have equal importance.
-     *
-     * @var array
-     */
-    protected $searchable = [
-        'columns' => [
-            'users.first_name' => 10,
-            'Users.last_name'  => 9,
-            'users.national_code' => 8,
-            'Users.phone_number'  => 7,
-        ],
-    ];
-    
     /**
      * The attributes that should delete all relation with this model.
      *
@@ -119,6 +101,33 @@ class User extends Authenticatable
         'bankCard',
         'purchases'
     ];
+
+    /**
+     * Searchable rules.
+     *
+     * Columns and their priority in search results.
+     * Columns with higher values are more important.
+     * Columns with equal values have equal importance.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        'columns' => [
+            'users.first_name' => 10,
+            'users.last_name'  => 9,
+            'users.national_code' => 8,
+            'users.phone_number'  => 7,
+        ],
+    ];
+
+
+    /**
+     * Send a password reset email to the user
+     */
+    // public function sendPasswordResetNotification($token)
+    // {
+    //     $this->notify(new MailResetPasswordToken($token));
+    // }
 
     /****************************************
      **              Relations

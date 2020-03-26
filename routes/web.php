@@ -1,4 +1,5 @@
 <?php
+
 use App\Mail\CloseTicketMail;
 use App\Models\Ticket\Ticket;
 
@@ -20,7 +21,7 @@ Route::group(['middleware' => ['web', 'role:owner'], 'prefix' => 'panel', 'names
     // Dashboard Route
     Route::get('/{total_type?}', 'PanelController@index')
         ->where('total_type', 'daily|weekly|monthly|yearly');
-    
+
     // Invoices Routes
     // Route::group(['prefix' => 'invoice'], function () {
 
@@ -32,7 +33,7 @@ Route::group(['middleware' => ['web', 'role:owner'], 'prefix' => 'panel', 'names
 
     // Discount code Routes
     // Route::resource('discountCode', 'DiscountCodeController')->except([ 'create', 'show' ]);    
-    
+
     // Setting Route
     Route::group(['prefix' => 'setting'], function () {
 
@@ -46,50 +47,50 @@ Route::group(['middleware' => ['web', 'role:owner'], 'prefix' => 'panel', 'names
     });
 
     // Users panel Route
-    Route::resource('user', 'UserController')->except([ 'create', 'store' ]);
+    Route::resource('user', 'UserController')->except(['create', 'store']);
     Route::put('user/{user}/accept', 'UserController@accept_certificate')->name('accept_certificate');
     Route::put('user/{bank_card}/acceptbank', 'UserController@accept_certificate_bank')->name('accept_certificate_bank');
     Route::get('user/{user}/editPass', 'UserController@editPass')->name('editPass');
     Route::get('user/{user}/show_purchases', 'UserController@show_purchases')->name('show_purchases');
     Route::put('user/{user}/updatePass', 'UserController@updatePass')->name('updatePass');
     Route::put('user/{user}/canbuy', 'UserController@canBuy')->name('canBuy');
-    
+
     Route::resource('role', 'RoleController')->except(['show']);
     Route::put('role/{$role}/updatePermissions', 'RoleController@updatePermissions')->name('updatePermissions');
-    
+
     // Tickets & TicketMessages panel Route
-    Route::resource('ticket', 'TicketController')->except([ 'create', 'show', 'update' ]);
+    Route::resource('ticket', 'TicketController')->except(['create', 'show', 'update']);
     Route::put('ticket/{ticket}/is_close', 'TicketController@is_close')->name('ticket.is_close');
 
     Route::resource('ticket_message', 'TicketMessageController');
-    
+
     // Category Route
     Route::resource('category', 'CategoryController')->except(['create']);
     Route::get('group/sub/{id}', 'CategoryController@sub');
 
     // Currencies panel Route
     Route::resource('currency', 'CurrencyController')->except(['show']);
-    
+
     // Specification tables handler panel Route
-    Route::resource('specification', 'Spec\SpecificationController')->except([ 'create', 'show' ]);
+    Route::resource('specification', 'Spec\SpecificationController')->except(['create', 'show']);
     Route::group(['prefix' => 'specification/{specification}'], function () {
-        Route::resource('header', 'Spec\SpecHeaderController')->except([ 'create', 'show' ]);
+        Route::resource('header', 'Spec\SpecHeaderController')->except(['create', 'show']);
     });
     Route::group(['prefix' => 'specification/header/{header}'], function () {
-        Route::resource('row', 'Spec\SpecRowController')->except([ 'create', 'show' ]);
+        Route::resource('row', 'Spec\SpecRowController')->except(['create', 'show']);
     });
-    
+
     // Subject Route
     Route::resource('subject', 'SubjectController')->except(['create', 'show']);
-    
+
     // Articles panel Route
     Route::resource('article', 'ArticleController');
-    
+
     // Comments panel Route
-    Route::resource('comment', 'CommentController')->except([ 'index', 'create', 'show', 'edit', 'update' ]);
-    Route::put('comment/{comment}/is_accept', 'CommentController@is_accept')->name('is_accept');
-    Route::put('comment/{comment}/replie_comment/{reply?}', 'CommentController@replie_comment')->name('replie_comment');
-    
+    // Route::resource('comment', 'CommentController')->except([ 'index', 'create', 'show', 'edit', 'update' ]);
+    // Route::put('comment/{comment}/is_accept', 'CommentController@is_accept')->name('is_accept');
+    // Route::put('comment/{comment}/replie_comment/{reply?}', 'CommentController@replie_comment')->name('replie_comment');
+
     // Color panel routes
     // Route::resource('color', 'ColorController')->except([ 'create', 'show' ]);
     // Warranty panel routes
@@ -98,8 +99,9 @@ Route::group(['middleware' => ['web', 'role:owner'], 'prefix' => 'panel', 'names
     // Route::resource('brand', 'BrandController')->except([ 'create', 'show' ]);
 });
 
+
 Route::group(['middleware' => ['web'], 'prefix' => 'panel', 'namespace' => 'Client'], function () {
-    
+
     Route::resource('client', 'ShowClient');
     Route::get('profile-setting/{user}', 'ShowClient@profile_setting')->name('profile_setting');
     Route::post('client/store/', 'ShowClient@storeTicket')->name('storeTicket');
@@ -142,5 +144,7 @@ Route::post('/checkout', 'CartController@checkout')->middleware('auth');
 Route::get('/blog', 'BlogController@index')->name('blog');
 Route::get('/blog/{article}', 'BlogController@show')->name('article.blog');
 Route::get('/subject/{subject}', 'BlogController@showSubject')->name('show.subject');
+Route::get('blog/tagged/{tag}', 'BlogController@tagged')->name('tagged');
 
 // Route::get('/send/email', 'HomeController@mail');
+Route::get('/home', 'HomeController@index')->name('home');

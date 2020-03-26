@@ -56,7 +56,6 @@ abstract class MainController extends Controller
         $request->validate( (new $this->request)->rules() );
         
         $this->checkPermission("create-{$this->type}");
-        
         $data = $this->storeData( $request );
 
         if ( method_exists($this, 'afterCreate') )

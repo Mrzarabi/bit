@@ -8,12 +8,12 @@ use App\Models\Grouping\Subject;
 use App\Models\Opinion\Comment;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
-use App\Helpers\MediaConversionsTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Cviebrock\EloquentTaggable\Taggable;
 
 class Article extends Model
 {
-    use Sluggable, SoftDeletes, CascadeSoftDeletes, SearchableTrait;
+    use Sluggable, SoftDeletes, CascadeSoftDeletes, SearchableTrait, Taggable;
     
     /****************************************
      **             Attributes
@@ -70,6 +70,15 @@ class Article extends Model
     protected $cascadeDeletes = [
         'comments'
     ];
+
+
+    public $articles = [
+
+        'taggedModels' => [
+            'articles' => Article::class
+        ]
+    ];
+
 
     /****************************************
      **              Relations

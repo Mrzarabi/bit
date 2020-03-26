@@ -95,7 +95,8 @@
                                                                 @if (\auth::user()->can_buy)
                                                                     <button title="اتصال به درگاه پرداخت " aria-id="{{ $item->id }}" type="submit" class="delete-item btn btn-primary custom-btn-primary"> اتصال به درگاه بانکی </button>
                                                                 @else
-                                                                    <p>بدون درگاه پرداخت</p>
+                                                                    {{-- <span class="label bg-{{$status[1]}}">{{$status[0]}}</span> --}}
+                                                                    <p class="label bg-red">بدون درگاه پرداخت</p>
                                                                 @endif
                                                             </div>
                                                         </div>

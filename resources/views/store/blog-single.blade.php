@@ -32,7 +32,7 @@
                             <h1 class="entry-title" itemprop="name headline">{{ $article->title }}</h1>
 
                             <div class="entry-meta">
-                                <span class="cat-links"><i class="fa fa-user"></i> {{ $article->user->full_name }}</span>
+                                <span class="cat-links"><i class="fa fa-user"></i> {{ $article->user ? $article->user->full_name : "کاربر حذف شده است" }}</span>
                                 <span class="posted-on"><time class="entry-date published" datetime="2016-03-01T07:40:25+00:00"><i class="fa fa-clock-o"></i> {{ \Morilog\Jalali\Jalalian::forge($article->updated_at)->ago() }}</time></span>
                             </div>
                         </header><!-- .entry-header -->

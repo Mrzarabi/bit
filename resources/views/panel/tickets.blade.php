@@ -29,7 +29,7 @@
 		overflow: auto;
 	}
 
-	.product-card .label {
+	.product-card .label {	
 		position: absolute;
 		bottom: 10px;
 		left: 0px;
@@ -92,7 +92,6 @@
 	
 @section('content')
 	<div class="container">
-
 		<!-- Title -->
 		<div class="row heading-bg">
 			<!-- Breadcrumb -->
@@ -172,6 +171,7 @@
 												@php $i = 0 @endphp
 												@foreach ($tickets as $ticket)
 													@if (!$ticket->is_close)
+													
 														<tr style="text-align:center;">
 															<td>{{ ++$i }}</td>
 															<td>
@@ -179,7 +179,11 @@
 																	<div class="col-md-8">
 																		<div class="row" style="display: flex; justify-content: center;">
 																			<div class="col-md-8">
-																				<img src=" {{$ticket->user->avatar ? $ticket->user->avatar : '/images/placeholder/placeholder.png'}}" style="background-size: cover; max-width: 80px; max-height: 60px; border-radius: 5px; width: 100%; height: 100%;" alt="تصویر">
+																				@if ($ticket->user)
+																					<img src=" {{$ticket->user->avatar ? $ticket->user->avatar : '/images/placeholder/placeholder.png'}}" style="background-size: cover; max-width: 80px; max-height: 60px; border-radius: 5px; width: 100%; height: 100%;" alt="تصویر">
+																				@else
+																					<img src="/images/placeholder/placeholder.png" style="background-size: cover; max-width: 80px; max-height: 60px; border-radius: 5px; width: 100%; height: 100%;" alt="تصویر">
+																				@endif
 																			</div>
 																		</div>
 																	</div>
@@ -198,7 +202,11 @@
 																@endphp
 																<span class="label bg-{{$status[1]}}">{{$status[0]}}</span>
 															</td>
-															<td>{{ $ticket->user->first_name }} {{ $ticket->user->last_name }}</td>
+															@if ($ticket->user)
+																<td>{{ $ticket->user->first_name }} {{ $ticket->user->last_name }}</td>
+															@else
+																<td style="color: red;">کاربر حذف شده است</td>
+															@endif
 															<td title="{{ \Morilog\Jalali\Jalalian::forge($ticket->created_at)->format('%H:i:s - %d %B %Y')  }}">
 																{{ \Morilog\Jalali\Jalalian::forge($ticket->created_at)->ago() }}
 															</td>
@@ -219,11 +227,10 @@
 																</div>
 															</td>
 														</tr>
-													@endif	
+													@endif
 												@endforeach
 											</tbody>
 										</table>
-
 										<table id="datable_2" class="table table-hover table-bordered display mb-30">
 											<h2 style="margin:15px;">تیکت های بسته شده</h2>
 											<thead>
@@ -249,7 +256,11 @@
 																	<div class="col-md-8">
 																		<div class="row" style="display: flex; justify-content: center;">
 																			<div class="col-md-8">
-																				<img src=" {{$ticket->user->avatar ? $ticket->user->avatar : '/images/placeholder/placeholder.png' }}" style="background-size: cover; max-width: 80px; max-height: 60px; border-radius: 5px; width: 100%; height: 100%;" alt="تصویر">
+																				@if ($ticket->user)
+																				<img src=" {{$ticket->user->avatar ? $ticket->user->avatar : '/images/placeholder/placeholder.png'}}" style="background-size: cover; max-width: 80px; max-height: 60px; border-radius: 5px; width: 100%; height: 100%;" alt="تصویر">
+																				@else
+																					<img src="/images/placeholder/placeholder.png" style="background-size: cover; max-width: 80px; max-height: 60px; border-radius: 5px; width: 100%; height: 100%;" alt="تصویر">
+																				@endif
 																			</div>
 																		</div>
 																	</div>
@@ -257,7 +268,11 @@
 															</td>
 															<td>{{ $ticket->title }}</td>
 															<td>{{ $ticket->id }}</td>
-															<td>{{ $ticket->user->first_name .' '. $ticket->user->last_name }}</td>
+															@if ($ticket->user)
+																<td>{{ $ticket->user->first_name }} {{ $ticket->user->last_name }}</td>
+															@else
+																<td style="color: red;">کاربر حذف شده است</td>
+															@endif
 															<td title="{{ \Morilog\Jalali\Jalalian::forge($ticket->created_at)->format('%H:i:s - %d %B %Y')  }}">
 																{{ \Morilog\Jalali\Jalalian::forge($ticket->created_at)->ago() }}
 															</td>

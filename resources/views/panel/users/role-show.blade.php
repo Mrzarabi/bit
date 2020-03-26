@@ -147,7 +147,7 @@
 														{{-- <td><input type="checkbox" class="sub_chk" data-id="{{$article->id}}"></td> --}}
 														<td>{{ ++$i }}</td>
 														<td>{{ $user->avatar }}</td>
-														<td>{{ $user->first_name.' '. $role->user->last_name }}</td>
+														<td>{{ $role->user ? $role->user->first_name.' '. $role->user->last_name : "کاربر حذف شده است"}}</td>
 														<td title="{{ \Morilog\Jalali\Jalalian::forge($user->created_at)->format('%H:i:s - %d %B %Y') }}">
 															{{ \Morilog\Jalali\Jalalian::forge($user->created_at)->ago() }}
 														</td>
