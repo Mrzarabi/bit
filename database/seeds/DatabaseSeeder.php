@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         if ($this->command->confirm('Do you wish to refresh migration before seeding, it will clear all old data ?')) {
 
             // Call the php artisan migrate:fresh using Artisan
-            $this->command->call('migrate:fresh');
+            // $this->command->call('migrate:fresh');
 
             $this->command->line("Database cleared.");
         }

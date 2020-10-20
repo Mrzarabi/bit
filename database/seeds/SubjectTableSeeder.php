@@ -50,29 +50,29 @@ class SubjectTableSeeder extends Seeder
         $this->command->info("Creating a range of {$articlecount} articles for {$users->count()} users.");
         
         // How many genres you need, defaulting 1 to 10
-        $commentcount = $this->getCount('comments');
+        // $commentcount = $this->getCount('comments');
         
-        $this->command->info("Creating a range of {$commentcount} comments for {$users->count()} users.");
+        // $this->command->info("Creating a range of {$commentcount} comments for {$users->count()} users.");
         
         // How many genres you need, defaulting 1 to 10
-        $replycommentcount = $this->getCount('reply comments');
+        // $replycommentcount = $this->getCount('reply comments');
         
-        $this->command->info("Creating a range of {$replycommentcount} comments for {$users->count()} users.");
+        // $this->command->info("Creating a range of {$replycommentcount} comments for {$users->count()} users.");
 
         //For using all memory limit
         // ini_set('memory_limit', '-1');
 
         
         //Showing all important Data in table
-        $this->command->table(['id', 'user_id', 'article_id', 'created_at'], Comment::all()->map( function($comment)
-        {
-            return [
-                $comment->id,
-                $comment->user_id,
-                $comment->article_id,
-                $comment->created_at,
-            ];
-        }));
+        // $this->command->table(['id', 'user_id', 'article_id', 'created_at'], Comment::all()->map( function($comment)
+        // {
+        //     return [
+        //         $comment->id,
+        //         $comment->user_id,
+        //         $comment->article_id,
+        //         $comment->created_at,
+        //     ];
+        // }));
 
         // Create the articles & relation Users
         $users->each( function($user) use($subjects, $commentcount, $articlecount, $users, $replycommentcount)
